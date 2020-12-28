@@ -8,6 +8,7 @@ import {PayManagerModule} from './pay-manager/pay-manager.module';
 import {ServiceRequestManagerModule} from './service-request-manager/service-request-manager.module';
 import {ServicesManagerModule} from './services-manager/services-manager.module';
 import {UserManagerModule} from './user-manager/user-manager.module';
+import {HttpClientModule} from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -24,6 +25,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ServiceRequestManagerModule,
     ServicesManagerModule,
     UserManagerModule,
+    HttpClientModule
     MatDialogModule,
     BrowserAnimationsModule
   ],
