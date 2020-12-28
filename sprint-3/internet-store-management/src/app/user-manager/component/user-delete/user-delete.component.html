@@ -1,0 +1,7 @@
+<h4 class="d-flex justify-content-center">Xóa thành viên</h4>
+<hr>
+<p class="my-3 mt-5">Bạn có thực sự muốn xóa thành viên <span class="text-danger font-weight-bold">{{username}}</span> không ? <br><br> <span class="text-danger">Lưu Ý: Thao tác này không thể hoàn tác !</span></p>
+<div class="row d-flex justify-content-center mt-5">
+  <button mat-dialog-close class="btn btn-secondary mr-3" style="width: 80px">Hủy</button>
+  <button class="btn btn-danger mr-3" style="width: 80px" (click)="delete()">Xóa</button>
+</div>
