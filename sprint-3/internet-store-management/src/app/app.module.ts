@@ -9,6 +9,7 @@ import {PayManagerModule} from './pay-manager/pay-manager.module';
 import {ServiceRequestManagerModule} from './service-request-manager/service-request-manager.module';
 import {ServicesManagerModule} from './services-manager/services-manager.module';
 import {UserManagerModule} from './user-manager/user-manager.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {UserManagerModule} from './user-manager/user-manager.module';
     PayManagerModule,
     ServiceRequestManagerModule,
     ServicesManagerModule,
-    UserManagerModule
+    UserManagerModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
