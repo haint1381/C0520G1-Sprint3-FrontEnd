@@ -81,7 +81,6 @@ export class HomePageComponent implements OnInit {
           this.isLoggedIn = true;
           this.ngOnInit();
         }, err => {
-          console.log('error');
           this.isLoggedIn = false;
         });
       }
