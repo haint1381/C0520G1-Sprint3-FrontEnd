@@ -1,1 +1,102 @@
-<p>request-service works!</p>
+<div class="col-lg-12 col-md-12 card m-0 p-0">
+  <div class="col-md-12 card-header text-center m-0 p-0"
+       style=" background: #0b222a;color: #ffbb0b;font-weight: bolder;font-size: 20px">
+    Dịch vụ
+  </div>
+  <div class="col-md-12 card-body m-0 p-2" style="border: 1px solid #09151c">
+    <form class="col-md-12 mt-2 text-center m-0 p-0">
+      <div class="col-md-12 m-0 p-0 d-flex text-dark font-weight-bold" style="font-size: 16px">
+        <div class="col-md-3 text-left">
+          <p>Loại dịch vụ</p>
+        </div>
+        <div class="col-md-3 text-center">
+        </div>
+        <div class="col-md-2 text-center">
+          <p>Giá</p>
+        </div>
+        <div class="col-md-2 text-center">
+          <p>Số lượng</p>
+        </div>
+        <div class="col-md-2 text-center">
+          <p>Kho</p>
+        </div>
+      </div>
+      <div class="col-md-12 m-0 p-0 d-flex">
+        <div class="col-md-3 text-left">
+          <p>Đồ uống</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <select class="form-control form-control-sm" #drinkList (change)="eventD(drinkList.value)">
+            <option value="" selected [disabled]="true">Loại nước</option>
+            <option *ngFor="let s of drinks" [value]="s.idService" >{{s.serviceName}}</option>
+          </select>
+        </div>
+        <div class="col-md-2 text-center">
+          <input class="form-control form-control-sm" type="text" [value]="priceDrinks" readonly>
+        </div>
+        <div class="col-md-2 text-center">
+          <input class="form-control form-control-sm" #valueDrink type="number" (change)="totalMoneyDrink(priceDrinks, valueDrink.value)" min="0">
+        </div>
+        <div class="col-md-2 text-center">
+          <input class="form-control form-control-sm" type="text" [value]="quantityDrinks" readonly>
+        </div>
+      </div>
+      <div class="col-md-12 m-0 p-0 d-flex mt-2">
+        <div class="col-md-3 text-left">
+          <p>Thức ăn</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <select class="form-control form-control-sm" #foodList (change)="eventF(foodList.value)">
+            <option selected [disabled]="true">Loại đồ ăn</option>
+            <option *ngFor="let f of food" [value]="f.idService">{{f.serviceName}}</option>
+          </select>
+        </div>
+        <div class="col-md-2 text-center">
+          <input class="form-control form-control-sm" type="text" [value]="priceFood" readonly>
+        </div>
+        <div class="col-md-2 text-center">
+          <input class="form-control form-control-sm"  type="number" #valueFood (change)="totalMoneyFood(priceFood, valueFood.value)" min="0">
+        </div>
+        <div class="col-md-2 text-center">
+          <input class="form-control form-control-sm" type="text" [value]="quantityFood" readonly>
+        </div>
+      </div>
+      <div class="col-md-12 m-0 p-0 d-flex mt-2">
+        <div class="col-md-3 text-left">
+          <p>Card điện thoại</p>
+        </div>
+        <div class="col-md-3 text-center">
+          <select class="form-control form-control-sm" #cardList (change)="eventC(cardList.value)">
+            <option value="" selected [disabled]="true">Mệnh giá</option>
+            <option *ngFor="let c of card" [value]="c.idService">{{c.serviceName}}</option>
+          </select>
+        </div>
+        <div class="col-md-2 text-center">
+          <input class="form-control form-control-sm" type="text" [value]="priceCard" readonly>
+        </div>
+        <div class="col-md-2 text-center">
+          <input class="form-control form-control-sm" type="number" min="0" #valueCard (change)="totalMoneyCard(priceCard, valueCard.value)">
+        </div>
+        <div class="col-md-2 text-center">
+          <input class="form-control form-control-sm" type="text" [value]="quantityCard" readonly>
+        </div>
+      </div>
+      <div class="col-md-12 d-flex text-center">
+        <div class="col-md-6">
+          <label>Tổng số tiền :<input class="form-control form-control-sm" [value]="totalMoney1 +totalMoney2 +totalMoney3" type="text" readonly></label>
+        </div>
+        <div class="col-md-6">
+          <label>Số dư tài khoản :<input class="form-control form-control-sm" type="text" [value]="moneyUser" readonly></label>
+        </div>
+      </div>
+    </form>
+    <div class=" mt-5 mb-2 d-flex justify-content-center">
+      <button class="btn btn-sm btn-danger " style="width: 100px;font-weight: bolder"> Thanh toán</button>
+      <button class="btn btn-sm btn-success ml-5" style="width: 100px;font-weight: bolder" mat-dialog-close> Đóng
+      </button>
+    </div>
+  </div>
+  <div class="col-md-12 card-footer m-0 p-1" style="background: #0b222a">
+
+  </div>
+</div>

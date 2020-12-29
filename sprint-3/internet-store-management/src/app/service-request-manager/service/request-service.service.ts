@@ -18,6 +18,6 @@ export class RequestServiceService {
   }
 
   getMoneyUser(idUser: number): Observable<any> {
-    return this.http.get(this.API_REQUEST + '/userList' + idUser);
+    return this.http.get(this.API_REQUEST + '/userList/' + idUser);
   }
 }
