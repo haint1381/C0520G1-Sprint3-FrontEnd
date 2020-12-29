@@ -8,6 +8,7 @@ import {AuthenticationService} from '../../service/auth/authentication.service';
 import {User} from '../../model/User';
 import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser} from 'angularx-social-login';
 import {TokenDTO} from '../../model/TokenDTO';
+import {RequestServiceComponent} from '../../../service-request-manager/component/request-service/request-service.component';
 
 @Component({
   selector: 'app-home-page',
@@ -61,13 +62,16 @@ export class HomePageComponent implements OnInit {
         }, 2000);
         this.isLoggedIn = false;
       }, () => {
-        this.ngOnInit();
+        this.reloadPage();
       }
     );
   }
+  reloadPage(): void {
+    window.location.reload();
+  }
   logout(): void {
     this.tokenStorageService.signOut();
-    this.ngOnInit();
+    this.reloadPage();
   }
 
   signInWithGoogle(): void {
@@ -79,7 +83,7 @@ export class HomePageComponent implements OnInit {
           this.tokenStorageService.saveToken(next.accessToken);
           this.tokenStorageService.saveUser(next);
           this.isLoggedIn = true;
-          this.ngOnInit();
+          this.reloadPage();
         }, err => {
           this.isLoggedIn = false;
         });
@@ -98,7 +102,7 @@ export class HomePageComponent implements OnInit {
           this.tokenStorageService.saveUser(next);
           //   console.log(next);
           this.isLoggedIn = true;
-          this.ngOnInit();
+          this.reloadPage();
         }, err => {
           console.log('error');
           this.isLoggedIn = false;

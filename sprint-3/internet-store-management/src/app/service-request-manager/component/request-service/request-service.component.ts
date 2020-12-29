@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RequestServiceService} from '../../service/request-service.service';
+import {Service} from '../../model/service.class';
+import {TypeServices} from '../../model/typeServices.class';
 
 @Component({
   selector: 'app-request-service',
@@ -8,20 +10,9 @@ import {RequestServiceService} from '../../service/request-service.service';
 })
 export class RequestServiceComponent implements OnInit {
   public idUser: number;
-  public listService = [];
-  public drinks = [];
-  public food = [];
-  public card = [];
-  public moneyUser;
-  public quantityDrinks = 0;
-  public priceDrinks = 0;
-  public quantityFood = 0;
-  public priceFood = 0;
-  public quantityCard = 0;
-  public priceCard = 0;
-  public totalMoney1 = 0;
-  public totalMoney2 = 0;
-  public totalMoney3 = 0;
+  public listService: Service[] = [];
+  public totalMoney = 0;
+  public moneyUser = 50000;
 
   constructor(
     private request: RequestServiceService,
@@ -29,76 +20,30 @@ export class RequestServiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.idUser = 1;
-    this.request.getMoneyUser(this.idUser).subscribe(data => {
-      this.moneyUser = data.money;
-      console.log(this.moneyUser);
-    });
     this.request.getListService().subscribe(data => {
       this.listService = data;
-      console.log('list');
-      console.log(this.listService);
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.listService.length; i++) {
-        if (this.listService[i].typeServices.idTypeServices === 3) {
-          this.card.push(this.listService[i]);
-        } else if (this.listService[i].typeServices.idTypeServices === 2) {
-          this.food.push(this.listService[i]);
-        } else {
-          this.drinks.push(this.listService[i]);
-        }
-      }
     });
   }
 
-  // tslint:disable-next-line:typedef
-  eventD(value) {
+  totalMoneyAll(idService: number, quanlity: number): void {
     // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.drinks.length; i++) {
-      // tslint:disable-next-line:triple-equals
-      if (this.drinks[i].idService == value) {
-        this.quantityDrinks = this.drinks[i].quantity;
-        this.priceDrinks = this.drinks[i].price;
+    for (let i = 0; i < this.listService.length; i++) {
+      if (idService === this.listService[i].idService){
+        this.listService[i].quantityPurchased = quanlity;
       }
     }
-  }
-
-  // tslint:disable-next-line:typedef
-  eventF(value) {
+    this.totalMoney = 0;
     // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.food.length; i++) {
-      // tslint:disable-next-line:triple-equals
-      if (this.food[i].idService == value) {
-        this.quantityFood = this.food[i].quantity;
-        this.priceFood = this.food[i].price;
+    for (let i = 0; i < this.listService.length; i++) {
+      if (this.listService[i].quantityPurchased === undefined){
+        this.listService[i].quantityPurchased = 0;
       }
+      this.totalMoney += (this.listService[i].quantityPurchased * this.listService[i].price);
     }
   }
-
-  // tslint:disable-next-line:typedef
-  eventC(value) {
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.card.length; i++) {
-      // tslint:disable-next-line:triple-equals
-      if (this.card[i].idService == value) {
-        this.quantityCard = this.card[i].quantity;
-        this.priceCard = this.card[i].price;
-      }
-    }
+  number(value: string): number {
+    return Number(value);
   }
 
-  totalMoneyDrink(price: number, value: number): void {
-    console.log(price + 'sdv' + value);
-    this.totalMoney1 = price * value;
-  }
 
-  totalMoneyFood(price: number, value: number): void {
-    console.log(price + 'sdv' + value);
-    this.totalMoney2 = price * value;
-  }
-
-  totalMoneyCard(price: number, value: number): void {
-    console.log(price + 'sdv' + value);
-    this.totalMoney3 = price * value;
-  }
 }

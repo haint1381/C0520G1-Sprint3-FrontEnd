@@ -12,15 +12,12 @@
         <a class="nav-link text-white font-text mt-2">VÉ TRỌN GÓI</a>
       </li>
       <li class="nav-item text-center" style="width: 125px">
-        <a class="nav-link text-white font-text mt-2">DỊCH VỤ</a>
+        <a class="nav-link text-white font-text mt-2" (click)="openBoxRequest()">DỊCH VỤ</a>
       </li>
       <li class="nav-item text-center" style="width: 125px">
         <a class="nav-link text-white font-text mt-2">TIN TỨC</a>
       </li>
-      <li class="nav-item text-center" style="width: 125px">
-        <a class="nav-link text-white font-text mt-2">TỆP</a>
-      </li>
-      <li class="nav-item text-center" style="width: 125px">
+      <li *ngIf="role === 'ROLE_ADMIN'" class="nav-item text-center" style="width: 125px">
         <a class="nav-link text-white font-text mt-2">QUẢN LÝ</a>
       </li>
     </ul>
