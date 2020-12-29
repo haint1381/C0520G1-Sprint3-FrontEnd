@@ -1,12 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {PageDefaultComponent} from './page-common/page-default/page-default.component';
-import {LoginComponent} from './page-common/login/login.component';
-
+import {AuthGuard} from './page-common/helper/auth.guard';
 const routes: Routes = [
-  {
-    path: '**', component: PageDefaultComponent
-  }
 ];
 
 @NgModule({

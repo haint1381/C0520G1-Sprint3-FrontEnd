@@ -1,0 +1,219 @@
+<div class="container-fluid my-5">
+  <div class="row">
+    <div class="mx-3"></div>
+    <div class="col-md-4 col-xs-12 background-color">
+      <h2 class="d-flex justify-content-center" style="color: white">Thuê máy</h2>
+      <div class="container register">
+        <div class="row">
+          <div class="col-md-12 register-right">
+            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link " id="home-tab" data-toggle="tab" href="#home"
+                   aria-selected="true" style="color: white; background: #1b1e21">Theo giờ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " id="profile-tab" data-toggle="tab" href="#profile"
+                   aria-selected="false" style="color: white; background: #1b1e21">Theo ngày</a>
+              </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="container">
+                  <div class="row mt-4">
+                    <h3 class="col-md-6">8h</h3>
+                    <button class="col-md-6 btn btn-outline-warning text-white">Mua-15USD</button>
+                  </div>
+                  <div class="row mt-5">
+                    <h3 class="col-md-6">10h</h3>
+                    <button class="col-md-6 btn btn-outline-warning text-white">Mua-25USD</button>
+                  </div>
+                  <div class="row mt-5">
+                    <h3 class="col-md-6">24h</h3>
+                    <button class="col-md-6 btn btn-outline-warning text-white">Mua-100USD</button>
+                  </div>
+                  <div class="row mt-5">
+                    <h3 class="col-md-6">36h</h3>
+                    <button class="col-md-6 btn btn-outline-warning text-white">Mua-120USD</button>
+                  </div>
+                  <div class="row mt-5">
+                    <h3 class="col-md-6">48h</h3>
+                    <button class="col-md-6 btn btn-outline-warning text-white">Mua-150USD</button>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="container">
+                  <div class="row mt-4">
+                    <h3 class="col-md-6">1 Ngày</h3>
+                    <button class="col-md-6 btn btn-outline-warning text-white">Mua-100USD</button>
+                  </div>
+                  <div class="row mt-5">
+                    <h3 class="col-md-6">2 Ngày</h3>
+                    <button class="col-md-6 btn btn-outline-warning text-white">Mua-150USD</button>
+                  </div>
+                  <div class="row mt-5">
+                    <h3 class="col-md-6">3 Ngày</h3>
+                    <button class="col-md-6 btn btn-outline-warning text-white">Mua-190USD</button>
+                  </div>
+                  <div class="row mt-5">
+                    <h3 class="col-md-6">4 ngày</h3>
+                    <button class="col-md-6 btn btn-outline-warning text-white">Mua-230USD</button>
+                  </div>
+                  <div class="row mt-5">
+                    <h3 class="col-md-6">5 ngày</h3>
+                    <button class="col-md-6 btn btn-outline-warning text-white">Mua-250USD</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mx-3"></div>
+    <div class="col-md-4 col-xs-12 background-color">
+      <div id="demo" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active mt-2 text-center">
+            <img src="../../../../assets/image-page/imageb.jpg" height="90%" width="90%"/>
+            <div class="">
+              <h3>Giảm giá.</h3>
+              <p>Duy nhất hôm nay!</p>
+            </div>
+          </div>
+          <div class="carousel-item mt-2 text-center">
+            <img src="../../../../assets/image-page/imagea.jpg" height="90%" width="90%"/>
+            <!--                        <img src="imageb.jpg" height="90%" width="90%"/>-->
+            <div class="">
+              <h3>Giảm giá.</h3>
+              <p>Duy nhất hôm nay!</p>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-next justify-content-end" href="#demo" data-slide="next">
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+    </div>
+
+
+    <div *ngIf="isLoggedIn == false; else block" class="col-md-3  col-xs-12 container-fluid background-color">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
+        <div class="row d-flex offset-2 mt-2">
+          <img src="../../../../assets/image-page/d.png" height="30%" width="30%"/>
+          <h3 class="mt-5">Đăng nhập</h3>
+        </div>
+        <div class="input-group mt-2">
+          <div class="input-group-prepend">
+                <span class="input-group-text" id="username-addon">&nbsp;<i class="fas fa-user"
+                                                                            style="color: #5f5f5f"></i>&nbsp;</span>
+          </div>
+          <input  type="text" class="form-control" formControlName="username" placeholder="User name" style="height: 45px; color: black">
+        </div>
+        <div  style="color: brown"  *ngIf="loginForm.get('username').invalid && loginForm.get('username').touched; else blockUsername">Vui lòng nhập tên tài khoản!</div>
+        <ng-template #blockUsername>
+          <br>
+        </ng-template>
+        <div class="input-group mt-1">
+          <div class="input-group-prepend">
+            <span class="input-group-text">&nbsp;<i class="fas fa-lock" style="color: #5f5f5f"></i>&nbsp;</span>
+          </div>
+          <input id="password" type="password" class="form-control"  formControlName="password"  placeholder="Password"
+                 style="height: 45px; color: black">
+        </div>
+        <div  style="color: brown"  *ngIf="loginForm.get('password').invalid && loginForm.get('password').touched; else blockPassword">Vui lòng nhập mật khẩu!</div>
+        <ng-template #blockPassword>
+          <br>
+        </ng-template>
+        <div *ngIf="errorMessage == ''; else blockMessage"></div>
+        <ng-template #blockMessage>
+          <div class="alert" style="background-color: brown" role="alert">{{errorMessage}}</div>
+        </ng-template>
+        <div class="input-group mt-2">
+          <button type="submit" class="form-control rounded btn btn-danger" [disabled]="loginForm.invalid" [ngClass]="{'btn-primary':loginForm.valid}">Đăng nhập</button>
+        </div>
+      </form>
+        <a href="#" class="d-flex justify-content-end" style="color: blue">Tạo tài khoản mới ?</a>
+        <div class="row mt-3">
+          <div class="col-md-3">
+            <hr>
+          </div>
+          <div class="col-md-6">Hoặc đăng nhập qua</div>
+          <div class="col-md-3">
+            <hr>
+          </div>
+        </div>
+        <div class=" justify-content-center row mt-3">
+          <button class="btn btn-secondary btn-outline-light col-md-5" (click)="signInWithFB()"><i class="fab fa-facebook-f" style="color: #574bff"  ></i>&nbsp;Facebook
+          </button>
+          <div class="mx-2"></div>
+          <button class="btn btn-secondary btn-outline-light  col-md-5" (click)="signInWithGoogle()"><i class="fab fa-google" style="color: red" ></i>&nbsp;Google
+          </button>
+        </div>
+
+    </div>
+    <ng-template #block>
+      <div class="col-md-3 col-xs-12 container-fluid background-color">
+        <h4 class="text-center">Thông tin tài khoản</h4>
+          <div class="row mt-3">
+              <div class=" col-md-8 mt-1">
+                  <p class="font-weight-bold">{{user.username}}</p>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-secondary btn-sm" style="height: 30px" (click)="logout()">Đăng xuất</button>
+              </div>
+          </div>
+          <hr>
+          <div class="container-fluid row">
+              <div class="col-md-6">
+                  <div class="row">Ngừng sau-hh:mm.</div>
+                  <div class="row">
+                      <h4>100:20</h4>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="row">Giá cước.</div>
+                  <div class="row">
+                      <h4>2USD/h</h4>
+                  </div>
+              </div>
+          </div>
+          <hr>
+          <div class="container-fluid row">
+              <div class="col-md-6">
+                  <div class="row">Số dư * -></div>
+                  <div class="row">
+                      <h4>1000.00</h4>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="row">Phí dịch vụ(USD).</div>
+                  <div class="row">
+                      <h4>10</h4>
+                  </div>
+              </div>
+          </div>
+          <button class="container-fluid col-11 ml-1 mt-2 btn btn-danger vw-100">Nạp vào tài khoản</button>
+          <hr>
+          <div class="container-fluid ">
+              <div class="col-12">
+                  <div class="row">Các mục ưa thích.</div>
+                  <div class="row mt-2">
+                      <img src="../../../../assets/image-page/imagee.png" height="40" width="48"/>
+                      <div class="mx-1"></div>
+                      <img src="../../../../assets/image-page/imagef.jpg" height="40" width="48"/>
+                  </div>
+              </div>
+          </div>
+          <hr>
+          <div class="  row">
+              <div class="col-md-6">Đơn hàng cuối.</div>
+              <div class="col-md-1"></div>
+              <div class="col-md-5">Trạng thái -></div>
+          </div>
+      </div>
+    </ng-template>
+  </div>
+  <br>
+</div>
+
