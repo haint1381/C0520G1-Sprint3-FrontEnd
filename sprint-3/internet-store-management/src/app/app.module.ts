@@ -18,7 +18,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     ComputerManagerModule,
     AppRoutingModule,
     PageCommonModule,
@@ -28,6 +27,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     UserManagerModule,
     HttpClientModule,
     MatDialogModule,
+    BrowserAnimationsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
