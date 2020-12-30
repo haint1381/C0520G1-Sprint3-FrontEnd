@@ -24,7 +24,7 @@ export class UserService {
 
   create(user): Observable<any> {
     console.log('service' + user);
-    return this.http.post(this.API + '/create', user);
+    return this.http.post(this.API + '/create/', user);
   }
 
   edit(user, idUser): Observable<any> {
@@ -34,4 +34,5 @@ export class UserService {
   delete(userId): Observable<any> {
     return this.http.delete(this.API + '/delete/' + userId);
   }
+
 }
