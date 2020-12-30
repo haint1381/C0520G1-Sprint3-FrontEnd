@@ -16,9 +16,12 @@ export class HeaderComponent implements OnInit {
               private router: Router) {
   }
   ngOnInit(): void {
-    console.log('kakakakka');
-    this.role = this.tokenStorageService.getUser().role[0];
-    console.log(this.role[0]);
+    console.log(this.tokenStorageService.getUser());
+    if (this.tokenStorageService.getUser() === null){
+      this.role = '';
+    }else {
+      this.role = this.tokenStorageService.getUser().role[0];
+    }
   }
   //  a hiên
   openBoxRequest(): void {
