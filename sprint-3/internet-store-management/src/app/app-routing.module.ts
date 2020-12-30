@@ -4,9 +4,7 @@ import {PageDefaultComponent} from './page-common/page-default/page-default.comp
 import {LoginComponent} from './page-common/login/login.component';
 
 const routes: Routes = [
-  {
-    path: '**', component: PageDefaultComponent
-  }
+  { path: '**', redirectTo: ''}
 ];
 
 @NgModule({
