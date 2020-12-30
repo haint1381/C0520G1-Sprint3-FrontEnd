@@ -5,7 +5,7 @@ import {LoginComponent} from './page-common/login/login.component';
 
 const routes: Routes = [
   {
-    path: '**', component: PageDefaultComponent
+    path: '', component: PageDefaultComponent
   }
 ];
 
