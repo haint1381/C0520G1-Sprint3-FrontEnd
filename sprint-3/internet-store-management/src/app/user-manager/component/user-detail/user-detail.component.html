@@ -1,1 +1,38 @@
-<p>user-detail works!</p>
+<div class="container-fluid">
+  <h3 class="row d-flex justify-content-center">Thông tin thành viên </h3>
+  <hr>
+  <div class="row">
+  <div class="col-8 row">
+    <div class="col-3">
+      <p>username: </p>
+      <p>email: </p>
+      <p>fullName: </p>
+      <p>password: </p>
+      <p>birthday: </p>
+    </div>
+    <div class="col-9">
+      <p>{{username}}</p>
+      <p>{{email}}</p>
+      <p>{{fullName}}</p>
+      <p>{{password}}</p>
+      <p>{{birthday|date: 'dd/LL/yyyy'}}</p>
+    </div>
+    <div class="offset-md-4">
+      <button class="btn btn-secondary" [mat-dialog-close]="" >Đóng</button>
+    </div>
+
+  </div>
+  <div class="col-4">
+    <div class="row">
+      <input type="image"
+             src="https://i.pinimg.com/originals/c6/99/e9/c699e91b336aaf4d57bcd6e912511cbb.jpg"
+             style="width: 80%" data-toggle1="tooltip"
+             data-placement="top" title="Chọn ảnh"/>
+      <input type="file" id="my_file" style="display: none;"/>
+    </div>
+    <div class="offset-md-2">
+      <button class="btn btn-sm btn-success mt-3">Cập nhật</button>
+    </div>
+  </div>
+  </div>
+</div>
