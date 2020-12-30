@@ -11,4 +11,12 @@ export class ComputerService {
   getAllComputer(): Observable<any> {
     return this.http.get(this.API + '/list');
   }
+  addNewComputer(computer): Observable<any> {
+    return this.http.post(this.API + '/create', computer);
+  }
+  editComputer(idComputer, computer): Observable<any> {
+    console.log('service');
+    console.log(computer);
+    return this.http.put(this.API + '/edit/' + idComputer, computer);
+  }
 }
