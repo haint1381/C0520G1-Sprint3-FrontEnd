@@ -21,9 +21,9 @@
           </li>
         </ul>
         <form [formGroup]="formBill">
-          <div class="tab-content" id="myTabContent">
+          <div class="tab-content" id="myTabContent" formGroupName="listAllService">
             <div class="tab-pane fade show active" id="drink" role="tabpanel" aria-labelledby="drink-tab">
-              <div class="container">
+              <div class="container" formArrayName="listServiceRecordsDrink">
                 <table class="table table-borderless">
                   <thead>
                   <tr class="text-center">
@@ -32,22 +32,25 @@
                     <th class="text-primary" scope="col">Số lượng</th>
                     <th class="text-primary" scope="col">Kho</th>
                   </tr>
-                  <tr *ngFor="let element of listService">
-                    <ng-template [ngIf]="element.typeServices.idTypeServices == 1">
-                      <td><input class="form-control form-control-sm" [value]="element.serviceName" readonly></td>
-                      <td><input class="form-control form-control-sm" [value]="element.price" readonly></td>
-                      <td><input class="form-control form-control-sm" #valueDrink
-                                 type="number" (change)="totalMoneyAll(element.idService,number(valueDrink.value))"
+                  <tr *ngFor="let element of listServiceRecordsDrink.controls,let i=index">
+                    <ng-container [formGroupName]="i">
+                      <td>
+                        <input class="form-control form-control-sm" #idDrinks formControlName="idService" type="hidden">
+                        <input class="form-control form-control-sm" formControlName="serviceName" readonly>
+                      </td>
+                      <td><input class="form-control form-control-sm" formControlName="price" readonly></td>
+                      <td><input class="form-control form-control-sm" #valueDrink formControlName="quantityPurchased"
+                                 type="number" (change)="totalMoneyAll(number(idDrinks.value),number(valueDrink.value))"
                                  min="0"></td>
-                      <td><input class="form-control form-control-sm" [value]="element.quantity" readonly></td>
-                    </ng-template>
+                      <td><input class="form-control form-control-sm" readonly formControlName="quantity"></td>
+                    </ng-container>
                   </tr>
                   </thead>
                 </table>
               </div>
             </div>
             <div class="tab-pane fade show" id="food" role="tabpanel" aria-labelledby="food-tab">
-              <div class="container">
+              <div class="container" formArrayName="listServiceRecordsFood">
                 <table class="table table-borderless">
                   <thead>
                   <tr class="text-center">
@@ -56,22 +59,25 @@
                     <th class="text-primary" scope="col">Số lượng</th>
                     <th class="text-primary" scope="col">Kho</th>
                   </tr>
-                  <tr *ngFor="let element of listService">
-                    <ng-template [ngIf]="element.typeServices.idTypeServices == 2">
-                      <td><input class="form-control form-control-sm" [value]="element.serviceName" readonly></td>
-                      <td><input class="form-control form-control-sm" [value]="element.price" readonly></td>
-                      <td><input class="form-control form-control-sm"  #valueFood
-                                 type="number" (change)="totalMoneyAll(element.idService,number(valueFood.value))"
+                  <tr *ngFor="let element of listServiceRecordsFood.controls,let i=index">
+                    <ng-container [formGroupName]="i">
+                      <td>
+                        <input class="form-control form-control-sm" #idFood formControlName="idService" type="hidden">
+                        <input class="form-control form-control-sm" formControlName="serviceName" readonly>
+                      </td>
+                      <td><input class="form-control form-control-sm" formControlName="price" readonly></td>
+                      <td><input class="form-control form-control-sm" #valueFood formControlName="quantityPurchased"
+                                 type="number" (change)="totalMoneyAll(number(idFood.value),number(valueFood.value))"
                                  min="0"></td>
-                      <td><input class="form-control form-control-sm" [value]="element.quantity" readonly></td>
-                    </ng-template>
+                      <td><input class="form-control form-control-sm" readonly formControlName="quantity"></td>
+                    </ng-container>
                   </tr>
                   </thead>
                 </table>
               </div>
             </div>
             <div class="tab-pane fade show" id="card" role="tabpanel" aria-labelledby="card-tab">
-              <div class="container">
+              <div class="container" formArrayName="listServiceRecordsCard">
                 <table class="table table-borderless">
                   <thead>
                   <tr class="text-center">
@@ -80,15 +86,18 @@
                     <th class="text-primary" scope="col">Số lượng</th>
                     <th class="text-primary" scope="col">Kho</th>
                   </tr>
-                  <tr *ngFor="let element of listService,let i=index">
-                    <ng-template [ngIf]="element.typeServices.idTypeServices == 3">
-                      <td><input class="form-control form-control-sm" [value]="element.serviceName" readonly></td>
-                      <td><input class="form-control form-control-sm" [value]="element.price" readonly></td>
-                      <td><input class="form-control form-control-sm"  #valueCard
-                                 type="number" (change)="totalMoneyAll(element.idService,number(valueCard.value))"
+                  <tr *ngFor="let element of listServiceRecordsCard.controls,let i=index">
+                    <ng-container [formGroupName]="i">
+                      <td>
+                        <input class="form-control form-control-sm" #idCard formControlName="idService" type="hidden">
+                        <input class="form-control form-control-sm" formControlName="serviceName" readonly>
+                      </td>
+                      <td><input class="form-control form-control-sm" formControlName="price" readonly></td>
+                      <td><input class="form-control form-control-sm" #valueCard formControlName="quantityPurchased"
+                                 type="number" (change)="totalMoneyAll(number(idCard.value),number(valueCard.value))"
                                  min="0"></td>
-                      <td><input class="form-control form-control-sm" [value]="element.quantity" readonly></td>
-                    </ng-template>
+                      <td><input class="form-control form-control-sm" readonly formControlName="quantity"></td>
+                    </ng-container>
                   </tr>
                   </thead>
                 </table>
@@ -104,13 +113,26 @@
                                               readonly></label>
               </div>
             </div>
-            <div class="mt-5 mb-2 d-flex justify-content-center">
-              <button class="btn btn-sm btn-secondary text-light " style="width: 100px" mat-dialog-close=""> Đóng
-              </button>
-              <button class="btn btn-sm btn-danger ml-5 text-light" style="width: 100px" role="button"
-                      (click)="sendData()"> Gửi yêu cầu
-              </button>
+            <div>
+              <label>Hình thức thanh toán
+                <select (change)="event($event)" >
+                  <option value="1">Tiền mặt</option>
+                  <option value="2">Trừ vào tài khoản</option>
+                </select></label>
             </div>
+            <button *ngIf="check1 == true" class="btn-outline-warning btn" (click)="payMent()">Thanh toán</button>
+          </div>
+          <div>
+            <p class="text-primary" *ngIf="check2 == true" > Thanh toán thành công</p>
+          </div>
+          <input type="hidden" formControlName="idUser">
+          <input type="hidden" formControlName="status" value="tr">
+          <div class="mt-5 mb-2 d-flex justify-content-center">
+            <button class="btn btn-sm btn-secondary text-light " style="width: 100px" mat-dialog-close=""> Đóng
+            </button>
+            <button class="btn btn-sm btn-danger ml-5 text-light" style="width: 100px" role="button"
+                    (click)="sendData()"> Gửi yêu cầu
+            </button>
           </div>
         </form>
       </div>
