@@ -17,6 +17,7 @@ export class UserDetailComponent implements OnInit {
   public password;
   public birthday;
   public image;
+  public gender;
 
   constructor(
     private dialogRef: MatDialogRef<UserDetailComponent>,
@@ -37,6 +38,11 @@ export class UserDetailComponent implements OnInit {
     this.birthday = this.data.data1.birthday;
     this.image = this.data.data1.image;
     this.password = this.data.data1.password;
+    if (this.data.data1.gender){
+      this.gender = 'Nam';
+    }else {
+      this.gender = 'Nữ';
+    }
   }
 
 }

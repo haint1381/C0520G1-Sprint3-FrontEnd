@@ -3,29 +3,29 @@
   <hr>
   <div class="row">
   <div class="col-8 row">
-    <div class="col-3">
-      <p>username: </p>
-      <p>email: </p>
-      <p>fullName: </p>
-      <p>password: </p>
-      <p>birthday: </p>
+    <div class="col-5">
+      <p>Tên đăng nhập: </p>
+      <p>Email: </p>
+      <p>Họ và tên: </p>
+      <p>Ngày sinh: </p>
+      <p>Giới tính: </p>
     </div>
-    <div class="col-9">
+    <div class="col-7">
       <p>{{username}}</p>
       <p>{{email}}</p>
       <p>{{fullName}}</p>
-      <p>{{password}}</p>
       <p>{{birthday|date: 'dd/LL/yyyy'}}</p>
+      <p>{{gender}}</p>
     </div>
-    <div class="offset-md-4">
-      <button class="btn btn-secondary" [mat-dialog-close]="" >Đóng</button>
+    <div class="offset-md-3">
+      <button class="btn btn-secondary mt-3 btn btn-sm" [mat-dialog-close]="" >Đóng</button>
     </div>
 
   </div>
   <div class="col-4">
     <div class="row">
       <input type="image"
-             src="https://i.pinimg.com/originals/c6/99/e9/c699e91b336aaf4d57bcd6e912511cbb.jpg"
+             src="{{image}}"
              style="width: 80%" data-toggle1="tooltip"
              data-placement="top" title="Chọn ảnh"/>
       <input type="file" id="my_file" style="display: none;"/>
