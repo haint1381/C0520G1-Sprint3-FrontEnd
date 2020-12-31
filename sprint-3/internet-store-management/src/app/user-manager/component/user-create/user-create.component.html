@@ -6,12 +6,12 @@
     <div class="form-group row ">
       <label class="col-sm-3 col-form-label">Tên đăng nhập <sup class="text-danger">*</sup> </label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" formControlName="username" required>
+        <input type="text" class="form-control form-control-sm" formControlName="username" required>
       </div>
       <label class="ml-2 text-success"
              *ngIf="formCreate.get('username').valid">
         <i style="font-size: 15px" class="fas fa-check"></i></label>
-      <div class="text-danger font-italic" role="alert" style="margin-left: 25%"
+      <div class="text-danger font-italic" role="alert" style="margin-left: 27%"
            *ngIf="formCreate.get('username').invalid && formCreate.get('username').touched">
         <span *ngIf="formCreate.get('username').hasError('required')"
               style="font-size: 12px">Vui lòng nhập tên đăng nhập.</span>
@@ -27,28 +27,77 @@
     <div class="form-group row">
       <label class="col-sm-3 col-form-label">Email <sup class="text-danger">*</sup> </label>
       <div class="col-sm-8">
-        <input type="text" min="1" class="form-control" formControlName="email">
+        <input type="text" min="1" class="form-control form-control-sm" formControlName="email">
+      </div>
+
+      <label class="ml-2 text-success"
+             *ngIf="formCreate.get('email').valid">
+        <i style="font-size: 15px" class="fas fa-check"></i></label>
+      <div class="text-danger font-italic" role="alert" style="margin-left: 27%;font-size: 12px" *ngIf="formCreate.get('email').invalid &&
+      formCreate.get('email').touched">
+           <span *ngIf="formCreate.get('email').hasError('required')"
+                 style="font-size: 12px">Vui lòng nhập email.</span>
+        <span
+          *ngIf="formCreate.get('email').hasError('pattern')"
+          style="font-size: 12px">email không hợp lệ.</span>
       </div>
     </div>
 
     <div class="form-group row ">
       <label class="col-sm-3 col-form-label">Họ và tên <sup class="text-danger">*</sup> </label>
       <div class="col-sm-8">
-        <input type="text" min="1" class="form-control" formControlName="fullName" required>
+        <input type="text" min="1" class="form-control form-control-sm" formControlName="fullName" required>
       </div>
+      <label class="ml-2 text-success"
+             *ngIf="formCreate.get('fullName').valid">
+        <i style="font-size: 15px" class="fas fa-check"></i></label>
+      <div class="text-danger font-italic" role="alert" style="margin-left: 27%;font-size: 12px" *ngIf="formCreate.get('fullName').invalid &&
+      formCreate.get('fullName').touched">
+           <span *ngIf="formCreate.get('fullName').hasError('required')"
+                 style="font-size: 12px">Vui lòng nhập tên.</span>
+        <span
+          *ngIf="formCreate.get('fullName').hasError('pattern')"
+          style="font-size: 12px">Tên không hợp lệ.</span>
+      </div>
+
     </div>
 
     <div class="form-group row ">
       <label class="col-sm-3 col-form-label">Mật khẩu <sup class="text-danger">*</sup> </label>
       <div class="col-sm-8">
-        <input type="text" min="1" class="form-control" formControlName="password" required>
+        <input type="password" class="form-control form-control-sm" formControlName="password" required>
+      </div>
+      <label class="ml-2 text-success"
+             *ngIf="formCreate.get('password').valid">
+        <i style="font-size: 15px" class="fas fa-check"></i></label>
+      <div class="text-danger font-italic" role="alert" style="margin-left: 27%;font-size: 12px" *ngIf="formCreate.get('password').invalid &&
+      formCreate.get('password').touched">
+
+           <span *ngIf="formCreate.get('password').hasError('required')"
+                 style="font-size: 12px">Vui lòng nhập mật khẩu.</span>
+
+        <span
+          *ngIf="formCreate.get('password').hasError('pattern')"
+          style="font-size: 12px">Mật khẩu không hợp lệ.</span>
       </div>
     </div>
 
     <div class="form-group row ">
       <label class="col-sm-3 col-form-label">Nhập lại mật khẩu <sup class="text-danger">*</sup> </label>
       <div class="col-sm-8">
-        <input type="text" class="form-control" formControlName="confirmPassword" required>
+        <input type="password" class="form-control form-control-sm" formControlName="confirmPassword" required>
+      </div>
+      <label class="ml-2 text-success"
+             *ngIf="formCreate.get('confirmPassword').valid && !formCreate.hasError('passwordNotMatch')">
+        <i style="font-size: 15px" class="fas fa-check"></i></label>
+      <div class="text-danger font-italic" role="alert" style="margin-left: 27%;font-size: 12px"
+           *ngIf="formCreate.get('confirmPassword').touched && formCreate.get('confirmPassword').invalid">
+        <span *ngIf="formCreate.get('confirmPassword').hasError('required')"
+              style="font-size: 12px">Vui lòng xác nhận lại mật khẩu.</span>
+      </div>
+      <div class="text-danger font-italic" role="alert" *ngIf="formCreate.hasError('passwordNotMatch')"
+           style="font-size: 12px;margin-left: 27%">
+        Mật khẩu không chính xác.
       </div>
     </div>
 
@@ -56,11 +105,14 @@
       <label class="col-sm-3 col-form-label">Ngày sinh <sup class="text-danger">*</sup> </label>
       <div class="col-sm-8">
         <mat-form-field>
-          <input class="form-control" formControlName="birthday" matInput [matDatepicker]="myDatepicker"
+          <input class="form-control form-control-sm" formControlName="birthday" matInput [matDatepicker]="myDatepicker"
                  placeholder="nhập vào ngày sinh">
           <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
           <mat-datepicker #myDatepicker></mat-datepicker>
         </mat-form-field>
+        <label class="ml-2 text-success"
+               *ngIf="formCreate.get('birthday').valid">
+          <i style="font-size: 15px; margin-left: 27%" class="fas fa-check"></i></label>
       </div>
       <!--        <p *ngIf="formCreate.controls.birthday.errors?.required && formCreate.controls.birthday.touched"-->
       <!--           class="text-danger">Vui lòng nhập ngày sinh</p>-->
@@ -71,7 +123,7 @@
       <div class="col-lg-9 col-md-9 d-flex justify-content-start">
         <div class="radio 4">
           <input id="radio-1" name="radio" type="radio"
-                 (click)="valueGenderClick(true)">
+                 (click)="valueGenderClick(true)" [checked]="true">
           <label for="radio-1" class="radio-label ml-1">Nam</label>
         </div>
         <div class="radio ml-4 ">
@@ -81,11 +133,11 @@
         </div>
       </div>
     </div>
-
     <div class="row d-flex justify-content-center ml-4">
       <div>
-        <button class="btn btn-secondary" [mat-dialog-close]="">Hủy</button>
-        <button type="submit" class="btn btn-success mx-4" (click)="create()" [disabled]="formCreate.invalid">Thêm
+        <button class="btn btn-secondary btn btn-sm" [mat-dialog-close]="">Hủy</button>
+        <button type="submit" class="btn btn-success btn btn-sm mx-4" (click)="create()"
+        >Thêm
           mới
         </button>
       </div>

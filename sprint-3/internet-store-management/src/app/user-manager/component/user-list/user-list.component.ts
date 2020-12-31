@@ -62,8 +62,8 @@ export class UserListComponent implements OnInit {
 
   openDialogCreate(): void {
     const dialogRef = this.dialog.open(UserCreateComponent, {
-      width: '700px',
-      // maxHeight: '80vh',
+      width: '750px',
+      maxHeight: '100vh',
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -75,8 +75,8 @@ export class UserListComponent implements OnInit {
     this.userService.getByID(id).subscribe(dataUser => {
       const dialogRef = this.dialog.open(UserEditComponent, {
         panelClass: 'app-full-bleed-dialog',
-        width: '650px',
-        // maxHeight: '80vh',
+        width: '750px',
+        maxHeight: '100vh',
         data: {dataC: dataUser.idUser, dataD: dataUser.gender},
         disableClose: true
       });
