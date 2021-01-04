@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {UserCreateComponent} from '../user-create/user-create.component';
 import {UserEditComponent} from '../user-edit/user-edit.component';
 import {UserDetailComponent} from '../user-detail/user-detail.component';
+import {ChangePasswordComponent} from '../change-password/change-password.component';
 
 @Component({
   selector: 'app-user-list',
@@ -48,7 +49,7 @@ export class UserListComponent implements OnInit {
     this.userService.getByID(id).subscribe(dataUser => {
       const dialogRef = this.dialog.open(UserDeleteComponent, {
         height: '300px',
-        width: '450px',
+        maxHeight: '250px',
         data: {data1: dataUser},
         disableClose: true
       });
@@ -62,8 +63,8 @@ export class UserListComponent implements OnInit {
 
   openDialogCreate(): void {
     const dialogRef = this.dialog.open(UserCreateComponent, {
-      width: '750px',
-      maxHeight: '100vh',
+      width: '600px',
+      maxHeight: '90vh',
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -75,8 +76,8 @@ export class UserListComponent implements OnInit {
     this.userService.getByID(id).subscribe(dataUser => {
       const dialogRef = this.dialog.open(UserEditComponent, {
         panelClass: 'app-full-bleed-dialog',
-        width: '750px',
-        maxHeight: '100vh',
+        width: '600px',
+        maxHeight: '90vh',
         data: {dataC: dataUser.idUser, dataD: dataUser.gender},
         disableClose: true
       });
@@ -92,7 +93,7 @@ export class UserListComponent implements OnInit {
     this.userService.getByID(id).subscribe(dataUser => {
       const dialogRef = this.dialog.open(UserDetailComponent, {
         width: '650px',
-        maxHeight: '400px',
+        maxHeight: '500px',
         data: {data1: dataUser},
         disableClose: true
       });
@@ -110,4 +111,27 @@ export class UserListComponent implements OnInit {
     this.deleteMSG = this.route.snapshot.queryParamMap.get('delete_msg');
   }
 
+  search(): void {
+    this.p = 0;
+    this.userService.searchUsers(this.valueSearch.trim()).subscribe(dataSearch => {
+      this.userList = dataSearch;
+      console.log(this.valueSearch);
+    });
+  }
+
+  openDialogChangePass(id): void {
+    this.userService.getByID(id).subscribe(dataUser => {
+      const dialogRef = this.dialog.open(ChangePasswordComponent, {
+        width: '450px',
+        maxHeight: '400px',
+        data: {dataC: dataUser.idUser},
+        disableClose: true
+      });
+      console.log('data:' + dataUser.idUser);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.ngOnInit();
+      });
+    });
+  }
 }

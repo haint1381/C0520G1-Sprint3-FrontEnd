@@ -11,6 +11,8 @@ import {UserManagerModule} from './user-manager/user-manager.module';
 import {HttpClientModule} from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HttpClientModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [],
   bootstrap: [AppComponent]

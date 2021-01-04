@@ -4,13 +4,15 @@
   <div class="row">
   <div class="col-8 row">
     <div class="col-5">
-      <p>Tên đăng nhập: </p>
-      <p>Email: </p>
-      <p>Họ và tên: </p>
-      <p>Ngày sinh: </p>
-      <p>Giới tính: </p>
+      <p class="font-weight-bold">Mã TV: </p>
+      <p class="font-weight-bold">Tên đăng nhập: </p>
+      <p class="font-weight-bold">Email: </p>
+      <p class="font-weight-bold">Họ và tên: </p>
+      <p class="font-weight-bold">Ngày sinh: </p>
+      <p class="font-weight-bold">Giới tính: </p>
     </div>
-    <div class="col-7">
+    <div class="col-6">
+      <p>TV{{userOfId}}</p>
       <p>{{username}}</p>
       <p>{{email}}</p>
       <p>{{fullName}}</p>
@@ -18,21 +20,24 @@
       <p>{{gender}}</p>
     </div>
     <div class="offset-md-3">
-      <button class="btn btn-secondary mt-3 btn btn-sm" [mat-dialog-close]="" >Đóng</button>
+      <button class="btn btn-secondary btn btn-sm" [mat-dialog-close]="" >Đóng</button>
     </div>
-
   </div>
   <div class="col-4">
     <div class="row">
-      <input type="image"
-             src="{{image}}"
-             style="width: 80%" data-toggle1="tooltip"
-             data-placement="top" title="Chọn ảnh"/>
-      <input type="file" id="my_file" style="display: none;"/>
-    </div>
-    <div class="offset-md-2">
-      <button class="btn btn-sm btn-success mt-3">Cập nhật</button>
+      <div class="text-center">
+        <img [src]="url"
+             alt="Xin vui lòng chọn ảnh!!!" style="color: darkred; font-size: 20px;
+       width: 290px; height: 240px" class="img-thumbnail" (click)="fileUploader.click()">
+        <div class="col-6 mt-3">
+          <input type="file" accept="image/*" class="form-control form-control-sm"
+                 id="images" #fileUploader (change)="showPreview($event)" style="display: none;">
+        </div>
+      </div>
+    <div class="offset-md-4">
+      <button class="btn btn-sm btn-success mt-3" (click)="save()">Cập nhật</button>
     </div>
   </div>
   </div>
+</div>
 </div>
