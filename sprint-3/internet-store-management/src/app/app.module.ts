@@ -11,8 +11,10 @@ import {UserManagerModule} from './user-manager/user-manager.module';
 import {HttpClientModule} from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import {environment} from '../environments/environment';
     UserManagerModule,
     HttpClientModule,
     MatDialogModule,
+    ToastrModule.forRoot()
     BrowserAnimationsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
