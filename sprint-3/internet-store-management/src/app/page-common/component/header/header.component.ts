@@ -3,6 +3,8 @@ import {TokenStorageService} from '../../service/token-storage/token-storage.ser
 import {Router} from '@angular/router';
 import {RequestServiceComponent} from '../../../service-request-manager/component/request-service/request-service.component';
 import {MatDialog} from '@angular/material/dialog';
+import {AuthGuard} from '../../helper/auth.guard';
+import {MessageComponent} from '../message/message.component';
 
 @Component({
   selector: 'app-header',
@@ -13,22 +15,31 @@ export class HeaderComponent implements OnInit {
   role: string;
   constructor(public dialog: MatDialog,
               private tokenStorageService: TokenStorageService,
-              private router: Router) {
+              private token: TokenStorageService) {
   }
   ngOnInit(): void {
-    console.log('kakakakka');
-    this.role = this.tokenStorageService.getUser().role[0];
-    console.log(this.role[0]);
+    console.log(this.tokenStorageService.getUser());
+    if (this.tokenStorageService.getUser() === null){
+      this.role = '';
+    }else {
+      this.role = this.tokenStorageService.getUser().role[0];
+    }
   }
   //  a hiên
   openBoxRequest(): void {
-    const dialogRef = this.dialog.open(RequestServiceComponent, {
-      panelClass: 'app-full-bleed-dialog',
-      width: '800px',
-      disableClose: true
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    if (this.token.getUser() !== null){
+      const dialogRef = this.dialog.open(RequestServiceComponent, {
+        panelClass: 'app-full-bleed-dialog',
+        width: '800px',
+        disableClose: true
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }else {
+      this.dialog.open(MessageComponent, {
+        disableClose: true
+      });
+    }
   }
 }

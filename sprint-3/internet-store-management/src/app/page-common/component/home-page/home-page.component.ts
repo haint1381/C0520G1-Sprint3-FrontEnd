@@ -9,6 +9,8 @@ import {User} from '../../model/User';
 import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser} from 'angularx-social-login';
 import {TokenDTO} from '../../model/TokenDTO';
 import {RequestServiceComponent} from '../../../service-request-manager/component/request-service/request-service.component';
+import {ResetPasswordComponent} from '../reset-password/reset-password.component';
+import {MessageComponent} from '../message/message.component';
 
 @Component({
   selector: 'app-home-page',
@@ -19,6 +21,7 @@ export class HomePageComponent implements OnInit {
   public loginForm: FormGroup;
   isLoggedIn = false;
   errorMessage = '';
+  successMessage = '';
   socialUser: SocialUser;
   user: User;
   constructor(
@@ -109,5 +112,15 @@ export class HomePageComponent implements OnInit {
         });
       }
     );
+  }
+
+  reset(): void {
+    const dialogRef = this.dialog.open(ResetPasswordComponent, {
+      width: '500px',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }
