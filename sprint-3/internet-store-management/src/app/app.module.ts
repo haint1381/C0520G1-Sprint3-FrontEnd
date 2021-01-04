@@ -30,9 +30,9 @@ import {environment} from '../environments/environment';
     UserManagerModule,
     HttpClientModule,
     MatDialogModule,
-    ToastrModule.forRoot()
     BrowserAnimationsModule,
     AppRoutingModule,
+    ToastrModule.forRoot({timeOut: 2000, positionClass : 'toast-top-center', preventDuplicates: true})
     AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [],

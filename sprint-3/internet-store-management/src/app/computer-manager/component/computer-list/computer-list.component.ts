@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Computer} from '../../model/Computer.class';
 import {ComputerService} from '../../service/computer.service';
-import {FormGroup} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ToastrService} from "ngx-toastr";
+
+
 @Component({
   selector: 'app-computer-list',
   templateUrl: './computer-list.component.html',
@@ -9,76 +13,64 @@ import {FormGroup} from '@angular/forms';
 })
 export class ComputerListComponent implements OnInit {
   public computers: Computer[];
-  settings = {
-    add: {
-      addButtonContent: '<i class="fas fa-plus"></i>',
-      createButtonContent: '<i class="fas fa-check"></i>',
-      cancelButtonContent: '<i class="fas fa-times"></i>',
-      confirmCreate: true
-    },
-    edit: {
-      editButtonContent: '<i class="fas fa-tools"></i>',
-      saveButtonContent: '<i class="fas fa-check"></i>',
-      cancelButtonContent: '<i class="fas fa-times"></i>',
-      confirmSave: true
-    },
-    delete: {
-      deleteButtonContent: '<i class="fas fa-trash"></i>',
-    },
-    actions: {
-      title: 'Hành động',
-      position: 'right'
-    },
-    columns: {
-      computerName: {
-        title: 'Tên máy'
-      },
-      statusComputerName: {
-        title: 'Tình trạng'
-      },
-      timeStart: {
-        title: 'Thời gian bắt đầu(giờ:phút)'
-      },
-      timeUser: {
-        title: 'Thời gian sử dụng'
-      }
-    }
-  };
+  formService: FormArray = this.fb.array([]);
+  p: number;
+  notification = null;
 
   constructor(
-    public computerService: ComputerService
+    private router: Router,
+    private fb: FormBuilder,
+    private computerService: ComputerService,
+    private toastr: ToastrService
   ) {
   }
 
   ngOnInit(): void {
     this.computerService.getAllComputer().subscribe(data => {
-      this.computers = data;
-      console.log(this.computers);
+      console.log(data);
+      if (data === []) {
+        this.addFormService();
+      } else {
+        (data as []).forEach((service: any) => {
+          this.formService.push(this.fb.group({
+            idComputer: [service.idComputer],
+            computerName: [service.computerName],
+            timeStart: [service.timeStart],
+            timeUser: [service.timeUser],
+            status: [service.status],
+            // unit: [service.unit]
+          }));
+        });
+      }
     });
   }
-
-  onAddConfirm(event): void {
-    // if (window.confirm('Are you sure you want to save?')) {
-    // call to remote api, remember that you have to await this
-    event.confirm.resolve(event.newData);
-    console.log(event.newData);
-    this.computerService.addNewComputer(event.newData).subscribe(data => {
-      console.log(data);
-      // tslint:disable-next-line:no-unused-expression
-    }), err => {
-      console.log(err);
-    };
+  addFormService(): void {
+    this.formService.push(this.fb.group({
+      idComputer: [0],
+      computerName: ['', [Validators.required]],
+      // statusComputer: ['', [Validators.required]],
+      timeStart: ['', [Validators.required]],
+      timeUser: ['', [Validators.required]],
+      status: ['', [Validators.required]],
+      // quantity: ['', [Validators.required, Validators.pattern(/^[1-9]{1,3}$/)]],
+      // unit: ['', [Validators.required, Validators.pattern(/^[a-zA-Zà-ỹÀ-Ỹ_0-9\s]{2,6}$/)]]
+    }));
   }
-  onEditConfirm(event): void {
-    // if (window.confirm('Are you sure you want to save?')) {
-    // call to remote api, remember that you have to await this
-    event.confirm.resolve(event.newData);
-    console.log(event.newData.idComputer);
-    this.computerService.editComputer(event.newData.idComputer, event.newData).subscribe(data => {
-      console.log(data);
-      // tslint:disable-next-line:no-unused-expression
-    }), err => {
-      console.log(err);
-    };
+
+  onDelete(value: any, i: number): void{
+  }
+
+  recordSubmit(fg): void {
+    if (fg.value.idComputer === 0) {
+      this.computerService.addNewComputer(fg.value).subscribe(data => {
+        fg.patchValue({idComputer: data.idComputer});
+        this.toastr.success('Thêm máy thành công!', 'Xin Chúc Mừng!');
+        // this.showNotification('insert');
+      });
+    } else {
+      this.computerService.editComputer(fg.value.idComputer, fg.value).subscribe(data => {
+        // this.showNotification('update');
+      });
+    }
   }
 }
