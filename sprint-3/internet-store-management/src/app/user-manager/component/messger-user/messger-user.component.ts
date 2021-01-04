@@ -4,15 +4,15 @@ import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-messger-asset',
-  templateUrl: './messger-asset.component.html',
-  styleUrls: ['./messger-asset.component.css']
+  templateUrl: './messger-user.component.html',
+  styleUrls: ['./messger-user.component.css']
 })
-export class MessgerAssetComponent implements OnInit {
+export class MessgerUserComponent implements OnInit {
   public messageNotification;
 
   constructor(
     public dialog: MatDialog,
-    public dialogRef: MatDialogRef<MessgerAssetComponent>,
+    public dialogRef: MatDialogRef<MessgerUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private title: Title
   ) {
@@ -21,7 +21,7 @@ export class MessgerAssetComponent implements OnInit {
     this.title.setTitle('Asset');
     this.messageNotification = this.data.dataMessage;
     const matDialogConfig: MatDialogConfig = new MatDialogConfig();
-    matDialogConfig.position = {left: `40%`, top: `60px`};
+    matDialogConfig.position = {left: `35%`, top: `60px`};
     this.dialogRef.updatePosition(matDialogConfig.position);
   }
 }

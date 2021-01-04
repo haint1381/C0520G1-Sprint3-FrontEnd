@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 import {UserService} from '../../service/user.service';
 import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {MessgerAssetComponent} from '../messger-user/messger-asset.component';
+import {MessgerUserComponent} from '../messger-user/messger-user.component';
 
 @Component({
   selector: 'app-user-delete',
@@ -45,9 +45,9 @@ export class UserDeleteComponent implements OnInit {
 
   openDialogMessage(): void {
     const timeout = 1800;
-    const dialogRef = this.dialog.open(MessgerAssetComponent, {
-      width: '300px',
-      height: '160px',
+    const dialogRef = this.dialog.open(MessgerUserComponent, {
+      width: '400px',
+      height: '200px',
       data: {dataMessage: this.idMessage},
       disableClose: true
     });

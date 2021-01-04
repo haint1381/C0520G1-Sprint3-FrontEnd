@@ -12,6 +12,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
+
 
 @NgModule({
   declarations: [
@@ -19,9 +22,7 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
     ComputerManagerModule,
-    AppRoutingModule,
     PageCommonModule,
     PayManagerModule,
     ServiceRequestManagerModule,
@@ -30,6 +31,9 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     MatDialogModule,
     ToastrModule.forRoot()
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [],
   bootstrap: [AppComponent]
