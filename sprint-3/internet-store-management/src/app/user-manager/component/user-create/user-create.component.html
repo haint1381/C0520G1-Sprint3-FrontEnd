@@ -106,7 +106,7 @@
       <div class="col-sm-8">
         <mat-form-field>
           <input class="form-control form-control-sm" formControlName="birthday" matInput [matDatepicker]="myDatepicker"
-                 placeholder="nhập vào ngày sinh">
+                 [max]="maxDate" [min]="minDate" placeholder="nhập vào ngày sinh">
           <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
           <mat-datepicker #myDatepicker></mat-datepicker>
         </mat-form-field>
@@ -135,8 +135,8 @@
     </div>
     <div class="row d-flex justify-content-center ml-4">
       <div>
-        <button class="btn btn-secondary btn btn-sm" [mat-dialog-close]="">Hủy</button>
-        <button type="submit" class="btn btn-success btn btn-sm mx-4" (click)="create()"
+        <button class="btn btn-secondary btn btn-sm" style="width: 80px" [mat-dialog-close]="">Hủy</button>
+        <button type="submit" class="btn btn-success btn btn-sm mx-4" style="width: 80px" (click)="create()"
         >Thêm
           mới
         </button>
