@@ -9,4 +9,13 @@
 
 hr {
   border: 1px solid #dcdcdc;
+/*.app-full-bleed-dialog .mat-dialog-container {*/
+/*  padding: 0;*/
+/*}*/
+/*hr {*/
+/*  border: 1px solid #dcdcdc;*/
+/*}*/
+*{
+  font-size: 12px;
+  font-family: Verdana;
 }

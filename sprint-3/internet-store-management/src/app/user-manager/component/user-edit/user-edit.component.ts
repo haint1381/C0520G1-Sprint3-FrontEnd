@@ -38,6 +38,8 @@ export class UserEditComponent implements OnInit {
   public valueGender;
   public userList;
   public listUserName = [];
+  maxDate = new Date();
+  minDate = new Date(1920, 0, 1);
 
   constructor(
     private  dialog: MatDialog,
@@ -57,14 +59,14 @@ export class UserEditComponent implements OnInit {
     this.formEdit = this.formBuilder.group({
       // idUser: [''],
       username: ['', [Validators.required, Validators.pattern('^[a-z0-9]{3,30}$'), checkNameUser(this.listUserName)]],
-      password: ['', [Validators.required, Validators.pattern('^[a-z0-9]{6,30}$')]],
-      confirmPassword: ['', [Validators.required]],
-      fullName: ['', [Validators.required, Validators.maxLength(30), Validators.pattern(/^[a-zA-Zà-ỹÀ-Ỹ_0-9\s]{1,30}$/)]],
+      // password: ['', [Validators.required, Validators.pattern('^[a-z0-9]{6,30}$')]],
+      // confirmPassword: [''],
+      fullName: ['', [Validators.required, Validators.maxLength(30), Validators.pattern(/^[a-zA-Zà-ỹÀ-Ỹ\s]{1,30}$/)]],
       email: ['', [Validators.required, Validators.pattern(/^[a-z][a-z0-9_\.]{3,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/)]],
       gender: ['', [Validators.required]],
       money: ['0'],
       birthday: ['', [Validators.required]]
-    }, {validator: comparePassword});
+    });
     this.dataId = this.data.dataC;
     this.valueGender = this.data.dataD;
     console.log(this.valueGender);
@@ -79,6 +81,7 @@ export class UserEditComponent implements OnInit {
 
   edit(): void {
     if (this.formEdit.valid) {
+      console.log(this.formEdit.value);
       this.userService.edit(this.formEdit.value, this.dataId).subscribe(data => {
         this.dialogRef.close();
         this.openDialogMessage();
@@ -115,5 +118,4 @@ export class UserEditComponent implements OnInit {
       }
     }
   }
-
 }

@@ -16,15 +16,15 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MessgerUserComponent} from './component/messger-user/messger-user.component';
-
-
+import { ChangePasswordComponent } from './component/change-password/change-password.component';
 
 
 @NgModule({
-  declarations: [UserListComponent, UserCreateComponent, UserDetailComponent, UserEditComponent, UserDeleteComponent, MessgerUserComponent],
-  exports: [
-    UserListComponent
-  ],
+  // tslint:disable-next-line:max-line-length
+  declarations: [UserListComponent, UserCreateComponent, UserDetailComponent, UserEditComponent, UserDeleteComponent, MessgerUserComponent, ChangePasswordComponent],
+    exports: [
+        UserListComponent,
+    ],
   imports: [
     CommonModule,
     NgxPaginationModule,

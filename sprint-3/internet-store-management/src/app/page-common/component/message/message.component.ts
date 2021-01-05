@@ -9,7 +9,6 @@ import {Title} from '@angular/platform-browser';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent implements OnInit {
-
   constructor(public router: Router) {
   }
 
