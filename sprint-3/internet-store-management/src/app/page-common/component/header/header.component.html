@@ -4,37 +4,36 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav topnav" style="margin-left: 87px">
-      <li class="nav-item text-center" style="width: 125px">
-        <a class="nav-link text-white font-text mt-2" [routerLink]="['']">TRANG CHỦ</a>
+      <li class="nav-item text-center d-flex" style="width: 125px">
+        <i class="fas fa-home" style="color: white; margin-top: 16px"></i><a class="nav-link text-white font-text mt-2" [routerLink]="['']">TRANG CHỦ</a>
       </li>
       <li class="nav-item text-center" style="width: 125px">
-        <a class="nav-link text-white font-text"><span
-          class="font-text" [routerLink]="['/my-game']">TRÒ CHƠI VÀ ỨNG DỤNG</span></a>
+        <a class="nav-link text-white font-text mt-2" [routerLink]="['/my-game']">TRÒ CHƠI</a>
       </li>
       <li class="nav-item text-center" style="width: 125px">
         <a class="nav-link text-white font-text mt-2">VÉ TRỌN GÓI</a>
       </li>
-      <li class="nav-item text-center" style="width: 125px">
+      <li *ngIf="role ==='ROLE_USER'" class="nav-item text-center" style="width: 125px">
         <a class="nav-link text-white font-text mt-2" (click)="openBoxRequest()">DỊCH VỤ</a>
       </li>
-
-      <li *ngIf="role ==='ROLE_ADMIN'" class="nav-item text-center" style="width: 125px">
-        <div class="dropdown">
-          <a class="nav-link text-white font-text mt-2" data-toggle="dropdown">QUẢN LÝ <span class="caret"></span></a>
-          <ul class="dropdown-menu" style="background-color: #0b222a">
-            <li><a style="color: white" [routerLink]="['user-list']">Người dùng</a></li>
-            <li><a style="color: white" [routerLink]="['computer-list']">Máy tính</a></li>
-            <li><a style="color: white" [routerLink]="['list-service']" >Dịch vụ</a></li>
-          </ul>
-        </div>
-      </li>
+  </li>
     </ul>
+    <a *ngIf="role ==='ROLE_ADMIN'" class="nav-item offset-7" style="width: 125px">
+      <div class="dropdown">
+        <a class="nav-link text-white font-text mt-2" data-toggle="dropdown">&nbsp;&nbsp;<i class="fas fa-cogs"></i>&nbsp;QUẢN LÝ <span class="caret"></span></a>
+        <ul class="dropdown-menu" style="background-color: #0b222a">
+          <li><a style="color: white" [routerLink]="['user-list']">Người dùng</a></li>
+          <li><a style="color: white" [routerLink]="['computer-list']">Máy tính</a></li>
+          <li><a style="color: white" [routerLink]="['list-service']">Dịch vụ</a></li>
+        </ul>
+      </div>
+    </a>
   </div>
 </nav>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-3 col-xs-12" style="background: #f9f4f4; height: 50px"></div>
+    <div class="col-md-3 col-xs-12" style="background: black; height: 50px"></div>
     <div class="col-md-6 col-xs-12"></div>
-    <div class="col-md-3 col-xs-12" style="background: #f9f4f4;"></div>
+    <div class="col-md-3 col-xs-12" style="background: black;"></div>
   </div>
 </div>

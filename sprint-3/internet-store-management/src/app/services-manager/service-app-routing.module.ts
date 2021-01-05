@@ -6,7 +6,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ServiceDeleteDialogComponent} from './service-delete-dialog/service-delete-dialog.component';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule} from "@angular/material/dialog";
 
 const routes: Routes = [
   {

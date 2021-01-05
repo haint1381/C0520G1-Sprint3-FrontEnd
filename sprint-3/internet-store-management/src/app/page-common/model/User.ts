@@ -6,4 +6,6 @@ export class User {
   fullName: string;
   address: string;
   image: string;
+  money: string;
+  timeRemaining: string;
 }

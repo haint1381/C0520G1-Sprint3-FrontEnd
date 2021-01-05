@@ -22,7 +22,6 @@ export class HomePageComponent implements OnInit {
   public loginForm: FormGroup;
   isLoggedIn = false;
   errorMessage = '';
-  successMessage = '';
   socialUser: SocialUser;
   user: User;
 
@@ -43,6 +42,7 @@ export class HomePageComponent implements OnInit {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn === true) {
       this.user = this.tokenStorageService.getUser();
+      console.log(this.user);
       // this.showAdminBoard = this.role.includes('ROLE_ADMIN');
       // this.showUserBoard = this.role.includes('ROLE_USER');
     }

@@ -11,6 +11,7 @@ export class ServiceManagerService {
   public API_UPDATE_SERVICE = 'http://localhost:8080/service/edit';
   public API_DELETE_SERVICE = 'http://localhost:8080/service/delete';
   public API_FIND_BY_ID_SERVICE = 'http://localhost:8080/service/findById';
+  public API_TYPE_SERVICE = 'http://localhost:8080/typeService';
 
   constructor(
     public http: HttpClient
@@ -34,5 +35,9 @@ export class ServiceManagerService {
   }
   getServiceById(idService): Observable<any> {
     return this.http.get(this.API_FIND_BY_ID_SERVICE + '/' + idService);
+  }
+
+  getAllTypeService(): Observable<any> {
+    return this.http.get(this.API_TYPE_SERVICE);
   }
 }
