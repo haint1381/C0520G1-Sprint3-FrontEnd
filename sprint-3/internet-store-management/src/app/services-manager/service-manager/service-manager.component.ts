@@ -15,6 +15,7 @@ export class ServiceManagerComponent implements OnInit {
   p: number;
   notification = null;
   result: any;
+  typeServiceList: any;
 
   constructor(
     private router: Router,
@@ -43,10 +44,10 @@ export class ServiceManagerComponent implements OnInit {
   }
 
   addFormService(): void {
-    this.formService.push(this.fb.group({
+    this.formService.insert(0, this.fb.group({
       idService: [0],
       serviceName: ['', [Validators.required, Validators.pattern(/^[a-zA-Zà-ỹÀ-Ỹ_0-9\s]{3,20}$/)]],
-      price: ['', [Validators.required, Validators.pattern(/^\d{3,5}$/)]],
+      price: ['', [Validators.required, Validators.pattern(/^[\d.]{3,6}$/)]],
       quantity: ['', [Validators.required, Validators.pattern(/^\d{1,3}$/)]],
       unit: ['', [Validators.required, Validators.pattern(/^[a-zA-Zà-ỹÀ-Ỹ_0-9\s]{2,6}$/)]]
     }));
