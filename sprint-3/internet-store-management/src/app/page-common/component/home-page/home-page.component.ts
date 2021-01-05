@@ -11,6 +11,7 @@ import {TokenDTO} from '../../model/TokenDTO';
 import {RequestServiceComponent} from '../../../service-request-manager/component/request-service/request-service.component';
 import {ResetPasswordComponent} from '../reset-password/reset-password.component';
 import {MessageComponent} from '../message/message.component';
+import {DepositAccountComponent} from '../../../service-request-manager/component/deposit-account/deposit-account.component';
 
 @Component({
   selector: 'app-home-page',
@@ -21,25 +22,27 @@ export class HomePageComponent implements OnInit {
   public loginForm: FormGroup;
   isLoggedIn = false;
   errorMessage = '';
-  successMessage = '';
   socialUser: SocialUser;
   user: User;
+
   constructor(
-              private authenticationService: AuthenticationService,
-              private tokenStorageService: TokenStorageService,
-              private router: Router,
-              public dialog: MatDialog,
-              private activatedRoute: ActivatedRoute,
-              private  title: Title,
-              private fb: FormBuilder,
-              private authService: SocialAuthService) {
+    private authenticationService: AuthenticationService,
+    private tokenStorageService: TokenStorageService,
+    private router: Router,
+    public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private  title: Title,
+    private fb: FormBuilder,
+    private authService: SocialAuthService) {
     this.title.setTitle('home-page');
   }
+
   ngOnInit(): void {
     // this.tokenStorageService.signOut();
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn === true) {
       this.user = this.tokenStorageService.getUser();
+      console.log(this.user);
       // this.showAdminBoard = this.role.includes('ROLE_ADMIN');
       // this.showUserBoard = this.role.includes('ROLE_USER');
     }
@@ -60,7 +63,7 @@ export class HomePageComponent implements OnInit {
       },
       err => {
         this.errorMessage = 'Tên tài khoản và mật khẩu không hợp lệ !';
-        setTimeout (() => {
+        setTimeout(() => {
           this.errorMessage = '';
         }, 2000);
         this.isLoggedIn = false;
@@ -69,9 +72,11 @@ export class HomePageComponent implements OnInit {
       }
     );
   }
+
   reloadPage(): void {
     window.location.reload();
   }
+
   logout(): void {
     this.tokenStorageService.signOut();
     this.reloadPage();
@@ -117,6 +122,17 @@ export class HomePageComponent implements OnInit {
   reset(): void {
     const dialogRef = this.dialog.open(ResetPasswordComponent, {
       width: '500px',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDepositAccount(): void {
+    const dialogRef = this.dialog.open(DepositAccountComponent, {
+      panelClass: 'app-full-bleed-dialog',
+      width: '350px',
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {

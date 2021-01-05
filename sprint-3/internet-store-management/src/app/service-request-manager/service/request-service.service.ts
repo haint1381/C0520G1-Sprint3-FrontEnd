@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +11,35 @@ export class RequestServiceService {
     private http: HttpClient
   ) {
   }
+
   getListService(): Observable<any> {
     return this.http.get(this.API_REQUEST + '/service');
   }
-  // getTypeService(): Observable<any> {
-  //   return this.http.get('http://localhost:8080/request/type-service');
-  // }
-  // getMoneyUser(idUser: number): Observable<any> {
-  //   return this.http.get(this.API_REQUEST + '/userList/' + idUser);
-  // }
+
+  creatBillPaymentDirect(bill): Observable<any> {
+    return this.http.post(this.API_REQUEST + '/payment-direct', bill);
+  }
+
+  createBillPaymentByAccount(bill): Observable<any> {
+    return this.http.post(this.API_REQUEST + '/payment-by-account', bill);
+  }
+  getListBill(): Observable<any> {
+    return this.http.get(this.API_REQUEST + '/listBill');
+  }
+
+  getBillByIdBill(idBill): Observable<any> {
+    return this.http.get(this.API_REQUEST + '/listBill/' + idBill);
+  }
+
+  setStatusBill(idBill): Observable<any> {
+    return this.http.put(this.API_REQUEST + '/listBill/setStatus/' + idBill, idBill);
+  }
+
+  creatBillDeposit(bill): Observable<any> {
+    return this.http.post(this.API_REQUEST + '/deposit', bill);
+  }
+
+  payDeposit(idBill): Observable<any> {
+    return this.http.put(this.API_REQUEST + '/deposit/' + idBill, idBill);
+  }
 }

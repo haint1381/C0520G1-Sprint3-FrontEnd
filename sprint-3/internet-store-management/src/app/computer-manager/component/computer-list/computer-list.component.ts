@@ -7,6 +7,11 @@ import {ToastrService} from 'ngx-toastr';
 import {MatDialog} from '@angular/material/dialog';
 import {ComputerDeleteComponent} from '../computer-delete/computer-delete.component';
 import {ComputerStatus} from '../../model/ComputerStatus.class';
+import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
+import {PaymentDetailComponent} from '../../../service-request-manager/component/payment-detail/payment-detail.component';
+import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
+import {MatDialog} from '@angular/material/dialog';
 
 
 @Component({
@@ -24,6 +29,11 @@ export class ComputerListComponent implements OnInit {
   handleCommentForm: FormGroup;
   checkButton = false;
   typeComputer = '';
+  notification = null;
+  public billList = [];
+  p1: any;
+  public billId;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -32,6 +42,8 @@ export class ComputerListComponent implements OnInit {
     public dialog: MatDialog,
     private computerService: ComputerService,
     private toastr: ToastrService,
+    private request: RequestServiceService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -170,5 +182,22 @@ export class ComputerListComponent implements OnInit {
         this.ngOnInit();
       }
     }
+  }
+  // hien
+  openBillDetail(idBill): void {
+    console.log(idBill);
+    this.request.getBillByIdBill(idBill).subscribe(data => {
+      const dialogRef = this.dialog.open(PaymentDetailComponent, {
+        panelClass: 'app-full-bleed-dialog',
+        width: '650px',
+        data: {dataBill: data},
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.ngOnInit();
+      });
+    });
   }
 }
