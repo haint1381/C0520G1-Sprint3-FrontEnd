@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MessgerAssetComponent } from './messger-asset.component';
+import { MessgerAssetComponent } from './messger-user.component';
 
 describe('MessgerAssetComponent', () => {
   let component: MessgerAssetComponent;

@@ -5,8 +5,11 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav topnav" style="margin-left: 87px">
       <li class="nav-item text-center" style="width: 125px">
-        <a class="nav-link text-white font-text" href="/"><span
-          class="font-text">TRÒ CHƠI VÀ ỨNG DỤNG</span></a>
+        <a class="nav-link text-white font-text mt-2" [routerLink]="['']">TRANG CHỦ</a>
+      </li>
+      <li class="nav-item text-center" style="width: 125px">
+        <a class="nav-link text-white font-text"><span
+          class="font-text" [routerLink]="['/my-game']">TRÒ CHƠI VÀ ỨNG DỤNG</span></a>
       </li>
       <li class="nav-item text-center" style="width: 125px">
         <a class="nav-link text-white font-text mt-2">VÉ TRỌN GÓI</a>
@@ -14,11 +17,16 @@
       <li class="nav-item text-center" style="width: 125px">
         <a class="nav-link text-white font-text mt-2" (click)="openBoxRequest()">DỊCH VỤ</a>
       </li>
-      <li class="nav-item text-center" style="width: 125px">
-        <a class="nav-link text-white font-text mt-2">TIN TỨC</a>
-      </li>
-      <li *ngIf="role === 'ROLE_ADMIN'" class="nav-item text-center" style="width: 125px">
-        <a class="nav-link text-white font-text mt-2">QUẢN LÝ</a>
+
+      <li *ngIf="role ==='ROLE_ADMIN'" class="nav-item text-center" style="width: 125px">
+        <div class="dropdown">
+          <a class="nav-link text-white font-text mt-2" data-toggle="dropdown">QUẢN LÝ <span class="caret"></span></a>
+          <ul class="dropdown-menu" style="background-color: #0b222a">
+            <li><a style="color: white" [routerLink]="['user-list']">Người dùng</a></li>
+            <li><a style="color: white" [routerLink]="['list-service']">Máy tính</a></li>
+            <li><a style="color: white" [routerLink]="['computer-list']">Dịch vụ</a></li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>

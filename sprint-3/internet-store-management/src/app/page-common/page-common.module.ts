@@ -11,9 +11,11 @@ import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthServiceConfig, Soc
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
+import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
+import { MyGameComponent } from './component/my-game/my-game.component';
 
 @NgModule({
-  declarations: [HeaderComponent, HomePageComponent, FooterComponent, MessageComponent],
+  declarations: [MyGameComponent , HeaderComponent, HomePageComponent, FooterComponent, MessageComponent, ResetPasswordComponent],
   exports: [
     HeaderComponent,
     FooterComponent
