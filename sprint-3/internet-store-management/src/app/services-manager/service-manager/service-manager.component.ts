@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ServiceManagerService} from '../service/service-manager.service';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {ServiceDeleteDialogComponent} from '../service-delete-dialog/service-delete-dialog.component';
+import {TokenStorageService} from '../../page-common/service/token-storage/token-storage.service';
 
 @Component({
   selector: 'app-service-manager',
@@ -21,26 +22,35 @@ export class ServiceManagerComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private servicesService: ServiceManagerService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private token: TokenStorageService
   ) {
   }
 
   ngOnInit(): void {
-    this.servicesService.getAllService().subscribe(data => {
-      if (data === []) {
-        this.addFormService();
-      } else {
-        (data as []).forEach((service: any) => {
-          this.formService.push(this.fb.group({
-            idService: [service.idService],
-            serviceName: [service.serviceName],
-            price: [service.price],
-            quantity: [service.quantity],
-            unit: [service.unit]
-          }));
+    if (this.token.getUser() !== null) {
+      if (this.token.getUser().id == 1) {
+        this.servicesService.getAllService().subscribe(data => {
+          if (data === []) {
+            this.addFormService();
+          } else {
+            (data as []).forEach((service: any) => {
+              this.formService.push(this.fb.group({
+                idService: [service.idService],
+                serviceName: [service.serviceName],
+                price: [service.price],
+                quantity: [service.quantity],
+                unit: [service.unit]
+              }));
+            });
+          }
         });
+      } else {
+        this.router.navigateByUrl('/error-page');
       }
-    });
+    } else {
+      this.router.navigateByUrl('/error-page');
+    }
   }
 
   addFormService(): void {
@@ -60,8 +70,7 @@ export class ServiceManagerComponent implements OnInit {
         fg.patchValue({idService: data.idService});
         this.showNotification('insert');
       });
-    }
-    else {
+    } else {
       this.servicesService.updateService(fg.value.idService, fg.value).subscribe(data => {
         this.showNotification('update');
       });
@@ -69,19 +78,19 @@ export class ServiceManagerComponent implements OnInit {
   }
 
   // tslint:disable-next-line:typedef
- //  onDelete(idService, i){
- //    if(idService === 0){
- //      this.formService.removeAt(i);
- //    } else if (confirm('Bạn có chắc muốn xóa dịch vụ này không?')) {
- //    this.servicesService.deleteService(idService).subscribe( data => {
- //      this.formService.removeAt(i);
- //      this.showNotification('delete');
- //    });
- // }
- //  }
+  //  onDelete(idService, i){
+  //    if(idService === 0){
+  //      this.formService.removeAt(i);
+  //    } else if (confirm('Bạn có chắc muốn xóa dịch vụ này không?')) {
+  //    this.servicesService.deleteService(idService).subscribe( data => {
+  //      this.formService.removeAt(i);
+  //      this.showNotification('delete');
+  //    });
+  // }
+  //  }
   // tslint:disable-next-line:typedef
-  onDelete(idService, i){
-    if (idService === 0){
+  onDelete(idService, i) {
+    if (idService === 0) {
       this.formService.removeAt(i);
     } else {
       this.servicesService.getServiceById(idService).subscribe(dataService => {
@@ -99,6 +108,7 @@ export class ServiceManagerComponent implements OnInit {
       });
     }
   }
+
   // tslint:disable-next-line:typedef
   showNotification(category) {
     switch (category) {

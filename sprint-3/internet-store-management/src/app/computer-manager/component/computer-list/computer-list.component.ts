@@ -61,7 +61,7 @@ export class ComputerListComponent implements OnInit {
     });
     this.handleCommentForm = this.formBuilder.group({
       idComputer: [''],
-      computerName: ['', Validators.required, Validators.pattern(/^[a-zA-Zà-ỹÀ-Ỹ_0-9\s]{5,30}$/)],
+      computerName: ['', Validators.required],
       fullName: [''],
       idStatusComputer: ['', Validators.required],
       timeStart: [''],
