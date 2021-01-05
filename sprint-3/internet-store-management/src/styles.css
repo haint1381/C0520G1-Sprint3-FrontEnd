@@ -1,5 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+.app-full-bleed-dialog .mat-dialog-container {
+  padding: 0;
+}
+/** {*/
+/*  color: white;*/
+/*}*/
+
+hr {
+  border: 1px solid #dcdcdc;
 /*.app-full-bleed-dialog .mat-dialog-container {*/
 /*  padding: 0;*/
 /*}*/

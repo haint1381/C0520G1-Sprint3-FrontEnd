@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {RequestServiceService} from '../../service/request-service.service';
 import {Service} from '../../model/service.class';
 import {UserService} from '../../../user-manager/service/user.service';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MessageNotificationComponent} from '../message-notification/message-notification.component';
 
 @Component({
   selector: 'app-request-service',
@@ -12,16 +14,24 @@ import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 export class RequestServiceComponent implements OnInit {
   public idUser: number;
   public listService: Service[] = [];
+  public billService: Service[] = [];
   public totalMoney = 0;
   public moneyUser: number;
-  public check1 = false;
-  public check2 = false;
+  public checkButtonPay = false;
+  public checkMessagePaymentSuccess = false;
+  public checkSubmitBill = false;
+  public isPayDirect = false;
   public formBill: FormGroup;
 
+  // public subs = new Subscription();
+
   constructor(
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<RequestServiceComponent>,
     private request: RequestServiceService,
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
   }
 
@@ -48,15 +58,17 @@ export class RequestServiceComponent implements OnInit {
       this.moneyUser = data.money;
     });
     this.formBill = this.fb.group({
-      status: [''],
-      idUser: [''],
+      statusBill: [''],
+      idUser: [this.idUser],
       listAllService: this.fb.group({
         listServiceRecordsDrink: this.fb.array([]),
         listServiceRecordsFood: this.fb.array([]),
         listServiceRecordsCard: this.fb.array([])
       })
     });
-
+    // this.subs.add(this.formBill.valueChanges.subscribe(data => {
+    //   this.request.senDataComponent(this.formBill);
+    // }));
   }
 
   get listServiceRecordsDrink(): FormArray {
@@ -76,7 +88,7 @@ export class RequestServiceComponent implements OnInit {
       idService: serviceObj.idService,
       serviceName: serviceObj.serviceName,
       price: serviceObj.price,
-      quantityPurchased: serviceObj.quantityPurchased,
+      quantityPurchased: [serviceObj.quantityPurchased, [Validators.required]],
       quantity: serviceObj.quantity,
     });
   }
@@ -93,46 +105,128 @@ export class RequestServiceComponent implements OnInit {
     this.listServiceRecordsCard.push(this.newService(serviceObj));
   }
 
-  totalMoneyAll(idService: number, quantity: number): void {
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.listService.length; i++) {
-      if (idService === this.listService[i].idService) {
-        this.listService[i].quantityPurchased = quantity;
+  totalMoneyBooked(idService: number, quantity: number): void {
+    for (const element of this.listService) {
+      if (idService === element.idService) {
+        element.quantityPurchased = quantity;
       }
     }
     this.totalMoney = 0;
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.listService.length; i++) {
-      if (this.listService[i].quantityPurchased === undefined) {
-        this.listService[i].quantityPurchased = 0;
+    for (const element of this.listService) {
+      if (element.quantityPurchased === undefined) {
+        element.quantityPurchased = 0;
       }
-      this.totalMoney += (this.listService[i].quantityPurchased * this.listService[i].price);
+      this.totalMoney += (element.quantityPurchased * element.price);
     }
   }
 
-  number(value: string): number {
+  formatNumber(value: string): number {
     return Number(value);
   }
 
-  // tslint:disable-next-line:typedef
-  sendData() {
-    console.log(this.formBill.value);
+  creatBillPaymentDirect(): void {
+    this.billService = [];
+    let listDrink: Service[];
+    let listFood: Service[];
+    let listCard: Service[];
+    listDrink = this.formBill.value.listAllService.listServiceRecordsDrink;
+    listFood = this.formBill.value.listAllService.listServiceRecordsFood;
+    listCard = this.formBill.value.listAllService.listServiceRecordsCard;
+    for (const item of listDrink) {
+      if (item.quantityPurchased != null) {
+        this.billService.push(item);
+      }
+    }
+    for (const item of listFood) {
+      if (item.quantityPurchased != null) {
+        this.billService.push(item);
+      }
+    }
+    for (const item of listCard) {
+      if (item.quantityPurchased != null) {
+        this.billService.push(item);
+      }
+    }
+    this.formBill.removeControl('listAllService');
+    this.formBill.addControl('list', this.fb.control(this.billService));
+    this.request.creatBillPaymentDirect(this.formBill.value).subscribe(data => {
+      this.dialogRef.close();
+    });
   }
+
+  createBillPaymentByAccount(): void {
+    this.billService = [];
+    let listDrink: Service[];
+    let listFood: Service[];
+    let listCard: Service[];
+    listDrink = this.formBill.value.listAllService.listServiceRecordsDrink;
+    listFood = this.formBill.value.listAllService.listServiceRecordsFood;
+    listCard = this.formBill.value.listAllService.listServiceRecordsCard;
+    for (const item of listDrink) {
+      if (item.quantityPurchased != null) {
+        this.billService.push(item);
+      }
+    }
+    for (const item of listFood) {
+      if (item.quantityPurchased != null) {
+        this.billService.push(item);
+      }
+    }
+    for (const item of listCard) {
+      if (item.quantityPurchased != null) {
+        this.billService.push(item);
+      }
+    }
+    this.formBill.removeControl('listAllService');
+    this.formBill.addControl('list', this.fb.control(this.billService));
+    console.log(this.formBill.value);
+    this.request.createBillPaymentByAccount(this.formBill.value).subscribe(data => {
+      this.dialogRef.close();
+    });
+  }
+
+  // tslint:disable-next-line:use-lifecycle-interface
+  // public ngOnDestroy(): void {
+  //   this.subs.unsubscribe();
+  // }
 
   event(event): void {
     const value = event.target.value;
     // tslint:disable-next-line:triple-equals
-    if (value == 2) {
-      this.check1 = true;
+    if (value == 0) {
+      this.checkButtonPay = false;
+      // tslint:disable-next-line:triple-equals
+    } else if (value == 2) {
+      this.checkButtonPay = true;
+      this.checkSubmitBill = false;
+      this.isPayDirect = false;
+    } else {
+      this.checkButtonPay = false;
+      this.checkSubmitBill = true;
+      this.isPayDirect = true;
     }
   }
 
-  payMent(): void {
-    console.log(this.moneyUser + 'truoc');
-    this.moneyUser = this.moneyUser - this.totalMoney;
-    console.log(this.moneyUser + 'sau');
-    this.check1 = false;
-    this.check2 = true;
+  payment(): void {
+    if (this.moneyUser < this.totalMoney) {
+      this.isPayDirect = false;
+      this.openMessage();
+    } else {
+      this.moneyUser = this.moneyUser - this.totalMoney;
+      this.checkButtonPay = false;
+      this.checkMessagePaymentSuccess = true;
+      this.isPayDirect = true;
+    }
+  }
 
+  openMessage(): void {
+    const dialogRef = this.dialog.open(MessageNotificationComponent, {
+      panelClass: 'app-full-bleed-dialog',
+      width: '500px',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }
