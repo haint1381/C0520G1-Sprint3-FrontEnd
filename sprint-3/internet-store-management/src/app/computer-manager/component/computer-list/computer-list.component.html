@@ -13,7 +13,7 @@
             <div class="col-6"></div>
             <div class="row col-4">
               <div class="col-10 p-0">
-                <select [formGroup]="formSearch" class="form-control form-control-sm"
+                <select class="form-control form-control-sm"
                         formControlName="idStatusComputer">
                   <option [selected]="true" [value]="0">Tất cả</option>
                   <option style="color: black" *ngFor="let status of computerStatuses"
