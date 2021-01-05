@@ -3,5 +3,5 @@
 <p class="my-3">Bạn có chắc chắn muốn xóa dịch vụ <span class="text-danger font-weight-bold"> {{serviceName}}</span> không?</p>
 <div class="row d-flex justify-content-end">
   <button mat-dialog-close class="btn btn-warning mr-3" style="width: 80px" (click)="closeDialog()">Không</button>
-  <button class="btn btn-danger mr-3" [mat-dialog-close]="1" style="width: 80px" (click)="deleteService()">Có</button>
+  <button class="btn btn-danger mr-3" mat-dialog-close="1" style="width: 80px" (click)="deleteService()">Có</button>
 </div>
