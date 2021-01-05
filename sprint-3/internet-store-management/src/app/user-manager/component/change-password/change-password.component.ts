@@ -27,7 +27,6 @@ export class ChangePasswordComponent implements OnInit {
   public dataId;
   public formChangePassword: FormGroup;
   public idMessage = 4;
-  public valueGender;
 
   constructor(
     private  dialog: MatDialog,
@@ -49,8 +48,6 @@ export class ChangePasswordComponent implements OnInit {
       confirmPassword: ['', [Validators.required]],
     }, {validator: comparePassword});
     this.dataId = this.data.dataC;
-    this.valueGender = this.data.dataD;
-    console.log(this.valueGender);
     this.userService.getByID(this.dataId).subscribe(getData => {
       this.formChangePassword.patchValue(getData);
     });
@@ -58,7 +55,6 @@ export class ChangePasswordComponent implements OnInit {
 
   changePass(): void {
     if (this.formChangePassword.valid) {
-      console.log(this.formChangePassword.value);
       this.userService.changePassword(this.formChangePassword.value, this.dataId).subscribe(data => {
         this.dialogRef.close();
         this.openDialogMessage();
