@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServiceAppRoutingModule } from './service-app-routing.module';
-import {RouterModule} from '@angular/router';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 
@@ -9,7 +9,8 @@ import {RouterModule} from '@angular/router';
   declarations: [],
   imports: [
     CommonModule,
-    ServiceAppRoutingModule
+    ServiceAppRoutingModule,
+    MatDialogModule,
   ]
 })
 export class ServicesManagerModule { }
