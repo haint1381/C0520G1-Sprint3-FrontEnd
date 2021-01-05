@@ -12,6 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+// @ts-ignore
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 
@@ -32,7 +33,7 @@ import {environment} from '../environments/environment';
     MatDialogModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    ToastrModule.forRoot({timeOut: 2000, positionClass : 'toast-top-center', preventDuplicates: true})
+    ToastrModule.forRoot({timeOut: 2000, positionClass : 'toast-top-center', preventDuplicates: true}),
     AngularFireModule.initializeApp(environment.firebaseConfig),
   ],
   providers: [],
