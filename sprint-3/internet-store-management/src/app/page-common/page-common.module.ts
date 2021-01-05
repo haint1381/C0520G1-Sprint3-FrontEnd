@@ -13,9 +13,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
 import { MyGameComponent } from './component/my-game/my-game.component';
+import {ErrorPageComponent} from './component/error-page/error-page.component';
 
 @NgModule({
-  declarations: [MyGameComponent , HeaderComponent, HomePageComponent, FooterComponent, MessageComponent, ResetPasswordComponent],
+  declarations: [MyGameComponent , HeaderComponent, HomePageComponent, FooterComponent, MessageComponent, ResetPasswordComponent, ErrorPageComponent],
   exports: [
     HeaderComponent,
     FooterComponent

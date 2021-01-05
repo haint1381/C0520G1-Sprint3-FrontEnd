@@ -8,6 +8,7 @@ import {UserCreateComponent} from '../user-create/user-create.component';
 import {UserEditComponent} from '../user-edit/user-edit.component';
 import {UserDetailComponent} from '../user-detail/user-detail.component';
 import {ChangePasswordComponent} from '../change-password/change-password.component';
+import {TokenStorageService} from '../../../page-common/service/token-storage/token-storage.service';
 
 
 function formatCash(str): void {
@@ -36,23 +37,32 @@ export class UserListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private title: Title,
+    private token: TokenStorageService
   ) {
   }
 
   ngOnInit(): void {
-    this.title.setTitle('User');
-    this.sizeMSG = 'Không có kết quả nào!';
-    this.userService.getAll().subscribe(data => {
-      this.userList = data;
-      if (this.userList != null) {
-        // tslint:disable-next-line:prefer-for-of
-        for (let i = 0; i < this.userList.length; i++){
-          this.userList[i].money = formatCash(this.userList[i].money);
-        }
-        this.sizeMSG = this.userList.length + '';
+    if (this.token.getUser() !== null) {
+      if (this.token.getUser().id == 1) {
+        this.title.setTitle('User');
+        this.sizeMSG = 'Không có kết quả nào!';
+        this.userService.getAll().subscribe(data => {
+          this.userList = data;
+          if (this.userList != null) {
+            // tslint:disable-next-line:prefer-for-of
+            for (let i = 0; i < this.userList.length; i++) {
+              this.userList[i].money = formatCash(this.userList[i].money);
+            }
+            this.sizeMSG = this.userList.length + '';
+          }
+          this.sendMessage();
+        });
+      } else {
+        this.router.navigateByUrl('/error-page');
       }
-      this.sendMessage();
-    });
+    } else {
+      this.router.navigateByUrl('/error-page');
+    }
   }
 
   openDialogDelete(id): void {

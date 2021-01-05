@@ -9,3 +9,9 @@
 @keyframes fadeinout {
   50% {opacity: 1;}
 }
+.abc{
+  background-color: white;
+}
+*{
+  color: black;
+}

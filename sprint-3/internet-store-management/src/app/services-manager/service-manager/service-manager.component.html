@@ -1,14 +1,17 @@
-<div id="app" class="container">
-  <div class="row">
+<div class="container-fluid  px-0 abc" id="app" style="height: 100vh">
+  <br>
+  <h2 class="text-center">Quản lý dịch vụ</h2>
+  <div class="d-flex justify-content-center">
+  <div class="col-md-11 ">
     <div class="card-body">
-          <button class="btn btn-primary mb-3" id="but_add" (click)="addFormService()">Thêm dịch vụ</button>
-          <span *ngIf="notification" class="showMessage ml-3 text-warning" style="font-size: 20px">
+      <button class="btn btn-success btn btn-sm  " id="but_add" (click)="addFormService()">Thêm dịch vụ</button>
+      <span *ngIf="notification" class="showMessage ml-3 text-warning" style="font-size: 20px">
             <i class="fas fa-check-circle {{notification.class}}"></i>
-            {{notification.message}}
+        {{notification.message}}
           </span>
-      <table class="table table-responsive-md table-bordered table-hover table-striped"
+      <table class="table table-responsive-md table-bordered table-hover table-striped my-3"
              id="makeEditable">
-        <thead style="background: #0b222a; color: #ffbb0b">
+        <thead style="background: white; color: #ffbb0b">
         <tr class="text-center">
           <th>Stt</th>
           <th style="width: 270px">Tên dịch vụ</th>
@@ -19,8 +22,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr [formGroup]="fg" *ngFor="let fg of formService.controls | paginate : { itemsPerPage: 8, currentPage: p }; let i = index">
-          <td class="text-right text-white">{{i + 1}}</td>
+        <tr [formGroup]="fg"
+            *ngFor="let fg of formService.controls | paginate : { itemsPerPage: 8, currentPage: p }; let i = index">
+          <td class="text-right text-dark">{{i + 1}}</td>
           <td>
             <input class="form-control" formControlName="serviceName">
             <label *ngIf="formService.controls[i].get('serviceName').errors?.required">
@@ -58,13 +62,13 @@
             </label>
           </td>
           <td>
-            <button type="button" class="btn ml-2" [disabled]="fg.invalid"
-                    [ngClass]="(fg.get('idService').value == 0) ? 'btn-primary':'btn-success'"
+            <button type="button" class="btn" [disabled]="fg.invalid"
+                    [ngClass]="(fg.get('idService').value == 0) ? 'btn-primary':'btn-warning'"
                     (click)="recordSubmit(fg)"><i class="far fa-save"></i>
-                    {{fg.get('idService').value == 0 ? 'Cập nhật':'Chỉnh Sửa'}}
+              {{fg.get('idService').value == 0 ? 'Cập nhật' : 'Chỉnh Sửa'}}
             </button>
             <button class="btn btn-light ml-2">
-                <i class="far fa-trash-alt text-danger" (click)="onDelete(fg.get('idService').value,i)"></i>
+              <i class="far fa-trash-alt text-danger " (click)="onDelete(fg.get('idService').value,i)"></i>
             </button>
           </td>
         </tr>
@@ -76,6 +80,7 @@
                              responsive="true"></pagination-controls>
       </div>
     </div>
+  </div>
   </div>
 </div>
 
