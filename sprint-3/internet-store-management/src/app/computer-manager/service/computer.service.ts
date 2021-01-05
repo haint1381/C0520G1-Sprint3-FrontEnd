@@ -27,4 +27,7 @@ export class ComputerService {
   getAllComputerStatus(): Observable<any> {
     return this.http.get(this.API + '/list/statusComputer');
   }
+  search(value): Observable<any> {
+    return this.http.get(this.API + '/search/' + value);
+  }
 }

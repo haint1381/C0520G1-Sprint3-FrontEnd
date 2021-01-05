@@ -8,8 +8,6 @@ import {ComputerDeleteComponent} from '../computer-delete/computer-delete.compon
 import {ComputerStatus} from '../../model/ComputerStatus.class';
 import {PaymentDetailComponent} from '../../../service-request-manager/component/payment-detail/payment-detail.component';
 import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
-import {MatDialog} from '@angular/material/dialog';
-
 
 @Component({
   selector: 'app-computer-list',
@@ -101,10 +99,13 @@ export class ComputerListComponent implements OnInit {
       // tslint:disable-next-line:triple-equals
       if (this.checkButton == false) {
         this.computerService.getComputerById(idComputer).subscribe(dataName => {
-          this.typeComputer = dataName.statusComputer.idStatusComputer;
+          console.log(dataName);
+          this.typeComputer = dataName.idStatusComputer;
           console.log(this.typeComputer);
           this.handleCommentForm.controls.idStatusComputer.setValue(this.typeComputer);
           this.handleCommentForm.patchValue(dataName);
+          console.log('dataName');
+          console.log(dataName);
         });
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.computers.length; i++) {
@@ -195,5 +196,16 @@ export class ComputerListComponent implements OnInit {
         this.ngOnInit();
       });
     });
+  }
+  onSearch(): void {
+    this.p = 0;
+    // tslint:disable-next-line:max-line-length
+    this.computerService.search(this.handleCommentForm.value.idStatusComputer).subscribe(data => {
+      this.computers = data;
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.computers.length; i++) {
+        this.computers[i].statusView = false;
+      }
+    }, error =>  console.log(error));
   }
 }
