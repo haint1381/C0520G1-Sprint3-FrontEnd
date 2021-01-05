@@ -45,41 +45,39 @@ export class ComputerListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // if (this.token.getUser() !== null) {
-    // if (this.token.getUser().id == 1) {
-    this.checkButton = false;
-    this.p = 0;
-    this.computerService.getAllComputerStatus().subscribe(data => {
-      this.computerStatuses = data;
-    });
-    this.computerService.getAllComputer().subscribe(data => {
-      this.computers = data;
-      console.log(this.computers);
-    }, error => {
-    }, () => {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.computers.length; i++) {
-        this.computers[i].statusView = false;
+    if (this.token.getUser() !== null) {
+      if (this.token.getUser().id == 1) {
+        this.checkButton = false;
+        this.p = 0;
+        this.computerService.getAllComputerStatus().subscribe(data => {
+          this.computerStatuses = data;
+        });
+        this.computerService.getAllComputer().subscribe(data => {
+          this.computers = data;
+          console.log(this.computers);
+        }, error => {
+        }, () => {
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < this.computers.length; i++) {
+            this.computers[i].statusView = false;
+          }
+        });
+        this.handleCommentForm = this.formBuilder.group({
+          idComputer: [''],
+          computerName: ['', Validators.required],
+          fullName: [''],
+          idStatusComputer: ['', Validators.required],
+          timeStart: [''],
+          timeUser: [''],
+          status: [''],
+          money: [''],
+        });
+      } else {
+        this.router.navigateByUrl('/error-page');
       }
-    });
-    this.handleCommentForm = this.formBuilder.group({
-      idComputer: [''],
-      computerName: ['', Validators.required],
-      fullName: [''],
-      idStatusComputer: ['', Validators.required],
-      timeStart: [''],
-      timeUser: [''],
-      status: [''],
-      money: [''],
-    });
-    // }
-    //   else {
-    //     this.router.navigateByUrl('/error-page');
-    //   }
-    // }
-    // else {
-    //   this.router.navigateByUrl('/error-page');
-    // }
+    } else {
+      this.router.navigateByUrl('/error-page');
+    }
     this.handleCommentForm = this.formBuilder.group({
       idComputer: [''],
       computerName: ['', Validators.required],
@@ -238,3 +236,4 @@ export class ComputerListComponent implements OnInit {
     }, error => console.log(error));
   }
 }
+
