@@ -78,8 +78,6 @@ export class ComputerListComponent implements OnInit {
     } else {
       this.router.navigateByUrl('/error-page');
     }
-
-    });
     this.handleCommentForm = this.formBuilder.group({
       idComputer: [''],
       computerName: ['', Validators.required],
