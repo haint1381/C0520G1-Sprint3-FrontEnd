@@ -1,147 +1,162 @@
-<div id="app" class="container-fluid">
-  <div class="row">
-    <div class="card-body">
-<!--      </form>-->
-      <form focusInvalidInput [formGroup]="handleCommentForm">
-        <div class="row">
-          <div class="col-2">
-          <button class="btn btn-success mb-3" id="but_add" (click)="addForm()"><i class="fas fa-plus"></i></button>
-          </div>
-          <div class="col-6"></div>
-          <div class="row col-4">
-            <div class="col-10 p-0">
-                <select class="form-control form-control-sm" formControlName="idStatusComputer">
-                  <option [selected]="true" [value]="0">Tất cả</option>
-                  <option style="color: black" *ngFor="let status of computerStatuses" [value]="status.idStatusComputer">{{status.statusComputerName}}</option>
-                </select>
-            </div>
+<div id="app" class="container-fluid abc">
+  <br>
+  <p class="text-center" style="font-size: 20px;font-weight: bolder;color: black">Quản lý máy</p>
+  <div class="mt-3 container-fluid col-md-11">
+    <div class="col-md-12">
+      <div class="card-body">
+        <!--      </form>-->
+        <form focusInvalidInput [formGroup]="handleCommentForm">
+          <div class="row">
             <div class="col-2">
-                <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit" (click)="onSearch()"><i class="fas fa-search"></i></button>
+              <button class="btn btn-success mb-3" id="but_add" (click)="addForm()"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="col-6"></div>
+            <div class="row col-4">
+              <div class="col-10 p-0">
+                <select [formGroup]="formSearch" class="form-control form-control-sm"
+                        formControlName="idStatusComputer">
+                  <option [selected]="true" [value]="0">Tất cả</option>
+                  <option style="color: black" *ngFor="let status of computerStatuses"
+                          [value]="status.idStatusComputer">{{status.statusComputerName}}</option>
+                </select>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit" (click)="onSearch()"><i
+                  class="fas fa-search"></i></button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <table class="table table-responsive-md table-sm table-hover table-striped"
-               id="makeEditable">
-          <thead style="background: #0b222a; color: #ffbb0b">
-          <tr class="text-center">
-            <th>Stt</th>
-            <th>Tên máy</th>
-            <th>Tình trạng</th>
-            <th>Tên người dùng</th>
-            <th>Thời gian bắt đầu</th>
-            <th>Thời gian sử dung</th>
-            <th>Số dư tài khoản</th>
-            <th>Hành động</th>
-          </tr>
-          </thead>
-          <tbody>
-          <ng-container *ngFor="let fg of computers | paginate : { itemsPerPage: 5, currentPage: p }; let i = index">
-            <tr *ngIf="fg.statusView == false; else blockId">
-              <td class="text-right">{{i + 1}}</td>
-              <td class="text-left">{{fg.computerName}}</td>
-              <td class="text-left">{{fg.statusComputerName}}</td>
-              <td class="text-center">{{fg.fullName}}</td>
-              <td class="text-center">{{fg.timeStart}}</td>
-              <td class="text-center">{{fg.timeUser}}</td>
-              <td class="text-right">{{fg.money}}</td>
-              <td class="text-center">
-                <div class="btn-group pull-right ">
-                  <button type="button" class="btn btn-sm btn-warning mx-2 mb-2 rounded" (click)="changeSelection(fg.idComputer)">
-                    <i class="fas fa-tools"></i></button>
-                </div>
-                <div class="btn-group pull-right " (click)="dialogDeleteComment(fg.idComputer)">
-                  <button type="button" class="btn btn-sm btn-danger mx-2 mb-2 rounded">
-                    <i class="fas fa-trash"></i></button>
-                </div>
-              </td>
+          <table class="table table-responsive-md table-sm table-hover table-striped"
+                 id="makeEditable">
+            <thead style="background: white; color: #ffbb0b">
+            <tr class="text-center">
+              <th>Stt</th>
+              <th>Tên máy</th>
+              <th>Tình trạng</th>
+              <th>Tên người dùng</th>
+              <th>Thời gian bắt đầu</th>
+              <th>Thời gian sử dung</th>
+              <th>Số dư tài khoản</th>
+              <th>Hành động</th>
             </tr>
-            <ng-template #blockId>
-              <tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let fg of computers | paginate : { itemsPerPage: 5, currentPage: p }; let i = index">
+              <tr *ngIf="fg.statusView == false; else blockId">
                 <td class="text-right">{{i + 1}}</td>
-                <td class="text-left">
-                  <input class="form-control form-control-sm" formControlName="computerName">
-                  <span *ngIf="handleCommentForm.get('computerName').hasError('required')"
-                        style="color: red">Vui lòng nhập.</span>
-                  <span
-                    *ngIf="handleCommentForm.get('computerName').hasError('pattern')"
-                    style=" color: red">Tên từ 3-20 ký tự.</span>
-                </td>
-                <td class="text-left">
-                  <select class="form-control form-control-sm" formControlName="idStatusComputer">
-<!--                    <option>a</option>-->
-                    <option style="color: black" *ngFor="let status of computerStatuses" [value]="status.idStatusComputer">{{status.statusComputerName}}</option>
-                  </select>
-                  <span *ngIf="handleCommentForm.get('idStatusComputer').hasError('required')"
-                        style="color: red">Vui lòng chọn.</span>
-                </td>
+                <td class="text-left">{{fg.computerName}}</td>
+                <td class="text-left">{{fg.statusComputerName}}</td>
+                <td class="text-center">{{fg.fullName}}</td>
+                <td class="text-center">{{fg.timeStart}}</td>
+                <td class="text-center">{{fg.timeUser}}</td>
+                <td class="text-right">{{fg.money}}</td>
                 <td class="text-center">
-                  <input class="form-control form-control-sm" formControlName="fullName" readonly>
-                </td>
-                <td class="text-center">
-                  <input class="form-control form-control-sm" formControlName="timeStart" readonly>
-                </td>
-                <td class="text-center">
-                  <input class="form-control form-control-sm" formControlName="timeUser" readonly>
-                </td>
-                <td class="text-center">
-                  <input class="form-control form-control-sm" formControlName="money" readonly>
-                </td>
-                <td class="text-center">
-                  <div class="btn-group pull-right " (click)="editComputer(fg.idComputer)">
-                    <button type="button" class="btn btn-sm btn-success mx-2 mb-2 rounded">
-                      <i class="fas fa-check"></i></button>
+                  <div class="btn-group pull-right ">
+                    <button type="button" class="btn btn-sm btn-warning mx-2 mb-2 rounded"
+                            (click)="changeSelection(fg.idComputer)">
+                      <i class="fas fa-tools"></i></button>
                   </div>
-                  <div class="btn-group pull-right " (click)="changeSelection123(fg.idComputer)">
+                  <div class="btn-group pull-right " (click)="dialogDeleteComment(fg.idComputer)">
                     <button type="button" class="btn btn-sm btn-danger mx-2 mb-2 rounded">
-                      <i class="fas fa-times"></i></button>
+                      <i class="fas fa-trash"></i></button>
                   </div>
                 </td>
               </tr>
-            </ng-template>
-          </ng-container>
-          </tbody>
-        </table>
-      </form>
-      <div class="d-flex justify-content-center">
-        <pagination-controls (pageChange)="p = $event" previousLabel="Trước"
-                             nextLabel="Sau"
-                             responsive="true"></pagination-controls>
+              <ng-template #blockId>
+                <tr>
+                  <td class="text-right">{{i + 1}}</td>
+                  <td class="text-left">
+                    <input class="form-control form-control-sm" formControlName="computerName">
+                    <span *ngIf="handleCommentForm.get('computerName').hasError('required')"
+                          style="color: red">Vui lòng nhập.</span>
+                    <span
+                      *ngIf="handleCommentForm.get('computerName').hasError('pattern')"
+                      style=" color: red">Tên từ 3-20 ký tự.</span>
+                  </td>
+                  <td class="text-left">
+                    <select class="form-control form-control-sm" formControlName="idStatusComputer">
+                      <!--                    <option>a</option>-->
+                      <option style="color: black" *ngFor="let status of computerStatuses"
+                              [value]="status.idStatusComputer">{{status.statusComputerName}}</option>
+                    </select>
+                    <span *ngIf="handleCommentForm.get('idStatusComputer').hasError('required')"
+                          style="color: red">Vui lòng chọn.</span>
+                  </td>
+                  <td class="text-center">
+                    <input class="form-control form-control-sm" formControlName="fullName" readonly>
+                  </td>
+                  <td class="text-center">
+                    <input class="form-control form-control-sm" formControlName="timeStart" readonly>
+                  </td>
+                  <td class="text-center">
+                    <input class="form-control form-control-sm" formControlName="timeUser" readonly>
+                  </td>
+                  <td class="text-center">
+                    <input class="form-control form-control-sm" formControlName="money" readonly>
+                  </td>
+                  <td class="text-center">
+                    <div class="btn-group pull-right " (click)="editComputer(fg.idComputer)">
+                      <button type="button" class="btn btn-sm btn-success mx-2 mb-2 rounded">
+                        <i class="fas fa-check"></i></button>
+                    </div>
+                    <div class="btn-group pull-right " (click)="changeSelection123(fg.idComputer)">
+                      <button type="button" class="btn btn-sm btn-danger mx-2 mb-2 rounded">
+                        <i class="fas fa-times"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </ng-container>
+            </tbody>
+          </table>
+        </form>
+        <div class="d-flex justify-content-center">
+          <pagination-controls (pageChange)="p = $event" previousLabel="Trước"
+                               nextLabel="Sau"
+                               responsive="true"></pagination-controls>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+
 <!-----                   TRAN HUU HIEN ---------------------------------------------------- -->
 
-<div class="pt-4">
-  <p class="text-center " style="font-size: 20px;font-weight: bolder;color: white">Yêu Cầu Dịch Vụ</p>
-<!--  <p class="ml-2 text-left">Có {{billList.length}} yêu cầu.</p>-->
-  <table class="table table-hover ">
-    <thead class="table-dark">
-    <tr>
-      <th>STT</th>
-      <th>Máy</th>
-      <th>Tên tài khoản</th>
-      <th>Trạng thái</th>
-      <th style="text-align: center">Tác vụ</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let bill of billList |paginate: { itemsPerPage: 5, currentPage: p1 }; let i = index">
-      <td>{{i + 1}}</td>
-      <td>Máy 01</td>
-      <td>{{bill.user.username}}</td>
-      <td>
-        <span *ngIf="bill.status==true">đã thanh toán</span>
-        <span *ngIf="bill.status==false">chưa thanh toán</span>
-      </td>
-      <td style="text-align: center">
-        <button type="button" class="btn btn-dark btn-sm  mr-3 " (click)="openBillDetail(bill.idBill)"> Xem yêu cầu
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<div class="container-fluid abc">
+  <p class="text-center" style="font-size: 20px;font-weight: bolder;color: black">Yêu Cầu Dịch Vụ</p>
+  <div class="mt-3 container-fluid col-md-11">
+    <p class="text-left ml-4">Có {{billList.length}} yêu cầu.</p>
+    <div class="col-md-12">
+      <table class="table table-responsive-md table-sm table-hover table-striped">
+        <thead style="background: white; color: #ffbb0b">
+        <tr class="text-center">
+          <th>STT</th>
+          <th>Máy</th>
+          <th>Tên tài khoản</th>
+          <th>Trạng thái</th>
+          <th style="text-align: center">Tác vụ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let bill of billList |paginate: { itemsPerPage: 5, currentPage: p1 }; let i = index">
+          <td>{{i + 1}}</td>
+          <td>Máy 01</td>
+          <td>{{bill.user.username}}</td>
+          <td>
+            <span *ngIf="bill.status==true">đã thanh toán</span>
+            <span *ngIf="bill.status==false">chưa thanh toán</span>
+          </td>
+          <td style="text-align: center">
+            <button type="button" class="btn btn-dark btn-sm  mr-3 " (click)="openBillDetail(bill.idBill)"> Xem yêu cầu
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
   <pagination-controls class=" d-flex justify-content-center " (pageChange)="p1 = $event" previousLabel="Trước"
                        nextLabel="Sau" responsive="true"></pagination-controls>
 </div>
