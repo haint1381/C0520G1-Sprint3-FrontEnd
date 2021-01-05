@@ -78,6 +78,22 @@ export class ComputerListComponent implements OnInit {
     } else {
       this.router.navigateByUrl('/error-page');
     }
+
+    });
+    this.handleCommentForm = this.formBuilder.group({
+      idComputer: [''],
+      computerName: ['', Validators.required],
+      fullName: [''],
+      idStatusComputer: ['', Validators.required],
+      timeStart: [''],
+      timeUser: [''],
+      status: [''],
+      money: [''],
+    });
+    // Của Hiên đừng xóa nữa
+    this.request.getListBill().subscribe(data => {
+      this.billList = data;
+    });
   }
 
   dialogDeleteComment(idComputer): void {
