@@ -24,6 +24,7 @@ export class ComputerListComponent implements OnInit {
   handleCommentForm: FormGroup;
   checkButton = false;
   typeComputer = '';
+    public formSearch: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,13 +54,16 @@ export class ComputerListComponent implements OnInit {
     });
     this.handleCommentForm = this.formBuilder.group({
       idComputer: [''],
-      computerName: ['', Validators.required, Validators.pattern(/^[a-zA-Zà-ỹÀ-Ỹ_0-9\s]{5,30}$/)],
+      computerName: ['', [Validators.required, Validators.maxLength(30), Validators.pattern(/^[a-zA-Zà-ỹÀ-Ỹ_0-9\s]{3,30}$/)]],
       fullName: [''],
       idStatusComputer: ['', Validators.required],
       timeStart: [''],
       timeUser: [''],
       status: [''],
       money: [''],
+    });
+    this.formSearch = this.formBuilder.group({
+      idStatusComputer: [''],
     });
   }
 
@@ -93,10 +97,13 @@ export class ComputerListComponent implements OnInit {
       // tslint:disable-next-line:triple-equals
       if (this.checkButton == false) {
         this.computerService.getComputerById(idComputer).subscribe(dataName => {
-          this.typeComputer = dataName.statusComputer.idStatusComputer;
+          console.log(dataName);
+          this.typeComputer = dataName.idStatusComputer;
           console.log(this.typeComputer);
           this.handleCommentForm.controls.idStatusComputer.setValue(this.typeComputer);
           this.handleCommentForm.patchValue(dataName);
+          console.log('dataName');
+          console.log(dataName);
         });
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.computers.length; i++) {
@@ -170,5 +177,16 @@ export class ComputerListComponent implements OnInit {
         this.ngOnInit();
       }
     }
+  }
+  onSearch(): void {
+    this.p = 0;
+    // tslint:disable-next-line:max-line-length
+    this.computerService.search(this.handleCommentForm.value.idStatusComputer).subscribe(data => {
+      this.computers = data;
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.computers.length; i++) {
+        this.computers[i].statusView = false;
+      }
+    }, error =>  console.log(error));
   }
 }

@@ -1,12 +1,26 @@
 <div id="app" class="container-fluid">
   <div class="row">
     <div class="card-body">
+<!--      </form>-->
       <form focusInvalidInput [formGroup]="handleCommentForm">
-        <select class="form-control form-control-sm" formControlName="idStatusComputer">
-          <!--                    <option>a</option>-->
-          <option style="color: black" *ngFor="let status of computerStatuses" [value]="status.idStatusComputer">{{status.statusComputerName}}</option>
-        </select>
-        <button class="btn btn-success mb-3" id="but_add" (click)="addForm()"><i class="fas fa-plus"></i></button>
+        <div class="row">
+          <div class="col-2">
+          <button class="btn btn-success mb-3" id="but_add" (click)="addForm()"><i class="fas fa-plus"></i></button>
+          </div>
+          <div class="col-6"></div>
+          <div class="row col-4">
+            <div class="col-10 p-0">
+                <select [formGroup]="formSearch" class="form-control form-control-sm" formControlName="idStatusComputer">
+                  <option [selected]="true" [value]="0">Tất cả</option>
+                  <option style="color: black" *ngFor="let status of computerStatuses" [value]="status.idStatusComputer">{{status.statusComputerName}}</option>
+                </select>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-sm btn-success my-2 my-sm-0" type="submit" (click)="onSearch()"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+
         <table class="table table-responsive-md table-sm table-hover table-striped"
                id="makeEditable">
           <thead style="background: #0b222a; color: #ffbb0b">
@@ -26,7 +40,7 @@
             <tr *ngIf="fg.statusView == false; else blockId">
               <td class="text-right">{{i + 1}}</td>
               <td class="text-left">{{fg.computerName}}</td>
-              <td class="text-center">{{fg.statusComputerName}}</td>
+              <td class="text-left">{{fg.statusComputerName}}</td>
               <td class="text-center">{{fg.fullName}}</td>
               <td class="text-center">{{fg.timeStart}}</td>
               <td class="text-center">{{fg.timeUser}}</td>
@@ -44,26 +58,22 @@
             </tr>
             <ng-template #blockId>
               <tr>
-                <td class="text-center">{{i + 1}}</td>
+                <td class="text-right">{{i + 1}}</td>
                 <td class="text-left">
                   <input class="form-control form-control-sm" formControlName="computerName">
-                  <label class="text-danger d-flex align-self-center " role="alert"
-                         *ngIf="handleCommentForm.get('computerName').invalid && handleCommentForm.get('computerName').touched">
-                    Vui lòng nhập dữ liệu
-                  </label>
-                  <span *ngIf="handleCommentForm.get('computerName').hasError('pattern')"
-                        style="font-size: 12px">Vui lòng nhập địa chỉ.</span>
-                  <span></span>
+                  <span *ngIf="handleCommentForm.get('computerName').hasError('required')"
+                        style="color: red">Vui lòng nhập.</span>
+                  <span
+                    *ngIf="handleCommentForm.get('computerName').hasError('pattern')"
+                    style=" color: red">Tên từ 3-20 ký tự.</span>
                 </td>
-                <td class="text-center">
+                <td class="text-left">
                   <select class="form-control form-control-sm" formControlName="idStatusComputer">
 <!--                    <option>a</option>-->
                     <option style="color: black" *ngFor="let status of computerStatuses" [value]="status.idStatusComputer">{{status.statusComputerName}}</option>
                   </select>
-                  <label class="text-danger d-flex align-self-center" role="alert"
-                         *ngIf="handleCommentForm.get('idStatusComputer').invalid && handleCommentForm.get('idStatusComputer').touched">
-                    Vui lòng chọn
-                  </label>
+                  <span *ngIf="handleCommentForm.get('idStatusComputer').hasError('required')"
+                        style="color: red">Vui lòng chọn.</span>
                 </td>
                 <td class="text-center">
                   <input class="form-control form-control-sm" formControlName="fullName" readonly>
@@ -75,7 +85,7 @@
                   <input class="form-control form-control-sm" formControlName="timeUser" readonly>
                 </td>
                 <td class="text-center">
-                  <input class="form-control form-control-sm" formControlName="money  " readonly>
+                  <input class="form-control form-control-sm" formControlName="money" readonly>
                 </td>
                 <td class="text-center">
                   <div class="btn-group pull-right " (click)="editComputer(fg.idComputer)">
