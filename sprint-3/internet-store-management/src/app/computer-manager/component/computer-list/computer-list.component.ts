@@ -69,6 +69,10 @@ export class ComputerListComponent implements OnInit {
       status: [''],
       money: [''],
     });
+    // Của Hiên đừng xóa nữa
+    this.request.getListBill().subscribe(data => {
+      this.billList = data;
+    });
   }
 
   dialogDeleteComment(idComputer): void {
@@ -179,6 +183,7 @@ export class ComputerListComponent implements OnInit {
       }
     }
   }
+
   // hien
   openBillDetail(idBill): void {
     console.log(idBill);
