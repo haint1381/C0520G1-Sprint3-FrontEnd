@@ -12,6 +12,8 @@ import {RequestServiceComponent} from '../../../service-request-manager/componen
 import {ResetPasswordComponent} from '../reset-password/reset-password.component';
 import {MessageComponent} from '../message/message.component';
 import {DepositAccountComponent} from '../../../service-request-manager/component/deposit-account/deposit-account.component';
+import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
+import {PaymentBuyHourComponent} from '../../../service-request-manager/component/payment-buy-hour/payment-buy-hour.component';
 
 @Component({
   selector: 'app-home-page',
@@ -133,6 +135,18 @@ export class HomePageComponent implements OnInit {
     const dialogRef = this.dialog.open(DepositAccountComponent, {
       panelClass: 'app-full-bleed-dialog',
       width: '350px',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openPaymentHours(idUser: string, price: string, hour: string): void {
+    const dialogRef = this.dialog.open(PaymentBuyHourComponent, {
+      panelClass: 'app-full-bleed-dialog',
+      width: '500px',
+      data: {dataId: idUser, dataPrice: price, dataHour: hour},
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {

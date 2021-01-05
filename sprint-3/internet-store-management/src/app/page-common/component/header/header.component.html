@@ -5,7 +5,8 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav topnav" style="margin-left: 87px">
       <li class="nav-item text-center d-flex" style="width: 125px">
-        <i class="fas fa-home" style="color: white; margin-top: 16px"></i><a class="nav-link text-white font-text mt-2" [routerLink]="['']">TRANG CHỦ</a>
+        <i class="fas fa-home" style="color: white; margin-top: 16px"></i><a class="nav-link text-white font-text mt-2"
+                                                                             [routerLink]="['']">TRANG CHỦ</a>
       </li>
       <li class="nav-item text-center" style="width: 125px">
         <a class="nav-link text-white font-text mt-2" [routerLink]="['/my-game']">TRÒ CHƠI</a>
@@ -19,7 +20,8 @@
     </ul>
     <a *ngIf="role ==='ROLE_ADMIN'" class="nav-item offset-7" style="width: 125px">
       <div class="dropdown">
-        <a class="nav-link text-white font-text mt-2" data-toggle="dropdown">&nbsp;&nbsp;<i class="fas fa-cogs"></i>&nbsp;QUẢN LÝ <span class="caret"></span></a>
+        <a class="nav-link text-white font-text mt-2" data-toggle="dropdown">&nbsp;&nbsp;<i class="fas fa-cogs"></i>&nbsp;QUẢN
+          LÝ <span class="caret"></span></a>
         <ul class="dropdown-menu" style="background-color: #0b222a">
           <li><a style="color: white" [routerLink]="['user-list']">Người dùng</a></li>
           <li><a style="color: white" [routerLink]="['computer-list']">Máy tính</a></li>
