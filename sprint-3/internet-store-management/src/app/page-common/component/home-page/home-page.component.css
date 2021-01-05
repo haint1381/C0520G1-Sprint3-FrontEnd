@@ -1,0 +1,16 @@
+body {
+  background-color: rgba(202,203,219,0.26)
+}
+
+.background-color {
+  background-color: #1b1e21;
+}
+*{
+  color: white;
+}
+hr{
+  background-color: white;
+}
+.abc {
+  background-color: black;
+}

@@ -1,54 +1,86 @@
-<div class="container-fluid px-0" style="height: 100vh">
+<div class="container-fluid px-0 abc" style="height: 100vh">
   <div class="col-12-md px-5">
     <div class=" col-12-md text-center" style="margin-right: 90px">
-      <h2>Thông tin thành viên</h2>
+      <h2 class="mt-5">Thông tin thành viên</h2>
     </div>
     <div class="mt-3">
       <div class="col-12-md d-flex">
         <div class="col-2-md">
-          <button class="btn btn-success fas fa-user-plus" data-toggle1="tooltip"
-                  data-placement="top" title="Thêm thành viên">
+          <button class="btn btn-success btn btn-sm  " data-toggle1="tooltip"
+                  data-placement="top" (click)="openDialogCreate()" title="Thêm thành viên">
+            <i class="fas fa-user-plus"></i>
           </button>
         </div>
-        <div class="offset-md-9">
-          <form class="form-inline ">
-            <input class="form-control form-control-sm mr-sm-2" type="text" placeholder="Tìm kiếm">
-            <button class="btn btn-sm btn-success fas fa-search" type="submit" data-toggle="tooltip"
-                    data-placement="bottom" title="Tìm kiếm"></button>
-          </form>
-        </div>
-      </div>
 
-      <table class="table table-hover table-striped mt-3">
+        <div class="offset-md-9">
+          <div class="form-inline ">
+            <input class="form-control form-control-sm mr-sm-2" type="text" placeholder="Tìm kiếm"
+                   [(ngModel)]="valueSearch" #value>
+            <button class="btn btn-sm btn-info" type="submit" data-toggle="tooltip"
+                    data-placement="bottom" title="Tìm kiếm" (click)="search()">
+              <i class=" fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <p class="text-primary mt-3" *ngIf="userList != null; else block">Tổng số thành viên là: {{userList.length}}</p>
+      <ng-template #block>
+        <small class="font-weight-bold">Tổng số thành viên là: 0</small>
+      </ng-template>
+      <table class="table table-hover table-striped">
         <thead>
         <tr>
+          <th>STT</th>
           <th>Mã TV</th>
           <th>Họ và tên</th>
           <th>Tên đang nhập</th>
           <th>Giới tính</th>
           <th>Email</th>
           <th>Tài khoản</th>
-          <th style="text-align: center">Tác vụ</th>
+          <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tác vụ</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="userList; else blockList">
         <tr *ngFor="let user of userList|paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+          <td>{{i+1}}</td>
           <td>TV{{user.idUser}}</td>
           <td>{{user.fullName}}</td>
           <td>{{user.username}}</td>
-          <td>{{user.gender}}</td>
+          <td *ngIf="user.gender == true; else blockGender">Nam</td>
+          <ng-template #blockGender>
+            <td>Nữ</td>
+          </ng-template>
           <td>{{user.email}}</td>
           <td>{{user.money}}</td>
-          <td style="text-align: center">
-            <button type="button" class="btn btn-sm btn-warning mr-3 fas fa-tools"
+          <td class="row text-center">
+            <button type="button" class="btn btn-sm  mr-3  btn-info"
                     data-toggle="modal" data-toggle1=" tooltip"
-                    data-placement="bottom" title="Sửa" data-target="#edit"></button>
+                    data-placement="bottom" title="Chi tiết" (click)="openDialogDetail(user.idUser)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-warning mr-3 "
+                    data-toggle="modal" data-toggle1=" tooltip"
+                    data-placement="bottom" title="Sửa" (click)="openDialogEdit(user.idUser)">
+              <i class="fas fa-tools"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-warning mr-3" data-toggle="tooltip"
+                    (click)="openDialogChangePass(user.idUser)" title="Đổi mật khẩu">
+              <i class="fas fa-key"></i>
+            </button>
             <button type="button" class="btn btn-sm btn-danger mr-3 fas fa-trash-alt" data-toggle="tooltip"
-                    (click)="openDialogDelete(user.idUser)" title="Xóa"
-            ></button>
+                    (click)="openDialogDelete(user.idUser)" title="Xóa">
+            </button>
           </td>
         </tr>
         </tbody>
+        <ng-template #blockList>
+          <tbody>
+          <tr>
+            <td colspan="7"><h4 class="font-weight-bold  text-center">Không có dữ liệu!</h4></td>
+          </tr>
+          </tbody>
+        </ng-template>
       </table>
       <pagination-controls class=" d-flex justify-content-center " (pageChange)="p = $event" previousLabel="Trước"
                            nextLabel="Sau" responsive="true"></pagination-controls>

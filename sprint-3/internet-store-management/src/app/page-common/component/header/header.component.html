@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top py-0" style="background-color: #1b1e21">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav topnav" style="margin-left: 87px">
+      <li class="nav-item text-center" style="width: 125px">
+        <a class="nav-link text-white font-text mt-2" [routerLink]="['']">TRANG CHỦ</a>
+      </li>
+      <li class="nav-item text-center" style="width: 125px">
+        <a class="nav-link text-white font-text"><span
+          class="font-text" [routerLink]="['/my-game']">TRÒ CHƠI VÀ ỨNG DỤNG</span></a>
+      </li>
+      <li class="nav-item text-center" style="width: 125px">
+        <a class="nav-link text-white font-text mt-2">VÉ TRỌN GÓI</a>
+      </li>
+      <li class="nav-item text-center" style="width: 125px">
+        <a class="nav-link text-white font-text mt-2" (click)="openBoxRequest()">DỊCH VỤ</a>
+      </li>
+
+      <li *ngIf="role ==='ROLE_ADMIN'" class="nav-item text-center" style="width: 125px">
+        <div class="dropdown">
+          <a class="nav-link text-white font-text mt-2" data-toggle="dropdown">QUẢN LÝ <span class="caret"></span></a>
+          <ul class="dropdown-menu" style="background-color: #0b222a">
+            <li><a style="color: white" [routerLink]="['user-list']">Người dùng</a></li>
+            <li><a style="color: white" [routerLink]="['list-service']">Máy tính</a></li>
+            <li><a style="color: white" [routerLink]="['computer-list']">Dịch vụ</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 col-xs-12" style="background: #f9f4f4; height: 50px"></div>
+    <div class="col-md-6 col-xs-12"></div>
+    <div class="col-md-3 col-xs-12" style="background: #f9f4f4;"></div>
+  </div>
+</div>

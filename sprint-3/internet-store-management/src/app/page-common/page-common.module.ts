@@ -20,16 +20,16 @@ import { MyGameComponent } from './component/my-game/my-game.component';
     HeaderComponent,
     FooterComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(CommonRoute),
-    FormsModule,
-    SocialLoginModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    MatButtonModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(CommonRoute),
+        FormsModule,
+        SocialLoginModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatButtonModule,
+        ReactiveFormsModule
+    ],
   providers: [{
     provide: 'SocialAuthServiceConfig',
     useValue: {

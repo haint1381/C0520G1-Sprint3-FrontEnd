@@ -1,0 +1,27 @@
+.top10 {
+  text-align: center;
+margin-top: 8px;
+}
+a{
+  color: #fff;
+}
+a:hover{
+  color: #fff;
+}
+#myBtn{
+  position: fixed;
+  bottom: 5px;
+  right: 16px;
+  z-index: 99;
+  border: none;
+  outline: 0;
+  background-color: rgba(1,1,2,.36);
+  color: #fff;
+  cursor: pointer;
+  padding: 7px;
+  font-size: 11px;
+  border-radius: 7px;
+}
+#myBtn:hover{
+  background: #909090;
+}

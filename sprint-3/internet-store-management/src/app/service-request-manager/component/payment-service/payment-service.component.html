@@ -1,0 +1,36 @@
+<div class="pt-4">
+  <p class="text-center " style="font-size: 25px;font-weight: bolder;color: crimson">Yêu Cầu Dịch Vụ</p>
+  <p class="ml-2 text-left">Có {{billList.length}} yêu cầu.</p>
+  <table class="table table-hover ">
+    <thead class="table-dark">
+    <tr>
+      <th>STT</th>
+      <th>Máy</th>
+      <th>Tên tài khoản</th>
+      <th>Trạng thái</th>
+      <th style="text-align: center">Tác vụ</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let bill of billList |paginate: { itemsPerPage: 5, currentPage: p }; let i = index">
+      <td>{{i + 1}}</td>
+      <td>Máy 01</td>
+      <td>{{bill.user.username}}</td>
+      <td>
+        <span *ngIf="bill.status==true">đã thanh toán</span>
+        <span *ngIf="bill.status==false">chưa thanh toán</span>
+      </td>
+      <td style="text-align: center">
+        <button type="button" class="btn btn-dark btn-sm  mr-3 " (click)="openBillDetail(bill.idBill)"> Xem yêu cầu
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <pagination-controls class=" d-flex justify-content-center " (pageChange)="p = $event" previousLabel="Trước"
+                       nextLabel="Sau" responsive="true"></pagination-controls>
+</div>
+<div class="d-flex justify-content-end mr-3 pb-3">
+  <button class="btn btn-sm btn-dark text-light " style="width: 100px" mat-dialog-close=""> Đóng
+  </button>
+</div>
