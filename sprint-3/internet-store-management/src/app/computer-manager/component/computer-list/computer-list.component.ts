@@ -8,6 +8,7 @@ import {ComputerDeleteComponent} from '../computer-delete/computer-delete.compon
 import {ComputerStatus} from '../../model/ComputerStatus.class';
 import {PaymentDetailComponent} from '../../../service-request-manager/component/payment-detail/payment-detail.component';
 import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-computer-list',
@@ -49,7 +50,6 @@ export class ComputerListComponent implements OnInit {
     });
     this.computerService.getAllComputer().subscribe(data => {
       this.computers = data;
-      console.log(this.computers);
     }, error => {
     }, () => {
       // tslint:disable-next-line:prefer-for-of
@@ -88,7 +88,6 @@ export class ComputerListComponent implements OnInit {
 
   changeSelection(idComputer): void {
     if (idComputer == null) {
-      console.log('a');
       // @ts-ignore
       this.computers.shift(this.computer);
       // tslint:disable-next-line:prefer-for-of
@@ -103,13 +102,9 @@ export class ComputerListComponent implements OnInit {
       // tslint:disable-next-line:triple-equals
       if (this.checkButton == false) {
         this.computerService.getComputerById(idComputer).subscribe(dataName => {
-          console.log(dataName);
           this.typeComputer = dataName.idStatusComputer;
-          console.log(this.typeComputer);
           this.handleCommentForm.controls.idStatusComputer.setValue(this.typeComputer);
           this.handleCommentForm.patchValue(dataName);
-          console.log('dataName');
-          console.log(dataName);
         });
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.computers.length; i++) {
@@ -120,7 +115,6 @@ export class ComputerListComponent implements OnInit {
         }
         this.checkButton = true;
       }
-      console.log(this.computers);
     }
   }
 
@@ -148,13 +142,11 @@ export class ComputerListComponent implements OnInit {
   addForm(): void {
     // tslint:disable-next-line:triple-equals
     if (this.checkButton == false) {
-      console.log(this.computers.length);
       this.checkButton = true;
       this.computer = new Computer();
       this.computer.idComputer = null;
       this.computer.statusView = true;
       this.computers.unshift(this.computer);
-      console.log(this.computers.length);
     }
   }
 

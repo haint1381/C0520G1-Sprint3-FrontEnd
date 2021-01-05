@@ -10,7 +10,7 @@
           <div class="col-6"></div>
           <div class="row col-4">
             <div class="col-10 p-0">
-                <select [formGroup]="formSearch" class="form-control form-control-sm" formControlName="idStatusComputer">
+                <select class="form-control form-control-sm" formControlName="idStatusComputer">
                   <option [selected]="true" [value]="0">Tất cả</option>
                   <option style="color: black" *ngFor="let status of computerStatuses" [value]="status.idStatusComputer">{{status.statusComputerName}}</option>
                 </select>
@@ -115,7 +115,7 @@
 
 <div class="pt-4">
   <p class="text-center " style="font-size: 20px;font-weight: bolder;color: white">Yêu Cầu Dịch Vụ</p>
-  <p class="ml-2 text-left">Có {{billList.length}} yêu cầu.</p>
+<!--  <p class="ml-2 text-left">Có {{billList.length}} yêu cầu.</p>-->
   <table class="table table-hover ">
     <thead class="table-dark">
     <tr>
