@@ -4,6 +4,8 @@ import { ComputerListComponent } from './component/computer-list/computer-list.c
 import {RouterModule} from '@angular/router';
 import {ComputerRoutes} from './computer-manager-routing.modules';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import {NgxPaginationModule} from "ngx-pagination";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -12,9 +14,11 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
         ComputerListComponent
     ],
     imports: [
-      CommonModule,
-      Ng2SmartTableModule,
-      RouterModule.forChild(ComputerRoutes)
+        CommonModule,
+        Ng2SmartTableModule,
+        RouterModule.forChild(ComputerRoutes),
+        NgxPaginationModule,
+        ReactiveFormsModule
     ]
 })
 export class ComputerManagerModule { }
