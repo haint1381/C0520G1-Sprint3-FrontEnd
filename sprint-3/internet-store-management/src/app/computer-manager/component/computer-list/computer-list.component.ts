@@ -8,6 +8,8 @@ import {ComputerDeleteComponent} from '../computer-delete/computer-delete.compon
 import {ComputerStatus} from '../../model/ComputerStatus.class';
 import {PaymentDetailComponent} from '../../../service-request-manager/component/payment-detail/payment-detail.component';
 import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
+import {MatDialog} from '@angular/material/dialog';
+import {TokenStorageService} from '../../../page-common/service/token-storage/token-storage.service';
 
 @Component({
   selector: 'app-computer-list',
@@ -38,24 +40,45 @@ export class ComputerListComponent implements OnInit {
     private computerService: ComputerService,
     private toastr: ToastrService,
     private request: RequestServiceService,
+    private token: TokenStorageService
   ) {
   }
 
   ngOnInit(): void {
-    this.checkButton = false;
-    this.p = 0;
-    this.computerService.getAllComputerStatus().subscribe(data => {
-      this.computerStatuses = data;
-    });
-    this.computerService.getAllComputer().subscribe(data => {
-      this.computers = data;
-      console.log(this.computers);
-    }, error => {
-    }, () => {
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.computers.length; i++) {
-        this.computers[i].statusView = false;
+    if (this.token.getUser() !== null) {
+      if (this.token.getUser().id == 1) {
+        this.checkButton = false;
+        this.p = 0;
+        this.computerService.getAllComputerStatus().subscribe(data => {
+          this.computerStatuses = data;
+        });
+        this.computerService.getAllComputer().subscribe(data => {
+          this.computers = data;
+          console.log(this.computers);
+        }, error => {
+        }, () => {
+          // tslint:disable-next-line:prefer-for-of
+          for (let i = 0; i < this.computers.length; i++) {
+            this.computers[i].statusView = false;
+          }
+        });
+        this.handleCommentForm = this.formBuilder.group({
+          idComputer: [''],
+          computerName: ['', Validators.required],
+          fullName: [''],
+          idStatusComputer: ['', Validators.required],
+          timeStart: [''],
+          timeUser: [''],
+          status: [''],
+          money: [''],
+        });
+      } else {
+        this.router.navigateByUrl('/error-page');
       }
+    } else {
+      this.router.navigateByUrl('/error-page');
+    }
+
     });
     this.handleCommentForm = this.formBuilder.group({
       idComputer: [''],
@@ -202,6 +225,7 @@ export class ComputerListComponent implements OnInit {
       });
     });
   }
+
   onSearch(): void {
     this.p = 0;
     // tslint:disable-next-line:max-line-length
@@ -211,6 +235,6 @@ export class ComputerListComponent implements OnInit {
       for (let i = 0; i < this.computers.length; i++) {
         this.computers[i].statusView = false;
       }
-    }, error =>  console.log(error));
+    }, error => console.log(error));
   }
 }
