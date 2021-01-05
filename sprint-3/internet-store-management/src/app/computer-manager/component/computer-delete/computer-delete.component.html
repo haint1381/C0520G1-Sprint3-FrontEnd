@@ -1,0 +1,10 @@
+<h5 class="d-flex justify-content-center">Xác nhận xóa thông báo</h5>
+<hr>
+<p class="my-3">Bạn có muốn xóa
+  <span class="text-danger font-weight-bolder">{{computerName}}</span>
+  ? <br> Lưu
+  ý : không thể hoàn lại!!</p>
+<div class="row d-flex justify-content-end">
+  <button mat-dialog-close class="btn btn-secondary mr-3">Hủy</button>
+  <button class="btn btn-danger mr-3" (click)="deleteComment()">Xóa</button>
+</div>
