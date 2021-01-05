@@ -28,7 +28,7 @@
                   <thead>
                   <tr class="text-center">
                     <th class="text-primary" scope="col">Loại nước</th>
-                    <th class="text-primary" scope="col">Giá</th>
+                    <th class="text-primary" scope="col">Giá (VNĐ)</th>
                     <th class="text-primary" scope="col">Số lượng</th>
                     <th class="text-primary" scope="col">Kho</th>
                   </tr>
@@ -38,11 +38,13 @@
                         <input class="form-control form-control-sm" #idDrinks formControlName="idService" type="hidden">
                         <input class="form-control form-control-sm" formControlName="serviceName" readonly>
                       </td>
-                      <td><input class="form-control form-control-sm" formControlName="price" readonly></td>
+                      <td><input class="form-control form-control-sm" formControlName="price" readonly ></td>
                       <td><input class="form-control form-control-sm" #valueDrink formControlName="quantityPurchased"
-                                 type="number" (change)="totalMoneyAll(number(idDrinks.value),number(valueDrink.value))"
-                                 min="0"></td>
-                      <td><input class="form-control form-control-sm" readonly formControlName="quantity"></td>
+                                 type="number" [readOnly]="checkMessagePaymentSuccess==true"
+                                 (change)="totalMoneyBooked(formatNumber(idDrinks.value),formatNumber(valueDrink.value))"
+                                 min="0" max="{{quantity.value}}"></td>
+                      <td><input class="form-control form-control-sm" #quantity readonly formControlName="quantity"></td>
+                      <td class="text-center align-content-center" *ngIf="quantity.value == 0"><p class="text-danger font-weight-bold" style="font-size: 16px">Hết</p></td>
                     </ng-container>
                   </tr>
                   </thead>
@@ -55,7 +57,7 @@
                   <thead>
                   <tr class="text-center">
                     <th class="text-primary" scope="col">Món ăn</th>
-                    <th class="text-primary" scope="col">Giá</th>
+                    <th class="text-primary" scope="col">Giá (VNĐ)</th>
                     <th class="text-primary" scope="col">Số lượng</th>
                     <th class="text-primary" scope="col">Kho</th>
                   </tr>
@@ -67,9 +69,11 @@
                       </td>
                       <td><input class="form-control form-control-sm" formControlName="price" readonly></td>
                       <td><input class="form-control form-control-sm" #valueFood formControlName="quantityPurchased"
-                                 type="number" (change)="totalMoneyAll(number(idFood.value),number(valueFood.value))"
-                                 min="0"></td>
-                      <td><input class="form-control form-control-sm" readonly formControlName="quantity"></td>
+                                 type="number" [readOnly]="checkMessagePaymentSuccess==true"
+                                 (change)="totalMoneyBooked(formatNumber(idFood.value),formatNumber(valueFood.value))"
+                                 min="0" max="{{quantity.value}}" ></td>
+                      <td><input class="form-control form-control-sm" #quantity readonly formControlName="quantity"></td>
+                      <td class="text-center align-content-center" *ngIf="quantity.value == 0"><p class="text-danger font-weight-bold" style="font-size: 16px">Hết</p></td>
                     </ng-container>
                   </tr>
                   </thead>
@@ -82,7 +86,7 @@
                   <thead>
                   <tr class="text-center">
                     <th class="text-primary" scope="col">Loại card</th>
-                    <th class="text-primary" scope="col">Giá</th>
+                    <th class="text-primary" scope="col">Giá (VNĐ)</th>
                     <th class="text-primary" scope="col">Số lượng</th>
                     <th class="text-primary" scope="col">Kho</th>
                   </tr>
@@ -94,44 +98,62 @@
                       </td>
                       <td><input class="form-control form-control-sm" formControlName="price" readonly></td>
                       <td><input class="form-control form-control-sm" #valueCard formControlName="quantityPurchased"
-                                 type="number" (change)="totalMoneyAll(number(idCard.value),number(valueCard.value))"
-                                 min="0"></td>
-                      <td><input class="form-control form-control-sm" readonly formControlName="quantity"></td>
+                                 type="number" [readOnly]="checkMessagePaymentSuccess == true"
+                                 (change)="totalMoneyBooked(formatNumber(idCard.value),formatNumber(valueCard.value))"
+                                 min="0" max="{{quantity.value}}" ></td>
+                      <td><input class="form-control form-control-sm" readonly #quantity formControlName="quantity"></td>
+                      <td class="text-center align-content-center" *ngIf="quantity.value == 0"><p class="text-danger font-weight-bold" style="font-size: 16px">Hết</p></td>
                     </ng-container>
                   </tr>
                   </thead>
                 </table>
               </div>
             </div>
-            <div class="col-md-12 d-flex form-inline text-center">
-              <div class="col-md-6">
-                <label>Tổng số tiền <input class="form-control form-control-sm ml-2" [value]="totalMoney" type="text"
-                                           readonly></label>
+            <hr>
+            <div class="col-md-12 row form-inline text-center m-0 p-0">
+              <div class="col-md-6 d-flex justify-content-start p-0">
+                <label class="font-weight-bold m-0 p-0">Tổng số tiền <input class="form-control form-control-sm ml-2"
+                                                                    [value]="totalMoney" type="text"
+                                                                    readonly></label>
               </div>
-              <div class="col-md-6">
-                <label>Số dư tài khoản <input class="form-control form-control-sm ml-2" type="text" [value]="moneyUser"
-                                              readonly></label>
+              <div class="col-md-6 d-flex justify-content-end m-0 p-0">
+                <label class="font-weight-bold m-0 p-0">Số dư tài khoản <input class="form-control form-control-sm ml-2 m-0 p-0"
+                                                                       type="text" [value]="moneyUser"
+                                                                       readonly></label>
               </div>
             </div>
-            <div>
-              <label>Hình thức thanh toán
-                <select (change)="event($event)" >
-                  <option value="1">Tiền mặt</option>
-                  <option value="2">Trừ vào tài khoản</option>
-                </select></label>
+            <div class="col-md-12 row mt-4 form-inline m-0 p-0">
+              <div class="col-md-6 d-flex justify-content-start m-0 p-0">
+                <label class="font-weight-bold "  >Hình thức thanh toán
+                  <select class="ml-2 form-control-sm" (change)="event($event)" [disabled]="checkMessagePaymentSuccess == true" >
+                    <option value="0" >- Chọn -</option>
+                    <option value="1" >Trực tiếp</option>
+                    <option value="2" >Trừ vào tài khoản</option>
+                  </select></label>
+              </div>
+              <div class="col-md-6 d-flex justify-content-end">
+                <button class="btn btn-sm btn-info text-light mr-3" style="width: 100px" *ngIf="checkButtonPay == true && totalMoney>0"
+                        (click)="payment()">Thanh toán
+                </button>
+              </div>
             </div>
-            <button *ngIf="check1 == true" class="btn-outline-warning btn" (click)="payMent()">Thanh toán</button>
+            <div class="col-md-12 text-center mt-3 ">
+              <p class="text-success" *ngIf="checkMessagePaymentSuccess == true && totalMoney>0"> Thanh toán thành công. Vui
+                lòng nhấn
+                nút<span class="text-danger">"Gửi yêu cầu"</span> để
+                nhận dịch vụ</p>
+            </div>
           </div>
-          <div>
-            <p class="text-primary" *ngIf="check2 == true" > Thanh toán thành công</p>
-          </div>
-          <input type="hidden" formControlName="idUser">
-          <input type="hidden" formControlName="status" value="tr">
           <div class="mt-5 mb-2 d-flex justify-content-center">
-            <button class="btn btn-sm btn-secondary text-light " style="width: 100px" mat-dialog-close=""> Đóng
+            <button class="btn btn-sm btn-dark text-light " style="width: 100px" mat-dialog-close=""> Hủy
             </button>
             <button class="btn btn-sm btn-danger ml-5 text-light" style="width: 100px" role="button"
-                    (click)="sendData()"> Gửi yêu cầu
+                    [disabled]="totalMoney == 0 || isPayDirect == false " *ngIf="checkSubmitBill == false"
+                    (click)="createBillPaymentByAccount()"> Gửi yêu cầu
+            </button>
+            <button class="btn btn-sm btn-danger ml-5 text-light" style="width: 100px" role="button"
+                    [disabled]="totalMoney == 0 || isPayDirect == false" *ngIf="checkSubmitBill == true"
+                    (click)="creatBillPaymentDirect()"> Gửi yêu cầu
             </button>
           </div>
         </form>

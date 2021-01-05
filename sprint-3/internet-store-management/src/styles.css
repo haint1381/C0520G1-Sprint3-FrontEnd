@@ -3,9 +3,9 @@
 .app-full-bleed-dialog .mat-dialog-container {
   padding: 0;
 }
-* {
-  color: white;
-}
+/** {*/
+/*  color: white;*/
+/*}*/
 
 hr {
   border: 1px solid #dcdcdc;

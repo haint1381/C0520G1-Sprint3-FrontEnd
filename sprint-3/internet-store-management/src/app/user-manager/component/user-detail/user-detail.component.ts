@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {UserService} from '../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user-detail',
