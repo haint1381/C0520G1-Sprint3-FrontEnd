@@ -6,7 +6,7 @@ import {AuthGuard} from './helper/auth.guard';
 export const CommonRoute: Routes = [
   {path: 'my-game', component: MyGameComponent,
     canActivate: [AuthGuard],
-    data: {roles: ['ROLE_ADMIN']},
+    data: {roles: ['ROLE_ADMIN', 'ROLE_USER']},
   }, {
     path: '',
     redirectTo: 'home',

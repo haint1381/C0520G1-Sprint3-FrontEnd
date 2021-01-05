@@ -1,7 +1,9 @@
 <div class="container-fluid px-0 abc" style="height: 100vh">
   <div class="col-12-md px-5">
     <div class=" col-12-md text-center" style="margin-right: 90px">
-      <h2 class="mt-5">Thông tin thành viên</h2>
+      <br>
+      <br>
+      <h2>Thông tin thành viên</h2>
     </div>
     <div class="mt-3">
       <div class="col-12-md d-flex">
@@ -34,10 +36,10 @@
           <th>STT</th>
           <th>Mã TV</th>
           <th>Họ và tên</th>
-          <th>Tên đang nhập</th>
+          <th>Tên đăng nhập</th>
           <th>Giới tính</th>
           <th>Email</th>
-          <th>Tài khoản</th>
+          <th>Tài khoản(VNĐ)</th>
           <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Tác vụ</th>
         </tr>
         </thead>
@@ -53,7 +55,7 @@
           </ng-template>
           <td>{{user.email}}</td>
           <td>{{user.money}}</td>
-          <td class="row text-center">
+          <td class="row">
             <button type="button" class="btn btn-sm  mr-3  btn-info"
                     data-toggle="modal" data-toggle1=" tooltip"
                     data-placement="bottom" title="Chi tiết" (click)="openDialogDetail(user.idUser)">
@@ -68,8 +70,9 @@
                     (click)="openDialogChangePass(user.idUser)" title="Đổi mật khẩu">
               <i class="fas fa-key"></i>
             </button>
-            <button type="button" class="btn btn-sm btn-danger mr-3 fas fa-trash-alt" data-toggle="tooltip"
+            <button type="button" class="btn btn-sm btn-danger mr-3 " data-toggle="tooltip"
                     (click)="openDialogDelete(user.idUser)" title="Xóa">
+              <i class="fas fa-trash-alt"></i>
             </button>
           </td>
         </tr>
@@ -77,7 +80,7 @@
         <ng-template #blockList>
           <tbody>
           <tr>
-            <td colspan="7"><h4 class="font-weight-bold  text-center">Không có dữ liệu!</h4></td>
+            <td colspan="8"><h4 class="font-weight-bold  text-center">Không có dữ liệu!</h4></td>
           </tr>
           </tbody>
         </ng-template>

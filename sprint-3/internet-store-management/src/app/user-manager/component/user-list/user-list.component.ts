@@ -9,6 +9,13 @@ import {UserEditComponent} from '../user-edit/user-edit.component';
 import {UserDetailComponent} from '../user-detail/user-detail.component';
 import {ChangePasswordComponent} from '../change-password/change-password.component';
 
+
+function formatCash(str): void {
+  return str.split('').reverse().reduce((prev, next, index) => {
+    return ((index % 3) ? next : (next + '.')) + prev;
+  });
+}
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -38,9 +45,12 @@ export class UserListComponent implements OnInit {
     this.userService.getAll().subscribe(data => {
       this.userList = data;
       if (this.userList != null) {
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.userList.length; i++){
+          this.userList[i].money = formatCash(this.userList[i].money);
+        }
         this.sizeMSG = this.userList.length + '';
       }
-      console.log(this.userList);
       this.sendMessage();
     });
   }
@@ -63,7 +73,7 @@ export class UserListComponent implements OnInit {
 
   openDialogCreate(): void {
     const dialogRef = this.dialog.open(UserCreateComponent, {
-      width: '600px',
+      width: '670px',
       maxHeight: '90vh',
       disableClose: true
     });
@@ -75,7 +85,6 @@ export class UserListComponent implements OnInit {
   openDialogEdit(id): void {
     this.userService.getByID(id).subscribe(dataUser => {
       const dialogRef = this.dialog.open(UserEditComponent, {
-        panelClass: 'app-full-bleed-dialog',
         width: '600px',
         maxHeight: '90vh',
         data: {dataC: dataUser.idUser, dataD: dataUser.gender},

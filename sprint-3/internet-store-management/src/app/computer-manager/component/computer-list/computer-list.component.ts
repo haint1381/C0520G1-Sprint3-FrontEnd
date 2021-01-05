@@ -7,7 +7,8 @@ import {ToastrService} from 'ngx-toastr';
 import {MatDialog} from '@angular/material/dialog';
 import {ComputerDeleteComponent} from '../computer-delete/computer-delete.component';
 import {ComputerStatus} from '../../model/ComputerStatus.class';
-
+import {PaymentDetailComponent} from '../../../service-request-manager/component/payment-detail/payment-detail.component';
+import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
 
 @Component({
   selector: 'app-computer-list',
@@ -24,7 +25,11 @@ export class ComputerListComponent implements OnInit {
   handleCommentForm: FormGroup;
   checkButton = false;
   typeComputer = '';
-    public formSearch: FormGroup;
+  notification = null;
+  public billList = [];
+  p1: any;
+  public billId;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,6 +38,7 @@ export class ComputerListComponent implements OnInit {
     public dialog: MatDialog,
     private computerService: ComputerService,
     private toastr: ToastrService,
+    private request: RequestServiceService,
   ) {
   }
 
@@ -54,16 +60,13 @@ export class ComputerListComponent implements OnInit {
     });
     this.handleCommentForm = this.formBuilder.group({
       idComputer: [''],
-      computerName: ['', [Validators.required, Validators.maxLength(30), Validators.pattern(/^[a-zA-Zà-ỹÀ-Ỹ_0-9\s]{3,30}$/)]],
+      computerName: ['', Validators.required, Validators.pattern(/^[a-zA-Zà-ỹÀ-Ỹ_0-9\s]{5,30}$/)],
       fullName: [''],
       idStatusComputer: ['', Validators.required],
       timeStart: [''],
       timeUser: [''],
       status: [''],
       money: [''],
-    });
-    this.formSearch = this.formBuilder.group({
-      idStatusComputer: [''],
     });
   }
 
@@ -177,6 +180,23 @@ export class ComputerListComponent implements OnInit {
         this.ngOnInit();
       }
     }
+  }
+  // hien
+  openBillDetail(idBill): void {
+    console.log(idBill);
+    this.request.getBillByIdBill(idBill).subscribe(data => {
+      const dialogRef = this.dialog.open(PaymentDetailComponent, {
+        panelClass: 'app-full-bleed-dialog',
+        width: '650px',
+        data: {dataBill: data},
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.ngOnInit();
+      });
+    });
   }
   onSearch(): void {
     this.p = 0;
