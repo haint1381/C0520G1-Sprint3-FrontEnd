@@ -4,11 +4,8 @@ import {ComputerService} from '../../service/computer.service';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
-import {MatDialog} from '@angular/material/dialog';
 import {ComputerDeleteComponent} from '../computer-delete/computer-delete.component';
 import {ComputerStatus} from '../../model/ComputerStatus.class';
-import {Router} from '@angular/router';
-import {ToastrService} from 'ngx-toastr';
 import {PaymentDetailComponent} from '../../../service-request-manager/component/payment-detail/payment-detail.component';
 import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
 import {MatDialog} from '@angular/material/dialog';
@@ -43,7 +40,6 @@ export class ComputerListComponent implements OnInit {
     private computerService: ComputerService,
     private toastr: ToastrService,
     private request: RequestServiceService,
-    private dialog: MatDialog
   ) {
   }
 
