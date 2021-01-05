@@ -31,7 +31,6 @@ export class HeaderComponent implements OnInit {
 
   //  a hiên
   openBoxRequest(): void {
-    
      if (this.token.getUser() !== null){
       const dialogRef = this.dialog.open(RequestServiceComponent, {
         panelClass: 'app-full-bleed-dialog',
@@ -47,7 +46,6 @@ export class HeaderComponent implements OnInit {
       });
     }
   }
-  
   openListBill(): void {
     const dialogRef = this.dialog.open(PaymentServiceComponent, {
       panelClass: 'app-full-bleed-dialog',
