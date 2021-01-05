@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
 
 @Injectable({
@@ -7,6 +7,7 @@ import {Observable, Subject} from 'rxjs';
 })
 export class RequestServiceService {
   private API_REQUEST = 'http://localhost:8080/request';
+
   constructor(
     private http: HttpClient
   ) {
@@ -23,6 +24,7 @@ export class RequestServiceService {
   createBillPaymentByAccount(bill): Observable<any> {
     return this.http.post(this.API_REQUEST + '/payment-by-account', bill);
   }
+
   getListBill(): Observable<any> {
     return this.http.get(this.API_REQUEST + '/listBill');
   }
@@ -41,5 +43,12 @@ export class RequestServiceService {
 
   payDeposit(idBill): Observable<any> {
     return this.http.put(this.API_REQUEST + '/deposit/' + idBill, idBill);
+  }
+
+  buyHourOfUser(idUser: string, price: string ): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('idUser', idUser);
+    params = params.append('priceHour', price);
+    return this.http.get(this.API_REQUEST + '/getBuyHours', {params});
   }
 }
