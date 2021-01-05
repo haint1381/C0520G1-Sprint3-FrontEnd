@@ -5,6 +5,8 @@ import {UserService} from '../../../user-manager/service/user.service';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MessageNotificationComponent} from '../message-notification/message-notification.component';
+import {TokenStorageService} from '../../../page-common/service/token-storage/token-storage.service';
+import {MessageSuccessComponent} from '../message-success/message-success.component';
 
 @Component({
   selector: 'app-request-service',
@@ -23,9 +25,8 @@ export class RequestServiceComponent implements OnInit {
   public isPayDirect = false;
   public formBill: FormGroup;
 
-  // public subs = new Subscription();
-
   constructor(
+    private token: TokenStorageService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<RequestServiceComponent>,
     private request: RequestServiceService,
@@ -36,7 +37,8 @@ export class RequestServiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.idUser = 1;
+    this.idUser = this.token.getUser().id;
+    console.log(this.idUser);
     this.request.getListService().subscribe(data => {
       this.listService = data;
     }, () => {
@@ -66,9 +68,6 @@ export class RequestServiceComponent implements OnInit {
         listServiceRecordsCard: this.fb.array([])
       })
     });
-    // this.subs.add(this.formBill.valueChanges.subscribe(data => {
-    //   this.request.senDataComponent(this.formBill);
-    // }));
   }
 
   get listServiceRecordsDrink(): FormArray {
@@ -151,6 +150,7 @@ export class RequestServiceComponent implements OnInit {
     this.formBill.addControl('list', this.fb.control(this.billService));
     this.request.creatBillPaymentDirect(this.formBill.value).subscribe(data => {
       this.dialogRef.close();
+      this.openMessageSuccess();
     });
   }
 
@@ -182,13 +182,9 @@ export class RequestServiceComponent implements OnInit {
     console.log(this.formBill.value);
     this.request.createBillPaymentByAccount(this.formBill.value).subscribe(data => {
       this.dialogRef.close();
+      this.openMessageSuccess();
     });
   }
-
-  // tslint:disable-next-line:use-lifecycle-interface
-  // public ngOnDestroy(): void {
-  //   this.subs.unsubscribe();
-  // }
 
   event(event): void {
     const value = event.target.value;
@@ -210,7 +206,7 @@ export class RequestServiceComponent implements OnInit {
   payment(): void {
     if (this.moneyUser < this.totalMoney) {
       this.isPayDirect = false;
-      this.openMessage();
+      this.openMessageNotificationFail();
     } else {
       this.moneyUser = this.moneyUser - this.totalMoney;
       this.checkButtonPay = false;
@@ -219,7 +215,7 @@ export class RequestServiceComponent implements OnInit {
     }
   }
 
-  openMessage(): void {
+  openMessageNotificationFail(): void {
     const dialogRef = this.dialog.open(MessageNotificationComponent, {
       panelClass: 'app-full-bleed-dialog',
       width: '500px',
@@ -227,6 +223,21 @@ export class RequestServiceComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+    });
+  }
+
+  // tslint:disable-next-line:typedef
+  openMessageSuccess() {
+    const timeout = 1800;
+    const dialogRef = this.dialog.open(MessageSuccessComponent, {
+      panelClass: 'app-full-bleed-dialog',
+      width: '500px',
+      disableClose: true
+    });
+    dialogRef.afterOpened().subscribe(_ => {
+      setTimeout(() => {
+        dialogRef.close();
+      }, timeout);
     });
   }
 }

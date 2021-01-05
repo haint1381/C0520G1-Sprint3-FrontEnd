@@ -16,14 +16,15 @@
       <li *ngIf="role ==='ROLE_USER'" class="nav-item text-center" style="width: 125px">
         <a class="nav-link text-white font-text mt-2" (click)="openBoxRequest()">DỊCH VỤ</a>
       </li>
+  </li>
     </ul>
     <a *ngIf="role ==='ROLE_ADMIN'" class="nav-item offset-7" style="width: 125px">
       <div class="dropdown">
         <a class="nav-link text-white font-text mt-2" data-toggle="dropdown">&nbsp;&nbsp;<i class="fas fa-cogs"></i>&nbsp;QUẢN LÝ <span class="caret"></span></a>
         <ul class="dropdown-menu" style="background-color: #0b222a">
           <li><a style="color: white" [routerLink]="['user-list']">Người dùng</a></li>
-          <li><a style="color: white" [routerLink]="['list-service']">Máy tính</a></li>
-          <li><a style="color: white" [routerLink]="['computer-list']">Dịch vụ</a></li>
+          <li><a style="color: white" [routerLink]="['computer-list']">Máy tính</a></li>
+          <li><a style="color: white" [routerLink]="['list-service']">Dịch vụ</a></li>
         </ul>
       </div>
     </a>

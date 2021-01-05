@@ -11,6 +11,7 @@ import {Bill_service} from '../../model/bill_service';
 })
 export class PaymentDetailComponent implements OnInit {
   public getData;
+  public code: number;
   public userName: string;
   public idBill: number;
   public computerName: string;
@@ -18,7 +19,11 @@ export class PaymentDetailComponent implements OnInit {
   public listBill = [];
   public status: boolean;
   public totalPaymentMoney: number;
+  public totalPayDeposit: number;
+  public idBillService: number;
+
   public billServices: Bill_service[] = [];
+  public billDeposit: Bill_service[] = [];
 
   constructor(
     private request: RequestServiceService,
@@ -35,22 +40,36 @@ export class PaymentDetailComponent implements OnInit {
     this.moneyAccount = this.data.dataBill.user.money;
     this.status = this.data.dataBill.status;
     this.listBill = this.data.dataBill.billServiceCollection;
-    console.log(this.listBill);
-// tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.listBill.length; i++) {
+    this.code = this.listBill[0].services.typeServices.idTypeServices;
+    this.idBillService = this.listBill[0].idBillService;
+    if (this.code !== 4) {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.listBill.length; i++) {
+        // tslint:disable-next-line:max-line-length
+        this.billServices.push(new Bill_service(this.listBill[i].services.serviceName, this.listBill[i].services.price, this.listBill[i].quantityBooked));
+      }
+      console.log(this.billServices);
+      this.totalPaymentMoney = 0;
+      for (const element of this.billServices) {
+        this.totalPaymentMoney += element.priceService * element.quantityBook;
+      }
+    } else if (this.code === 4) {
       // tslint:disable-next-line:max-line-length
-      this.billServices.push(new Bill_service(this.listBill[i].services.serviceName, this.listBill[i].services.price, this.listBill[i].quantityBooked));
+      this.billDeposit.push(new Bill_service(this.listBill[0].services.serviceName, this.listBill[0].services.price, this.listBill[0].quantityBooked));
+      for (const element of this.billDeposit) {
+        this.totalPayDeposit = element.priceService;
+      }
     }
-    console.log(this.billServices);
-    this.totalPaymentMoney = 0;
-    for (const element of this.billServices) {
-      this.totalPaymentMoney += element.priceService * element.quantityBook;
-    }
-    console.log(this.totalPaymentMoney);
   }
 
   openDialogSetStatus(idBill: number): void {
     this.request.setStatusBill(idBill).subscribe(data => {
+      this.dialogRef.close();
+    });
+  }
+
+  openDialogPayDeposit(idBill: number): void {
+    this.request.payDeposit(idBill).subscribe(data => {
       this.dialogRef.close();
     });
   }

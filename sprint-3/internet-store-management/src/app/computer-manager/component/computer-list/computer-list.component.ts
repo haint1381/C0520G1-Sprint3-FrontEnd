@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Computer} from '../../model/Computer.class';
 import {ComputerService} from '../../service/computer.service';
 import {AbstractControl, FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {ToastrService} from "ngx-toastr";
+import {ToastrService} from 'ngx-toastr';
+import {PaymentDetailComponent} from '../../../service-request-manager/component/payment-detail/payment-detail.component';
+import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
+import {MatDialog} from '@angular/material/dialog';
 
 
 @Component({
@@ -16,12 +19,17 @@ export class ComputerListComponent implements OnInit {
   formService: FormArray = this.fb.array([]);
   p: number;
   notification = null;
+  public billList = [];
+  p1: any;
+  public billId;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private computerService: ComputerService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private request: RequestServiceService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -43,7 +51,12 @@ export class ComputerListComponent implements OnInit {
         });
       }
     });
+    this.request.getListBill().subscribe(data => {
+      this.billList = data;
+      console.log(data);
+    });
   }
+
   addFormService(): void {
     this.formService.push(this.fb.group({
       idComputer: [0],
@@ -57,7 +70,7 @@ export class ComputerListComponent implements OnInit {
     }));
   }
 
-  onDelete(value: any, i: number): void{
+  onDelete(value: any, i: number): void {
   }
 
   recordSubmit(fg): void {
@@ -72,5 +85,22 @@ export class ComputerListComponent implements OnInit {
         // this.showNotification('update');
       });
     }
+  }
+  // hien
+  openBillDetail(idBill): void {
+    console.log(idBill);
+    this.request.getBillByIdBill(idBill).subscribe(data => {
+      const dialogRef = this.dialog.open(PaymentDetailComponent, {
+        panelClass: 'app-full-bleed-dialog',
+        width: '650px',
+        data: {dataBill: data},
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.ngOnInit();
+      });
+    });
   }
 }
