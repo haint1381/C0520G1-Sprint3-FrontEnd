@@ -5,6 +5,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {ServiceDeleteDialogComponent} from './service-delete-dialog/service-delete-dialog.component';
+import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
   {
@@ -13,14 +15,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [ServiceManagerComponent],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        NgxPaginationModule,
-        Ng2SmartTableModule,
-        FormsModule,
-         ReactiveFormsModule
-    ]
+  declarations: [ServiceManagerComponent, ServiceDeleteDialogComponent],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    NgxPaginationModule,
+    Ng2SmartTableModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule
+  ]
 })
 export class ServiceAppRoutingModule { }

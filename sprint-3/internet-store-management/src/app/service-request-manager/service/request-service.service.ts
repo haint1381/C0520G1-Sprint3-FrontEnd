@@ -7,8 +7,6 @@ import {Observable, Subject} from 'rxjs';
 })
 export class RequestServiceService {
   private API_REQUEST = 'http://localhost:8080/request';
-  // private formBill = new Subject();
-  // currentForm = this.formBill.asObservable();
   constructor(
     private http: HttpClient
   ) {
@@ -25,11 +23,6 @@ export class RequestServiceService {
   createBillPaymentByAccount(bill): Observable<any> {
     return this.http.post(this.API_REQUEST + '/payment-by-account', bill);
   }
-
-  // tslint:disable-next-line:typedef
-  // senDataComponent(formBill) {
-  //   this.formBill.next(formBill);
-  // }
   getListBill(): Observable<any> {
     return this.http.get(this.API_REQUEST + '/listBill');
   }
@@ -40,5 +33,13 @@ export class RequestServiceService {
 
   setStatusBill(idBill): Observable<any> {
     return this.http.put(this.API_REQUEST + '/listBill/setStatus/' + idBill, idBill);
+  }
+
+  creatBillDeposit(bill): Observable<any> {
+    return this.http.post(this.API_REQUEST + '/deposit', bill);
+  }
+
+  payDeposit(idBill): Observable<any> {
+    return this.http.put(this.API_REQUEST + '/deposit/' + idBill, idBill);
   }
 }
