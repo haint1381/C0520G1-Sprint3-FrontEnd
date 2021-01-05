@@ -4,6 +4,7 @@ import { ServiceManagerComponent } from './service-manager/service-manager.compo
 import {RouterModule, Routes} from '@angular/router';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -18,6 +19,8 @@ const routes: Routes = [
         RouterModule.forChild(routes),
         NgxPaginationModule,
         Ng2SmartTableModule,
+        FormsModule,
+         ReactiveFormsModule
     ]
 })
 export class ServiceAppRoutingModule { }
