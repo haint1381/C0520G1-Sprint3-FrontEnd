@@ -29,7 +29,7 @@ export class ComputerListComponent implements OnInit {
   notification = null;
   public billList = [];
   p1: any;
-  public billId;
+  public size;
 
 
   constructor(
@@ -91,7 +91,17 @@ export class ComputerListComponent implements OnInit {
     // Của Hiên đừng xóa nữa
     this.request.getListBill().subscribe(data => {
       this.billList = data;
+      if (this.billList == null) {
+        this.size = 0;
+      } else {
+        this.size = this.billList.length;
+      }
     });
+    if (this.token.getUser().id != 1) {
+      this.handleCommentForm.value.idUser = this.token.getUser().id;
+      this.editComputer(1);
+      console.log(this.token.getUser().id);
+    }
   }
 
   dialogDeleteComment(idComputer): void {
