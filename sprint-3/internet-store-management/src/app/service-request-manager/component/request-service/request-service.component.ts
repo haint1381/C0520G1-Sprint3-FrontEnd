@@ -104,6 +104,7 @@ export class RequestServiceComponent implements OnInit {
             console.log('Transaction completed');
             this.checkMessagePaymentSuccess = true;
             this.isPayDirect = true;
+            this.checkButtonPayPal = false;
           });
         },
         onError: (data, actions) => {
