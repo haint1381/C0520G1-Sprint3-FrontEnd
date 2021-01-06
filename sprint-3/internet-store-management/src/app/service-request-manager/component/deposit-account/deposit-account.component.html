@@ -8,7 +8,7 @@
       <div class="form-group">
         <div class="mt-2">
           <label class="font-weight-bold ">Chọn số tiền
-            <select formControlName="idService">
+            <select formControlName="idService" #idService (change)="changeIdService(idService.value)">
               <option value="" selected [disabled]="true">-- Chọn --</option>
               <option *ngFor="let el of listDeposit" [value]="el.idService">{{el.serviceName}}</option>
             </select>
