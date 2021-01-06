@@ -43,6 +43,7 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.token.getUser() !== null) {
+      // tslint:disable-next-line:triple-equals
       if (this.token.getUser().id == 1) {
         this.title.setTitle('User');
         this.sizeMSG = 'Không có kết quả nào!';
@@ -50,9 +51,9 @@ export class UserListComponent implements OnInit {
           this.userList = data;
           if (this.userList != null) {
             // tslint:disable-next-line:prefer-for-of
-            for (let i = 0; i < this.userList.length; i++) {
-              this.userList[i].money = formatCash(this.userList[i].money);
-            }
+            // for (let i = 0; i < this.userList.length; i++) {
+            //   this.userList[i].money = formatCash(this.userList[i].money);
+            // }
             this.sizeMSG = this.userList.length + '';
           }
           this.sendMessage();
