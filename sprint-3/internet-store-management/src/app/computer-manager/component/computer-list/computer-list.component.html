@@ -136,7 +136,7 @@
           <th>Máy</th>
           <th>Tên tài khoản</th>
           <th>Trạng thái</th>
-          <th style="text-align: center">Tác vụ</th>
+          <th style="text-align: center">Hành động</th>
         </tr>
         </thead>
         <tbody>
@@ -149,7 +149,7 @@
             <span *ngIf="bill.status==false">chưa thanh toán</span>
           </td>
           <td style="text-align: center">
-            <button type="button" class="btn btn-dark btn-sm  mr-3 " (click)="openBillDetail(bill.idBill)"> Xem yêu cầu
+            <button type="button" class="btn btn-dark btn-sm text-light mr-3 " (click)="openBillDetail(bill.idBill)"> Xem yêu cầu
             </button>
           </td>
         </tr>
