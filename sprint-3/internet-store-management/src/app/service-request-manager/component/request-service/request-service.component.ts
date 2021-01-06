@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {RequestServiceService} from '../../service/request-service.service';
 import {Service} from '../../model/service.class';
 import {UserService} from '../../../user-manager/service/user.service';
@@ -21,9 +21,12 @@ export class RequestServiceComponent implements OnInit {
   public moneyUser: number;
   public checkButtonPay = false;
   public checkMessagePaymentSuccess = false;
-  public checkSubmitBill = false;
+  public checkSubmitAccount = false;
+  public checkSubmitDirect = false;
   public isPayDirect = false;
   public formBill: FormGroup;
+  public checkSubmitPayPal = false;
+  public checkButtonPayPal = false;
 
   constructor(
     private token: TokenStorageService,
@@ -36,7 +39,10 @@ export class RequestServiceComponent implements OnInit {
   ) {
   }
 
+  @ViewChild('paypalRef', {static: true}) private paypalRef: ElementRef;
+
   ngOnInit(): void {
+    console.log(window.paypal);
     this.idUser = this.token.getUser().id;
     console.log(this.idUser);
     this.request.getListService().subscribe(data => {
@@ -68,6 +74,46 @@ export class RequestServiceComponent implements OnInit {
         listServiceRecordsCard: this.fb.array([])
       })
     });
+    paypal.Buttons(
+      {
+        style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'horizontal',
+          label: 'paypal',
+          tagline: true,
+          height: 50
+        },
+        createOrder: (data, actions) => {
+          // console.log('createOrder');
+          // This function sets up the details of the transaction,
+          // including the amount and line item details
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: this.totalMoney,
+                  currency_code: 'USD'
+                }
+              }
+            ]
+          });
+        },
+        onApprove: (data, actions) => {
+          return actions.order.capture().then(details => {
+            console.log('Transaction completed');
+            this.checkMessagePaymentSuccess = true;
+            this.isPayDirect = true;
+          });
+        },
+        onError: (data, actions) => {
+          console.log('Transaction error');
+          // @ts-ignore
+          $('#refreshData').click();
+        }
+
+      }
+    ).render(this.paypalRef.nativeElement);
   }
 
   get listServiceRecordsDrink(): FormArray {
@@ -123,6 +169,7 @@ export class RequestServiceComponent implements OnInit {
     return Number(value);
   }
 
+// thanh toán trực tiếp
   creatBillPaymentDirect(): void {
     this.billService = [];
     let listDrink: Service[];
@@ -154,6 +201,7 @@ export class RequestServiceComponent implements OnInit {
     });
   }
 
+  // thanh toán trừ vào tài khoản
   createBillPaymentByAccount(): void {
     this.billService = [];
     let listDrink: Service[];
@@ -186,20 +234,72 @@ export class RequestServiceComponent implements OnInit {
     });
   }
 
+  // thanh toán bằng paypal
+  createBillPaymentByPayPal(): void {
+    this.billService = [];
+    let listDrink: Service[];
+    let listFood: Service[];
+    let listCard: Service[];
+    listDrink = this.formBill.value.listAllService.listServiceRecordsDrink;
+    listFood = this.formBill.value.listAllService.listServiceRecordsFood;
+    listCard = this.formBill.value.listAllService.listServiceRecordsCard;
+    for (const item of listDrink) {
+      if (item.quantityPurchased != null) {
+        this.billService.push(item);
+      }
+    }
+    for (const item of listFood) {
+      if (item.quantityPurchased != null) {
+        this.billService.push(item);
+      }
+    }
+    for (const item of listCard) {
+      if (item.quantityPurchased != null) {
+        this.billService.push(item);
+      }
+    }
+    this.formBill.removeControl('listAllService');
+    this.formBill.addControl('list', this.fb.control(this.billService));
+    console.log(this.formBill.value);
+    this.request.creatBillPaymentPayPal(this.formBill.value).subscribe(data => {
+      this.dialogRef.close();
+      this.openMessageSuccess();
+    });
+  }
+
   event(event): void {
     const value = event.target.value;
     // tslint:disable-next-line:triple-equals
     if (value == 0) {
       this.checkButtonPay = false;
+      this.checkSubmitPayPal = false;
+      this.checkSubmitAccount = false;
+      this.checkSubmitDirect = false;
+      this.isPayDirect = false;
+      this.checkButtonPayPal = false;
       // tslint:disable-next-line:triple-equals
     } else if (value == 2) {
       this.checkButtonPay = true;
-      this.checkSubmitBill = false;
+      this.checkSubmitAccount = true;
+      this.checkSubmitPayPal = false;
+      this.checkSubmitDirect = true;
       this.isPayDirect = false;
-    } else {
+      this.checkButtonPayPal = false;
+      // tslint:disable-next-line:triple-equals
+    } else if (value == 3) {
+      this.checkSubmitPayPal = true;
+      this.checkSubmitAccount = false;
+      this.checkSubmitDirect = true;
       this.checkButtonPay = false;
-      this.checkSubmitBill = true;
+      this.isPayDirect = false;
+      this.checkButtonPayPal = true;
+    } else {
+      this.checkSubmitDirect = false;
+      this.checkButtonPay = false;
+      this.checkSubmitAccount = false;
+      this.checkSubmitPayPal = false;
       this.isPayDirect = true;
+      this.checkButtonPayPal = false;
     }
   }
 

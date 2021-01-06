@@ -21,6 +21,10 @@ export class RequestServiceService {
     return this.http.post(this.API_REQUEST + '/payment-direct', bill);
   }
 
+  creatBillPaymentPayPal(bill): Observable<any> {
+    return this.http.post(this.API_REQUEST + '/payment-paypal', bill);
+  }
+
   createBillPaymentByAccount(bill): Observable<any> {
     return this.http.post(this.API_REQUEST + '/payment-by-account', bill);
   }
@@ -45,7 +49,7 @@ export class RequestServiceService {
     return this.http.put(this.API_REQUEST + '/deposit/' + idBill, idBill);
   }
 
-  buyHourOfUser(idUser: string, price: string ): Observable<any> {
+  buyHourOfUser(idUser: string, price: string): Observable<any> {
     let params = new HttpParams();
     params = params.append('idUser', idUser);
     params = params.append('priceHour', price);
