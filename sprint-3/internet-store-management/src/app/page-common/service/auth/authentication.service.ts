@@ -18,6 +18,9 @@ export class AuthenticationService {
   login(credentials): Observable<any> {
     return this.http.post(API_URL + 'login', credentials, httpOptions);
   }
+  findBy(idUser): Observable<any> {
+    return this.http.get(API_URL + 'find-by/' + idUser);
+  }
   public google(tokenDTO: TokenDTO): Observable<any> {
     return this.http.post<any>(API_URL + 'login-google', tokenDTO, httpOptions);
   }

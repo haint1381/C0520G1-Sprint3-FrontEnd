@@ -29,6 +29,7 @@ export class PaymentBuyHourComponent implements OnInit {
 
   ngOnInit(): void {
     this.idUser = this.data.dataId;
+    console.log(this.idUser);
     this.priceHour = this.formatCash(this.data.dataPrice);
     this.price = this.data.dataPrice;
     this.hour = this.data.dataHour;
