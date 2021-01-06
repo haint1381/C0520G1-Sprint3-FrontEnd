@@ -26,6 +26,7 @@ export class HomePageComponent implements OnInit {
   errorMessage = '';
   socialUser: SocialUser;
   user: User;
+  public idUser: number;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -43,10 +44,14 @@ export class HomePageComponent implements OnInit {
     // this.tokenStorageService.signOut();
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn === true) {
+      this.idUser = this.tokenStorageService.getUser().id;
       this.user = this.tokenStorageService.getUser();
       console.log(this.user);
-      // this.showAdminBoard = this.role.includes('ROLE_ADMIN');
-      // this.showUserBoard = this.role.includes('ROLE_USER');
+      this.authenticationService.findBy(this.tokenStorageService.getUser().username).subscribe(next => {
+        console.log('next');
+        console.log(next);
+        this.user = next;
+      });
     }
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -143,6 +148,7 @@ export class HomePageComponent implements OnInit {
   }
 
   openPaymentHours(idUser: string, price: string, hour: string): void {
+    console.log(idUser);
     const dialogRef = this.dialog.open(PaymentBuyHourComponent, {
       panelClass: 'app-full-bleed-dialog',
       width: '500px',
