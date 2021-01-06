@@ -5,6 +5,7 @@ import {RequestServiceService} from '../../service/request-service.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Service} from '../../model/service.class';
 import {MessageSuccessComponent} from '../message-success/message-success.component';
+import {ServiceManagerService} from '../../../services-manager/service/service-manager.service';
 
 @Component({
   selector: 'app-deposit-account',
@@ -16,11 +17,14 @@ export class DepositAccountComponent implements OnInit {
   public listDeposit: Service[] = [];
   public idUser: number;
   public formBill: FormGroup;
+  public moneyService: number;
+  public newService: Service;
 
   constructor(
     private token: TokenStorageService,
     public dialog: MatDialog,
     private request: RequestServiceService,
+    private  serviceManager: ServiceManagerService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<DepositAccountComponent>,
   ) {
@@ -54,6 +58,7 @@ export class DepositAccountComponent implements OnInit {
       this.openMessageSuccess();
     });
   }
+
   // tslint:disable-next-line:typedef
   openMessageSuccess() {
     const timeout = 1800;
@@ -66,6 +71,16 @@ export class DepositAccountComponent implements OnInit {
       setTimeout(() => {
         dialogRef.close();
       }, timeout);
+    });
+  }
+
+  changeIdService(value: string): void {
+    this.serviceManager.getServiceById(value).subscribe(data => {
+      this.newService = data;
+      if (this.newService != null) {
+        this.moneyService = this.newService.price;
+      }
+      console.log(this.moneyService);
     });
   }
 }

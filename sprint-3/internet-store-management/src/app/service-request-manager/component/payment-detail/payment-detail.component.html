@@ -73,7 +73,7 @@
           <tbody>
           <tr *ngFor="let deposit of billDeposit,let i=index" style="font-size: 13px">
             <td class="text-right">{{i + 1}}</td>
-            <td class="text-left">Nạp {{deposit.nameService}} vào tk</td>
+            <td class="text-left">{{deposit.nameService}} vào tk</td>
             <td class="text-right">{{deposit.priceService}}</td>
             <td class="text-right">{{deposit.quantityBook * deposit.priceService}}</td>
           </tr>
