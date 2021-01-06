@@ -14,6 +14,8 @@ import {MessageComponent} from '../message/message.component';
 import {DepositAccountComponent} from '../../../service-request-manager/component/deposit-account/deposit-account.component';
 import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
 import {PaymentBuyHourComponent} from '../../../service-request-manager/component/payment-buy-hour/payment-buy-hour.component';
+import {ComputerService} from '../../../computer-manager/service/computer.service';
+import {Computer} from '../../../computer-manager/model/Computer.class';
 
 @Component({
   selector: 'app-home-page',
@@ -27,10 +29,12 @@ export class HomePageComponent implements OnInit {
   socialUser: SocialUser;
   user: User;
   public idUser: number;
+  public computer: Computer;
 
   constructor(
     private authenticationService: AuthenticationService,
     private tokenStorageService: TokenStorageService,
+    private computerService: ComputerService,
     private router: Router,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -46,11 +50,10 @@ export class HomePageComponent implements OnInit {
     if (this.isLoggedIn === true) {
       this.idUser = this.tokenStorageService.getUser().id;
       this.user = this.tokenStorageService.getUser();
-      console.log(this.user);
       this.authenticationService.findBy(this.tokenStorageService.getUser().username).subscribe(next => {
-        console.log('next');
-        console.log(next);
+        ;
         this.user = next;
+        // tslint:disable-next-line:triple-equals
       });
     }
     this.loginForm = this.fb.group({
@@ -65,8 +68,17 @@ export class HomePageComponent implements OnInit {
       data => {
         this.tokenStorageService.saveToken(data.token);
         this.tokenStorageService.saveUser(data);
-        console.log(data);
+        this.idUser = data.id;
         this.isLoggedIn = true;
+        if (this.isLoggedIn === true && this.idUser != 1) {
+          // @ts-ignore
+          this.computerService.getComputerById(1).subscribe(dataID => {
+            this.computer = dataID;
+            dataID.idUser = this.idUser;
+            this.computerService.editComputer(1, dataID).subscribe(dataSuccess => {
+            });
+          });
+        }
       },
       err => {
         this.errorMessage = 'Tên tài khoản và mật khẩu không hợp lệ !';
@@ -75,7 +87,7 @@ export class HomePageComponent implements OnInit {
         }, 2000);
         this.isLoggedIn = false;
       }, () => {
-        this.reloadPage();
+        // this.reloadPage();
       }
     );
   }
@@ -85,6 +97,14 @@ export class HomePageComponent implements OnInit {
   }
 
   logout(): void {
+    this.idUser = null;
+    // @ts-ignore
+    this.computerService.getComputerById(1).subscribe(dataID => {
+      this.computer = dataID;
+      dataID.idUser = this.idUser;
+      this.computerService.editComputer(1, dataID).subscribe(dataSuccess => {
+      });
+    });
     this.tokenStorageService.signOut();
     this.reloadPage();
   }
@@ -93,12 +113,23 @@ export class HomePageComponent implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       data => {
         this.socialUser = data;
+        // @ts-ignore
+        this.idUser = data.id;
         const token = new TokenDTO(this.socialUser.idToken);
         this.authenticationService.google(token).subscribe(next => {
           this.tokenStorageService.saveToken(next.accessToken);
           this.tokenStorageService.saveUser(next);
           this.isLoggedIn = true;
           this.reloadPage();
+          if (this.isLoggedIn === true && this.idUser != 1) {
+            // @ts-ignore
+            this.computerService.getComputerById(1).subscribe(dataID => {
+              this.computer = dataID;
+              dataID.idUser = this.idUser;
+              this.computerService.editComputer(1, dataID).subscribe(dataSuccess => {
+              });
+            });
+          }
         }, err => {
           this.isLoggedIn = false;
         });
@@ -112,11 +143,22 @@ export class HomePageComponent implements OnInit {
         this.socialUser = data;
         const token = new TokenDTO(this.socialUser.authToken);
         console.log(data);
+        // @ts-ignore
+        this.idUser = data.id;
         this.authenticationService.facebook(token).subscribe(next => {
           this.tokenStorageService.saveToken(next.accessToken);
           this.tokenStorageService.saveUser(next);
           //   console.log(next);
           this.isLoggedIn = true;
+          if (this.isLoggedIn === true && this.idUser != 1) {
+            // @ts-ignore
+            this.computerService.getComputerById(1).subscribe(dataID => {
+              this.computer = dataID;
+              dataID.idUser = this.idUser;
+              this.computerService.editComputer(1, dataID).subscribe(dataSuccess => {
+              });
+            });
+          }
           this.reloadPage();
         }, err => {
           console.log('error');
