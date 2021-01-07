@@ -42,7 +42,7 @@
                       <td><input class="form-control form-control-sm" #valueDrink formControlName="quantityPurchased"
                                  type="number" [readOnly]="checkMessagePaymentSuccess==true"
                                  (change)="totalMoneyBooked(formatNumber(idDrinks.value),formatNumber(valueDrink.value))"
-                                 min="0" max="{{quantity.value}}"></td>
+                                 min="0" ></td>
                       <td><input class="form-control form-control-sm" #quantity readonly formControlName="quantity">
                       </td>
                       <td class="text-center align-content-center" *ngIf="quantity.value == 0"><p
@@ -73,7 +73,7 @@
                       <td><input class="form-control form-control-sm" #valueFood formControlName="quantityPurchased"
                                  type="number" [readOnly]="checkMessagePaymentSuccess==true"
                                  (change)="totalMoneyBooked(formatNumber(idFood.value),formatNumber(valueFood.value))"
-                                 min="0" max="{{quantity.value}}"></td>
+                                 min="0"></td>
                       <td><input class="form-control form-control-sm" #quantity readonly formControlName="quantity">
                       </td>
                       <td class="text-center align-content-center" *ngIf="quantity.value == 0"><p
@@ -104,7 +104,7 @@
                       <td><input class="form-control form-control-sm" #valueCard formControlName="quantityPurchased"
                                  type="number" [readOnly]="checkMessagePaymentSuccess == true"
                                  (change)="totalMoneyBooked(formatNumber(idCard.value),formatNumber(valueCard.value))"
-                                 min="0" max="{{quantity.value}}"></td>
+                                 min="0"></td>
                       <td><input class="form-control form-control-sm" readonly #quantity formControlName="quantity">
                       </td>
                       <td class="text-center align-content-center" *ngIf="quantity.value == 0"><p
