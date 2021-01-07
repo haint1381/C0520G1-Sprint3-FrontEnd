@@ -19,6 +19,8 @@ export class RequestServiceComponent implements OnInit {
   public billService: Service[] = [];
   public totalMoney = 0;
   public moneyUser: number;
+  public totalMoneyShow = '0';
+  public moneyUserShow: string;
   public checkButtonPay = false;
   public checkMessagePaymentSuccess = false;
   public checkSubmitAccount = false;
@@ -64,6 +66,7 @@ export class RequestServiceComponent implements OnInit {
     });
     this.userService.getByID(this.idUser).subscribe(data => {
       this.moneyUser = data.money;
+      this.moneyUserShow = this.formatCash(this.moneyUser);
     });
     this.formBill = this.fb.group({
       statusBill: [''],
@@ -164,6 +167,8 @@ export class RequestServiceComponent implements OnInit {
       }
       this.totalMoney += (element.quantityPurchased * element.price);
     }
+    const str = this.totalMoney + '';
+    this.totalMoneyShow = this.formatCash(str);
   }
 
   formatNumber(value: string): number {
@@ -310,6 +315,8 @@ export class RequestServiceComponent implements OnInit {
       this.openMessageNotificationFail();
     } else {
       this.moneyUser = this.moneyUser - this.totalMoney;
+      const str = this.moneyUser + '';
+      this.moneyUserShow = this.formatCash(str);
       this.checkButtonPay = false;
       this.checkMessagePaymentSuccess = true;
       this.isPayDirect = true;
@@ -339,6 +346,12 @@ export class RequestServiceComponent implements OnInit {
       setTimeout(() => {
         dialogRef.close();
       }, timeout);
+    });
+  }
+  // tslint:disable-next-line:typedef
+  formatCash(str) {
+    return str.split('').reverse().reduce((prev, next, index) => {
+      return ((index % 3) ? next : (next + '.')) + prev;
     });
   }
 }

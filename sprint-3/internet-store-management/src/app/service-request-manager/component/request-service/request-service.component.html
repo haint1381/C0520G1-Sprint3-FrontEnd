@@ -122,13 +122,13 @@
             <div class="col-md-12 row form-inline text-center m-0 p-0">
               <div class="col-md-6 d-flex justify-content-start p-0">
                 <label class="font-weight-bold m-0 p-0">Tổng số tiền <input class="form-control form-control-sm ml-2"
-                                                                            [value]="totalMoney" type="text"
+                                                                            [value]="totalMoneyShow + ' VNĐ'" type="text"
                                                                             readonly></label>
               </div>
               <div class="col-md-6 d-flex justify-content-end m-0 p-0">
                 <label class="font-weight-bold m-0 p-0">Số dư tài khoản <input
                   class="form-control form-control-sm ml-2 m-0 p-0"
-                  type="text" [value]="moneyUser"
+                  type="text" [value]="moneyUserShow +' VNĐ'"
                   readonly></label>
               </div>
             </div>
@@ -171,13 +171,13 @@
                     (click)="createBillPaymentByAccount()"> Gửi yêu cầu
             </button>
             <!--            thanh toán trực tiếp-->
-            <button class="btn btn-sm btn-success ml-5 text-light font-weight-bolder" style="width: 100px" role="button"
+            <button class="btn btn-sm btn-danger ml-5 text-light font-weight-bolder" style="width: 100px" role="button"
                     [disabled]="totalMoney == 0 || isPayDirect == false|| formBill.invalid"
                     *ngIf="checkSubmitDirect == false"
                     (click)="creatBillPaymentDirect()"> Gửi yêu cầu
             </button>
             <!--            thanh toán qua paypal-->
-            <button class="btn btn-sm btn-warning ml-5 text-light font-weight-bold" style="width: 100px" role="button"
+            <button class="btn btn-sm btn-danger ml-5 text-light font-weight-bold" style="width: 100px" role="button"
                     [disabled]="totalMoney == 0 || isPayDirect == false|| formBill.invalid"
                     *ngIf="checkSubmitPayPal == true "
                     (click)="createBillPaymentByPayPal()"> Gửi yêu cầu

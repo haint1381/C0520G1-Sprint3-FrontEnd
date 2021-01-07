@@ -13,6 +13,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthenticationService {
+  money = '0';
   constructor(private http: HttpClient) { }
 
   login(credentials): Observable<any> {
@@ -54,5 +55,10 @@ export class AuthenticationService {
     let params = new HttpParams();
     params = params.append('password', value);
     return this.http.get<any>(API_URL + 'resetPassWord', {params});
+  }
+  getMoney(userName): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('userName', userName);
+    return this.http.get(API_URL + 'get-money' , {params});
   }
 }

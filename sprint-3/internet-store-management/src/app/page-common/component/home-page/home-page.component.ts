@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {TokenStorageService} from '../../service/token-storage/token-storage.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
@@ -8,20 +8,21 @@ import {AuthenticationService} from '../../service/auth/authentication.service';
 import {User} from '../../model/User';
 import {FacebookLoginProvider, GoogleLoginProvider, SocialAuthService, SocialUser} from 'angularx-social-login';
 import {TokenDTO} from '../../model/TokenDTO';
-import {RequestServiceComponent} from '../../../service-request-manager/component/request-service/request-service.component';
 import {ResetPasswordComponent} from '../reset-password/reset-password.component';
-import {MessageComponent} from '../message/message.component';
 import {DepositAccountComponent} from '../../../service-request-manager/component/deposit-account/deposit-account.component';
-import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
 import {PaymentBuyHourComponent} from '../../../service-request-manager/component/payment-buy-hour/payment-buy-hour.component';
 import {MessageTimeComponent} from '../message-time/message-time.component';
+
 function formatCash(str): void {
   return str.split('').reverse().reduce((prev, next, index) => {
     return ((index % 3) ? next : (next + '.')) + prev;
   });
 }
+
 import {ComputerService} from '../../../computer-manager/service/computer.service';
 import {Computer} from '../../../computer-manager/model/Computer.class';
+
+;
 
 
 @Component({
@@ -42,6 +43,17 @@ export class HomePageComponent implements OnInit {
   public hour = 0;
   interval;
   public computer: Computer;
+  money1 = '0';
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(): void {
+    if (this.money1 != this.user.money) {
+      this.authenticationService.getMoney(this.user.username).subscribe(data => {
+        this.money1 = data + '';
+        console.log(this.formatCash(this.money1));
+      });
+    }
+  }
 
   startTimer(): void {
     this.interval = setInterval(() => {
@@ -64,7 +76,7 @@ export class HomePageComponent implements OnInit {
         });
         console.log('oke hết time');
       }
-    }, 2000);
+    }, 3000);
   }
 
   transform(value: number, args?: any): string {
@@ -85,7 +97,7 @@ export class HomePageComponent implements OnInit {
       return '0' + hours + ' : ' + ((value - hours * 3600000)) / 60000;
     }
   }
-  
+
   constructor(
     private authenticationService: AuthenticationService,
     private tokenStorageService: TokenStorageService,
@@ -128,7 +140,8 @@ export class HomePageComponent implements OnInit {
         this.tokenStorageService.saveUser(data);
         this.idUser = data.id;
         this.isLoggedIn = true;
-        if (this.isLoggedIn === true && this.idUser != 1) {
+        this.reloadPage();
+        if (this.isLoggedIn === true && this.idUser !== 1) {
           // @ts-ignore
           this.computerService.getComputerById(1).subscribe(dataID => {
             this.computer = dataID;
@@ -256,12 +269,19 @@ export class HomePageComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.ngOnInit();
       console.log('The dialog was closed');
+      this.reloadPage();
     });
   }
 
   byHour(): void {
     this.priceGame = Math.floor((this.hour / 60) * 5000);
+  }
+
+  // tslint:disable-next-line:typedef
+  formatCash(str) {
+    return str.split('').reverse().reduce((prev, next, index) => {
+      return ((index % 3) ? next : (next + '.')) + prev;
+    });
   }
 }
