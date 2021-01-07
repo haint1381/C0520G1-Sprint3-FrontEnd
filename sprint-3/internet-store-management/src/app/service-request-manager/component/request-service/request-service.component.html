@@ -162,22 +162,22 @@
             </div>
           </div>
           <div class="mt-5 mb-2 d-flex justify-content-center">
-            <button class="btn btn-sm btn-dark text-light " style="width: 100px" mat-dialog-close=""> Hủy
+            <button class="btn btn-sm btn-dark text-light font-weight-bolder " style="width: 100px" mat-dialog-close=""> Hủy
             </button>
             <!--            trừ vào tài khoản-->
-            <button class="btn btn-sm btn-danger ml-5 text-light" style="width: 100px" role="button"
+            <button class="btn btn-sm btn-danger ml-5 text-light font-weight-bold" style="width: 100px" role="button"
                     [disabled]="totalMoney == 0 || isPayDirect == false|| formBill.invalid "
                     *ngIf="checkSubmitAccount == true"
                     (click)="createBillPaymentByAccount()"> Gửi yêu cầu
             </button>
             <!--            thanh toán trực tiếp-->
-            <button class="btn btn-sm btn-success ml-5 text-light" style="width: 100px" role="button"
+            <button class="btn btn-sm btn-success ml-5 text-light font-weight-bolder" style="width: 100px" role="button"
                     [disabled]="totalMoney == 0 || isPayDirect == false|| formBill.invalid"
                     *ngIf="checkSubmitDirect == false"
                     (click)="creatBillPaymentDirect()"> Gửi yêu cầu
             </button>
             <!--            thanh toán qua paypal-->
-            <button class="btn btn-sm btn-warning ml-5 text-light" style="width: 100px" role="button"
+            <button class="btn btn-sm btn-warning ml-5 text-light font-weight-bold" style="width: 100px" role="button"
                     [disabled]="totalMoney == 0 || isPayDirect == false|| formBill.invalid"
                     *ngIf="checkSubmitPayPal == true "
                     (click)="createBillPaymentByPayPal()"> Gửi yêu cầu

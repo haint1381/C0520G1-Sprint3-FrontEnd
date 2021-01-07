@@ -97,8 +97,11 @@
       <button class="btn btn-sm btn-danger ml-5 " style="width: 100px;font-weight: bolder" *ngIf="status == false && code !==4"
               (click)="openDialogSetStatus(idBill)">Thanh toán
       </button>
-      <button class="btn btn-sm btn-warning ml-5 " style="width: 100px;font-weight: bolder" *ngIf="code == 4"
+      <button class="btn btn-sm btn-warning ml-5 " style="width: 100px;font-weight: bolder" *ngIf="code == 4 && status === false"
               (click)="openDialogPayDeposit(idBillService)">Thanh toán
+      </button>
+      <button class="btn btn-sm btn-success ml-5 " style="width: 100px;font-weight: bolder" *ngIf="code == 4 && status === true"
+              (click)="openDialogSetStatus(idBill)">Chấp nhận
       </button>
     </div>
   </div>

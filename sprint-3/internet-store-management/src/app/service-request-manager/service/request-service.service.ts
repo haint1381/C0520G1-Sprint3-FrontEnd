@@ -45,6 +45,10 @@ export class RequestServiceService {
     return this.http.post(this.API_REQUEST + '/deposit', bill);
   }
 
+  creatBillDepositPayPal(bill): Observable<any> {
+    return this.http.post(this.API_REQUEST + '/deposit-payPal', bill);
+  }
+
   payDeposit(idBill): Observable<any> {
     return this.http.put(this.API_REQUEST + '/deposit/' + idBill, idBill);
   }
