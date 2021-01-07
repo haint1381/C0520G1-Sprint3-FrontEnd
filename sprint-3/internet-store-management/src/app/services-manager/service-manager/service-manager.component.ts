@@ -77,18 +77,6 @@ export class ServiceManagerComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:typedef
-  //  onDelete(idService, i){
-  //    if(idService === 0){
-  //      this.formService.removeAt(i);
-  //    } else if (confirm('Bạn có chắc muốn xóa dịch vụ này không?')) {
-  //    this.servicesService.deleteService(idService).subscribe( data => {
-  //      this.formService.removeAt(i);
-  //      this.showNotification('delete');
-  //    });
-  // }
-  //  }
-  // tslint:disable-next-line:typedef
   onDelete(idService, i) {
     if (idService === 0) {
       this.formService.removeAt(i);

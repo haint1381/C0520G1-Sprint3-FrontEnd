@@ -30,6 +30,7 @@ export class ServiceDeleteDialogComponent implements OnInit {
       this.dialogRef.close();
     });
   }
+
   // tslint:disable-next-line:typedef
   closeDialog() {
     this.dialogRef.close();

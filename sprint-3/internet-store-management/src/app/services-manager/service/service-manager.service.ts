@@ -33,6 +33,7 @@ export class ServiceManagerService {
   deleteService(idService): Observable<any> {
     return this.http.delete(this.API_DELETE_SERVICE + '/' + idService);
   }
+
   getServiceById(idService): Observable<any> {
     return this.http.get(this.API_FIND_BY_ID_SERVICE + '/' + idService);
   }

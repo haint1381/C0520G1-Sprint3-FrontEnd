@@ -2,85 +2,85 @@
   <br>
   <h2 class="text-center">Quản lý dịch vụ</h2>
   <div class="d-flex justify-content-center">
-  <div class="col-md-11 ">
-    <div class="card-body">
-      <button class="btn btn-success btn btn-sm  " id="but_add" (click)="addFormService()">Thêm dịch vụ</button>
-      <span *ngIf="notification" class="showMessage ml-3 text-warning" style="font-size: 20px">
+    <div class="col-md-11 ">
+      <div class="card-body">
+        <button class="btn btn-success btn btn-sm  " id="but_add" (click)="addFormService()">Thêm dịch vụ</button>
+        <span *ngIf="notification" class="showMessage ml-3 text-warning" style="font-size: 20px">
             <i class="fas fa-check-circle {{notification.class}}"></i>
-        {{notification.message}}
+          {{notification.message}}
           </span>
-      <table class="table table-responsive-md table-bordered table-hover table-striped my-3"
-             id="makeEditable">
-        <thead style="background: white; color: #ffbb0b">
-        <tr class="text-center">
-          <th>Stt</th>
-          <th style="width: 270px">Tên dịch vụ</th>
-          <th>Đơn giá (VND)</th>
-          <th>Đơn vị</th>
-          <th>Số lượng tồn</th>
-          <th style="width: 200px">Tác vụ</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr [formGroup]="fg"
-            *ngFor="let fg of formService.controls | paginate : { itemsPerPage: 8, currentPage: p }; let i = index">
-          <td class="text-right text-dark">{{i + 1}}</td>
-          <td>
-            <input class="form-control" formControlName="serviceName">
-            <label *ngIf="formService.controls[i].get('serviceName').errors?.required">
-              <span style="color: red"> Nhập tên dịch vụ!</span>
-            </label>
-            <label *ngIf="formService.controls[i].get('serviceName').errors?.pattern">
-              <span style="color: red">Tên dịch vụ phải có 3-20 kí tự!</span>
-            </label>
-          </td>
-          <td>
-            <input class="form-control text-right" formControlName="price">
-            <label *ngIf="formService.controls[i].get('price').errors?.required">
-              <span style="color: red"> Nhập giá!</span>
-            </label>
-            <label *ngIf="formService.controls[i].get('price').errors?.pattern">
-              <span style="color: red">Giá phải có 3-5 số!</span>
-            </label>
-          </td>
-          <td>
-            <input class="form-control" formControlName="unit">
-            <label *ngIf="formService.controls[i].get('unit').errors?.required">
-              <span style="color: red"> Nhập tên đơn vị!</span>
-            </label>
-            <label *ngIf="formService.controls[i].get('unit').errors?.pattern">
-              <span style="color: red">Đơn vị phải có 2-6 kí tự!</span>
-            </label>
-          </td>
-          <td>
-            <input class="form-control text-right" formControlName="quantity">
-            <label *ngIf="formService.controls[i].get('quantity').errors?.required">
-              <span style="color: red"> Nhập số lượng!</span>
-            </label>
-            <label *ngIf="formService.controls[i].get('quantity').errors?.pattern">
-              <span style="color: red">Số lượng phải có 1-3 số!</span>
-            </label>
-          </td>
-          <td>
-            <button type="button" class="btn" [disabled]="fg.invalid"
-                    [ngClass]="(fg.get('idService').value == 0) ? 'btn-primary':'btn-warning'"
-                    (click)="recordSubmit(fg)"><i class="far fa-save"></i>
-              {{fg.get('idService').value == 0 ? 'Cập nhật' : 'Chỉnh Sửa'}}
-            </button>
-            <button class="btn btn-light ml-2">
-              <i class="far fa-trash-alt text-danger " (click)="onDelete(fg.get('idService').value,i)"></i>
-            </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-center text-white">
-        <pagination-controls (pageChange)="p = $event" previousLabel="Trước"
-                             nextLabel="Sau"
-                             responsive="true"></pagination-controls>
+        <table class="table table-responsive-md table-bordered table-hover table-striped my-3"
+               id="makeEditable">
+          <thead style="background: white; color: #ffbb0b">
+          <tr class="text-center">
+            <th>Stt</th>
+            <th style="width: 270px">Tên dịch vụ</th>
+            <th>Đơn giá (VND)</th>
+            <th>Đơn vị</th>
+            <th>Số lượng tồn</th>
+            <th style="width: 200px">Tác vụ</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr [formGroup]="fg"
+              *ngFor="let fg of formService.controls | paginate : { itemsPerPage: 8, currentPage: p }; let i = index">
+            <td class="text-right text-dark">{{i + 1}}</td>
+            <td>
+              <input class="form-control" formControlName="serviceName">
+              <label *ngIf="formService.controls[i].get('serviceName').errors?.required">
+                <span style="color: red"> Nhập tên dịch vụ!</span>
+              </label>
+              <label *ngIf="formService.controls[i].get('serviceName').errors?.pattern">
+                <span style="color: red">Tên dịch vụ phải có 3-20 kí tự!</span>
+              </label>
+            </td>
+            <td>
+              <input class="form-control text-right" formControlName="price">
+              <label *ngIf="formService.controls[i].get('price').errors?.required">
+                <span style="color: red"> Nhập giá!</span>
+              </label>
+              <label *ngIf="formService.controls[i].get('price').errors?.pattern">
+                <span style="color: red">Giá phải có 3-5 số!</span>
+              </label>
+            </td>
+            <td>
+              <input class="form-control" formControlName="unit">
+              <label *ngIf="formService.controls[i].get('unit').errors?.required">
+                <span style="color: red"> Nhập tên đơn vị!</span>
+              </label>
+              <label *ngIf="formService.controls[i].get('unit').errors?.pattern">
+                <span style="color: red">Đơn vị phải có 2-6 kí tự!</span>
+              </label>
+            </td>
+            <td>
+              <input class="form-control text-right" formControlName="quantity">
+              <label *ngIf="formService.controls[i].get('quantity').errors?.required">
+                <span style="color: red"> Nhập số lượng!</span>
+              </label>
+              <label *ngIf="formService.controls[i].get('quantity').errors?.pattern">
+                <span style="color: red">Số lượng phải có 1-3 số!</span>
+              </label>
+            </td>
+            <td>
+              <button type="button" class="btn" [disabled]="fg.invalid"
+                      [ngClass]="(fg.get('idService').value == 0) ? 'btn-primary':'btn-warning'"
+                      (click)="recordSubmit(fg)"><i class="far fa-save"></i>
+                {{fg.get('idService').value == 0 ? 'Cập nhật' : 'Chỉnh Sửa'}}
+              </button>
+              <button class="btn btn-light ml-2">
+                <i class="far fa-trash-alt text-danger " (click)="onDelete(fg.get('idService').value,i)"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="d-flex justify-content-center text-white">
+          <pagination-controls (pageChange)="p = $event" previousLabel="Trước"
+                               nextLabel="Sau"
+                               responsive="true"></pagination-controls>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </div>
 

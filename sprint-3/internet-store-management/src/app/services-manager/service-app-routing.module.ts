@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ServiceManagerComponent } from './service-manager/service-manager.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ServiceManagerComponent} from './service-manager/service-manager.component';
 import {RouterModule, Routes} from '@angular/router';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {Ng2SmartTableModule} from 'ng2-smart-table';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ServiceDeleteDialogComponent} from './service-delete-dialog/service-delete-dialog.component';
-import {MatDialogModule} from "@angular/material/dialog";
+import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
   {
@@ -26,4 +26,5 @@ const routes: Routes = [
     MatDialogModule
   ]
 })
-export class ServiceAppRoutingModule { }
+export class ServiceAppRoutingModule {
+}
