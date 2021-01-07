@@ -14,6 +14,7 @@ import {User} from '../model/User';
 export class AuthGuard implements CanActivate {
   private user1: User;
   private time: number;
+
   constructor(private authenticationService: AuthenticationService,
               private router: Router,
               private tokenStorageService: TokenStorageService,
@@ -30,37 +31,40 @@ export class AuthGuard implements CanActivate {
       this.authenticationService.findBy(this.tokenStorageService.getUser().username).subscribe(next => {
         this.user1 = next;
         this.time = next.timeRemaining;
-      });
-      if (this.time == 0 || this.time == null) {
-        this.dialog.open(MessageTimeComponent, {
-          disableClose: true
-        });
-        this.router.navigate(['/']);
-        return false;
-      } else {
-        console.log('aaaaaaaaa');
-        // check if route is restricted by role
-        if (route.data.roles) {
-          for (const role of route.data.roles) {
-            if (role.indexOf(user.role) !== -1) {
-              return true;
-            }
-          }
-          // role not authorised so redirect to home page
+      }, error => {
+      }, () => {
+        if (this.time == 0 || this.time == null) {
+          this.dialog.open(MessageTimeComponent, {
+            disableClose: true
+          });
           this.router.navigate(['/']);
           return false;
-        }
+        } else {
+          console.log('aaaaaaaaa');
+          // check if route is restricted by role
+          if (route.data.roles) {
+            for (const role of route.data.roles) {
+              if (role.indexOf(user.role) !== -1) {
+                return true;
+              }
+            }
+            // role not authorised so redirect to home page
+            this.router.navigate(['/']);
+            return false;
+          }
 
-        // authorised so return true
-        return true;
-      }
+          // authorised so return true
+          return true;
+        }
+      });
+      return true;
     } else {
-    // not logged in so redirect to login page with the return url
-    this.dialog.open(MessageComponent, {
-          disableClose: true
-        });
-    this.router.navigate(['/'], );
-    return false;
+      // not logged in so redirect to login page with the return url
+      this.dialog.open(MessageComponent, {
+        disableClose: true
+      });
+      this.router.navigate(['/'],);
+      return false;
     }
   }
 

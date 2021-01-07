@@ -36,7 +36,7 @@
               <th>Tình trạng</th>
               <th>Tên người dùng</th>
               <th>Thời gian bắt đầu</th>
-              <th>Thời gian sử dung</th>
+<!--              <th>Thời gian sử dung</th>-->
               <th>Số dư tài khoản</th>
               <th>Tác vụ</th>
             </tr>
@@ -48,9 +48,9 @@
                 <td class="text-left">{{fg.computerName}}</td>
                 <td class="text-left">{{fg.statusComputerName}}</td>
                 <td class="text-center">{{fg.fullName}}</td>
-                <td class="text-center">{{fg.timeStart}}</td>
-                <td class="text-center">{{fg.timeUser}}</td>
-                <td class="text-right">{{fg.money}}</td>
+                <td class="text-center">{{fg.timeStart|date: 'shortTime'}}</td>
+<!--                <td class="text-center">{{fg.timeUser}}</td>-->
+                <td class="text-center">{{fg.money}}</td>
                 <td class="text-center">
                   <div class="btn-group pull-right ">
                     <button type="button" class="btn btn-sm btn-warning mx-2 mb-2 rounded"
@@ -88,9 +88,6 @@
                   </td>
                   <td class="text-center">
                     <input class="form-control form-control-sm" formControlName="timeStart" readonly>
-                  </td>
-                  <td class="text-center">
-                    <input class="form-control form-control-sm" formControlName="timeUser" readonly>
                   </td>
                   <td class="text-center">
                     <input class="form-control form-control-sm" formControlName="money" readonly>

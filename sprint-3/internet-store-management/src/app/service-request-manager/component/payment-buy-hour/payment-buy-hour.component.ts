@@ -45,7 +45,7 @@ export class PaymentBuyHourComponent implements OnInit {
   // tslint:disable-next-line:typedef
   formatCash(str) {
     return str.split('').reverse().reduce((prev, next, index) => {
-      return ((index % 3) ? next : (next + ',')) + prev;
+      return ((index % 3) ? next : (next + '.')) + prev;
     });
   }
 
@@ -55,12 +55,15 @@ export class PaymentBuyHourComponent implements OnInit {
       this.checkConditions = true;
     } else {
       this.request.buyHourOfUser(this.idUser, this.price).subscribe(data => {
+        this.reloadPage();
         this.dialogRef.close();
         this.messageSuccessBuyHour();
       });
     }
   }
-
+  reloadPage(): void {
+    window.location.reload();
+  }
   // tslint:disable-next-line:typedef
   messageSuccessBuyHour() {
     const timeout = 1800;
