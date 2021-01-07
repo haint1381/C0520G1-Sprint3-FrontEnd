@@ -97,11 +97,6 @@ export class ComputerListComponent implements OnInit {
         this.size = this.billList.length;
       }
     });
-    if (this.token.getUser().id != 1) {
-      this.handleCommentForm.value.idUser = this.token.getUser().id;
-      this.editComputer(1);
-      console.log(this.token.getUser().id);
-    }
   }
 
   dialogDeleteComment(idComputer): void {
@@ -119,7 +114,6 @@ export class ComputerListComponent implements OnInit {
 
   changeSelection(idComputer): void {
     if (idComputer == null) {
-      console.log('a');
       // @ts-ignore
       this.computers.shift(this.computer);
       // tslint:disable-next-line:prefer-for-of
@@ -139,8 +133,6 @@ export class ComputerListComponent implements OnInit {
           console.log(this.typeComputer);
           this.handleCommentForm.controls.idStatusComputer.setValue(this.typeComputer);
           this.handleCommentForm.patchValue(dataName);
-          console.log('dataName');
-          console.log(dataName);
         });
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < this.computers.length; i++) {
@@ -151,7 +143,6 @@ export class ComputerListComponent implements OnInit {
         }
         this.checkButton = true;
       }
-      console.log(this.computers);
     }
   }
 
@@ -179,13 +170,11 @@ export class ComputerListComponent implements OnInit {
   addForm(): void {
     // tslint:disable-next-line:triple-equals
     if (this.checkButton == false) {
-      console.log(this.computers.length);
       this.checkButton = true;
       this.computer = new Computer();
       this.computer.idComputer = null;
       this.computer.statusView = true;
       this.computers.unshift(this.computer);
-      console.log(this.computers.length);
     }
   }
 
