@@ -85,7 +85,7 @@ export class HomePageComponent implements OnInit {
       return '0' + hours + ' : ' + ((value - hours * 3600000)) / 60000;
     }
   }
-  
+
   constructor(
     private authenticationService: AuthenticationService,
     private tokenStorageService: TokenStorageService,

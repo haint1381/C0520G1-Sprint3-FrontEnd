@@ -18,13 +18,16 @@ import {TokenStorageService} from '../../../page-common/service/token-storage/to
 })
 export class ComputerListComponent implements OnInit {
   public computers: Computer[];
+  public computersCheck: Computer[];
   // tslint:disable-next-line:new-parens
   public computer = new Computer;
   public computerStatuses: ComputerStatus[];
   p: number;
+  time: number;
   form: FormGroup;
   handleCommentForm: FormGroup;
   checkButton = false;
+  check = false;
   typeComputer = '';
   notification = null;
   public billList = [];
@@ -45,6 +48,34 @@ export class ComputerListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.time = 0;
+    setInterval(() => {
+      this.time++;
+      // tslint:disable-next-line:no-conditional-assignment
+      // if (this.time = 0) {
+      //   this.time++;
+      // } else {
+      //   this.time = 0;
+      // }
+    }, 1000);
+
+    // setInterval(() => {
+    //   this.computerService.getAllComputer().subscribe(data => {
+    //     this.computersCheck = data;
+    //     console.log(this.computersCheck);
+    //   });
+    //   for (let i = 0; i < this.computers.length; i++) {
+    //     if (this.computers[i] == this.computersCheck[i]) {
+    //       this.check = false;
+    //     } else {
+    //       this.check = true;
+    //     }
+    //   }
+    //   if (this.check == false) {
+    //     this.ngOnInit();
+    //     console.log('vFO ');
+    //   }
+    // }, 1000);
     if (this.token.getUser() !== null) {
       if (this.token.getUser().id == 1) {
         this.checkButton = false;
@@ -54,7 +85,7 @@ export class ComputerListComponent implements OnInit {
         });
         this.computerService.getAllComputer().subscribe(data => {
           this.computers = data;
-          console.log(this.computers);
+          // console.log(this.computers);
         }, error => {
         }, () => {
           // tslint:disable-next-line:prefer-for-of
@@ -128,9 +159,9 @@ export class ComputerListComponent implements OnInit {
       // tslint:disable-next-line:triple-equals
       if (this.checkButton == false) {
         this.computerService.getComputerById(idComputer).subscribe(dataName => {
-          console.log(dataName);
+          // console.log(dataName);
           this.typeComputer = dataName.idStatusComputer;
-          console.log(this.typeComputer);
+          // console.log(this.typeComputer);
           this.handleCommentForm.controls.idStatusComputer.setValue(this.typeComputer);
           this.handleCommentForm.patchValue(dataName);
         });

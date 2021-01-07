@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
+import {ComputerListComponent} from "../component/computer-list/computer-list.component";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,12 @@ import {Observable} from 'rxjs';
 export class ComputerService {
   public API = 'http://localhost:8080/computer';
   constructor(public http: HttpClient,
+              // public computer: ComputerListComponent
   ) { }
+  MyGetRequest(): Observable<any> {
+    // @ts-ignore
+    return of(this.deleteComputer(idComputer));
+  }
   getAllComputer(): Observable<any> {
     return this.http.get(this.API + '/list');
   }
@@ -30,4 +36,7 @@ export class ComputerService {
   search(value): Observable<any> {
     return this.http.get(this.API + '/search/' + value);
   }
+  // check(): void {
+  //   return this.computer.ngOnInit();
+  // }
 }

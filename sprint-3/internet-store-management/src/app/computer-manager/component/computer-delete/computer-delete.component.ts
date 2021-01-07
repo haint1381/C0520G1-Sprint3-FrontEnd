@@ -16,7 +16,7 @@ export class ComputerDeleteComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: any,
     public computerService: ComputerService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
