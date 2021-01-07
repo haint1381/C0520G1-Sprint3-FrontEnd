@@ -33,34 +33,34 @@
                     <h3 class="col-md-6">4</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white"
                             (click)="openPaymentHours(idUser+ '','20000','4 giờ')">
-                      Mua-20,000 VNĐ
+                      Mua-20.000 VNĐ
                     </button>
                   </div>
                   <div class="row mt-4">
                     <h3 class="col-md-6">8</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white"
                             (click)="openPaymentHours(idUser + '','40000','8 giờ')">
-                      Mua - 40,000 VNĐ</button>
+                      Mua - 40.000 VNĐ</button>
                   </div>
                   <div class="row mt-4">
                     <h3 class="col-md-6">10</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white"
                             (click)="openPaymentHours(idUser + '','50000','10 giờ')">
-                      Mua - 50,000 VNĐ
+                      Mua - 50.000 VNĐ
                     </button>
                   </div>
                   <div class="row mt-4">
                     <h3 class="col-md-6">12</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white"
                             (click)="openPaymentHours(idUser + '','60000','12 giờ')">
-                      Mua - 60,000 VNĐ
+                      Mua - 60.000 VNĐ
                     </button>
                   </div>
                   <div class="row mt-4">
                     <h3 class="col-md-6">24</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white"
                             (click)="openPaymentHours(idUser + '','120000','24 giờ')">
-                      Mua - 120,000 VNĐ
+                      Mua - 120.000 VNĐ
                     </button>
                   </div>
                 </div>
@@ -234,7 +234,10 @@
           <div class="col-md-6">
             <div class="row">Ngừng sau-hh:mm.</div>
             <div class="row">
-              <h4>{{transform(time)}}</h4>
+              <h4 *ngIf="time != 0; else blockabc">{{transform(time)}}</h4>
+              <ng-template #blockabc>
+                <h4 style="color: red">{{transform(time)}}</h4>
+              </ng-template>
             </div>
           </div>
           <div class="col-md-6">
@@ -250,7 +253,7 @@
           <div class="col-md-6">
             <div class="row">Số dư * -></div>
             <div class="row">
-              <h4>{{user.money}} VNĐ</h4>
+              <h4>{{formatCash(money1)}} VNĐ</h4>
             </div>
           </div>
           <div class="col-md-6">
