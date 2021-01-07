@@ -65,9 +65,12 @@ export class PaymentDetailComponent implements OnInit {
   openDialogSetStatus(idBill: number): void {
     this.request.setStatusBill(idBill).subscribe(data => {
       this.dialogRef.close();
+      this.reloadPage();
     });
   }
-
+  reloadPage(): void {
+    window.location.reload();
+  }
   openDialogPayDeposit(idBill: number): void {
     this.request.payDeposit(idBill).subscribe(data => {
       this.dialogRef.close();

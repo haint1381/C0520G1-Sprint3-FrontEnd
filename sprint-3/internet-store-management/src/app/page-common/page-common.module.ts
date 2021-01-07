@@ -14,9 +14,10 @@ import {MatButtonModule} from '@angular/material/button';
 import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
 import { MyGameComponent } from './component/my-game/my-game.component';
 import {ErrorPageComponent} from './component/error-page/error-page.component';
+import { MessageTimeComponent } from './component/message-time/message-time.component';
 
 @NgModule({
-  declarations: [MyGameComponent , HeaderComponent, HomePageComponent, FooterComponent, MessageComponent, ResetPasswordComponent, ErrorPageComponent],
+  declarations: [MyGameComponent , HeaderComponent, HomePageComponent, FooterComponent, MessageComponent, ResetPasswordComponent, ErrorPageComponent, MessageTimeComponent],
   exports: [
     HeaderComponent,
     FooterComponent

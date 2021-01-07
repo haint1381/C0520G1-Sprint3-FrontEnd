@@ -11,22 +11,39 @@
       <li class="nav-item text-center" style="width: 125px">
         <a class="nav-link text-white font-text mt-2" [routerLink]="['/my-game']">TRÒ CHƠI</a>
       </li>
-      <li class="nav-item text-center" style="width: 125px">
-        <a class="nav-link text-white font-text mt-2">VÉ TRỌN GÓI</a>
-      </li>
       <li *ngIf="role ==='ROLE_USER'" class="nav-item text-center" style="width: 125px">
         <a class="nav-link text-white font-text mt-2" (click)="openBoxRequest()">DỊCH VỤ</a>
       </li>
     </ul>
-    <a *ngIf="role ==='ROLE_ADMIN'" class="nav-item offset-7" style="width: 125px">
-      <div class="dropdown">
-        <a class="nav-link text-white font-text mt-2" data-toggle="dropdown">&nbsp;&nbsp;<i class="fas fa-cogs"></i>&nbsp;QUẢN
-          LÝ <span class="caret"></span></a>
-        <ul class="dropdown-menu" style="background-color: #0b222a">
-          <li><a style="color: white" [routerLink]="['user-list']">Người dùng</a></li>
-          <li><a style="color: white" [routerLink]="['computer-list']">Máy tính</a></li>
-          <li><a style="color: white" [routerLink]="['list-service']">Dịch vụ</a></li>
-        </ul>
+
+    <a *ngIf="role ==='ROLE_ADMIN'" class="nav-item offset-7 col-md-3" style="width: 125px">
+      <div class="row">
+        <div class="col-md-5"><div class="dropdown">
+          <a class="nav-link text-white font-text mt-2" data-toggle="dropdown">&nbsp;&nbsp;<i class="fas fa-cogs"></i>&nbsp;QUẢN
+            LÝ <span class="caret"></span></a>
+          <ul class="dropdown-menu" style="background-color: #0b222a">
+            <li><a style="color: white" [routerLink]="['user-list']">Người dùng</a></li>
+            <li><a style="color: white" [routerLink]="['computer-list']">Máy tính</a></li>
+            <li><a style="color: white" [routerLink]="['list-service']">Dịch vụ</a></li>
+          </ul>
+        </div></div>
+        <div class="col-md-5">
+          <div *ngIf="check== true">
+
+              <div class="dropdown" style="padding: 13px">
+                <button  data-toggle="dropdown" style="background-color: black; border: none"  class="dropdown-toggle" >
+                  <i class="fas fa-bell" style="color: white"></i>
+                </button>
+                <span class="badge badge-danger">1</span>
+
+
+              <ul class="dropdown-menu">
+                <li><p [routerLink]="['/computer-list']">Xử lý yêu cầu</p></li>
+              </ul>
+              </div>
+
+            </div>
+        </div>
       </div>
     </a>
   </div>
