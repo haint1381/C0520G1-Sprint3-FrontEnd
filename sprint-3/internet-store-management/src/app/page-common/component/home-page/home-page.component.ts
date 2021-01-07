@@ -14,6 +14,13 @@ import {MessageComponent} from '../message/message.component';
 import {DepositAccountComponent} from '../../../service-request-manager/component/deposit-account/deposit-account.component';
 import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
 import {PaymentBuyHourComponent} from '../../../service-request-manager/component/payment-buy-hour/payment-buy-hour.component';
+import {MessageTimeComponent} from '../message-time/message-time.component';
+
+function formatCash(str): void {
+  return str.split('').reverse().reduce((prev, next, index) => {
+    return ((index % 3) ? next : (next + '.')) + prev;
+  });
+}
 
 @Component({
   selector: 'app-home-page',
@@ -27,6 +34,53 @@ export class HomePageComponent implements OnInit {
   socialUser: SocialUser;
   user: User;
   public idUser: number;
+  public time: number;
+  public priceGame = 0;
+  public hour = 0;
+  interval;
+
+  startTimer(): void {
+    this.interval = setInterval(() => {
+      if (this.time > 0) {
+        this.time -= 60000;
+        this.authenticationService.saveUser(this.tokenStorageService.getUser().username, this.time).subscribe(next => {
+        });
+        if (this.time == 300000) {
+          const dialogRef = this.dialog.open(MessageTimeComponent, {
+            width: '500px',
+            disableClose: true
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log('The dialog was closed');
+          });
+        }
+      } else if (this.time < 0) {
+        this.authenticationService.findBy(this.tokenStorageService.getUser().username).subscribe(next => {
+          this.time = next.timeRemaining;
+        });
+        console.log('oke hết time');
+      }
+    }, 2000);
+  }
+
+  transform(value: number, args?: any): string {
+
+    const hours: number = Math.floor(value / 3600000);
+    const minutes: number = ((value - hours * 3600000)) / 60000;
+
+    if (hours < 10 && minutes < 10) {
+      return '0' + hours + ' : 0' + ((value - hours * 3600000)) / 60000;
+    }
+    if (hours > 10 && minutes > 10) {
+      return '0' + hours + ' : ' + ((value - hours * 3600000)) / 60000;
+    }
+    if (hours > 10 && minutes < 10) {
+      return hours + ' : 0' + ((value - hours * 3600000)) / 60000;
+    }
+    if (minutes > 10) {
+      return '0' + hours + ' : ' + ((value - hours * 3600000)) / 60000;
+    }
+  }
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -44,13 +98,15 @@ export class HomePageComponent implements OnInit {
     // this.tokenStorageService.signOut();
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn === true) {
+      this.startTimer();
       this.idUser = this.tokenStorageService.getUser().id;
       this.user = this.tokenStorageService.getUser();
       console.log(this.user);
       this.authenticationService.findBy(this.tokenStorageService.getUser().username).subscribe(next => {
-        console.log('next');
-        console.log(next);
         this.user = next;
+        // @ts-ignore
+        this.user.money = formatCash(this.user.money);
+        this.time = next.timeRemaining;
       });
     }
     this.loginForm = this.fb.group({
@@ -156,7 +212,12 @@ export class HomePageComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
       console.log('The dialog was closed');
     });
+  }
+
+  byHour(): void {
+    this.priceGame = Math.floor((this.hour / 60) * 5000);
   }
 }

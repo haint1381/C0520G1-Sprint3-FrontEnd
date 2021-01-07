@@ -14,3 +14,18 @@ hr{
 .abc {
   background-color: black;
 }
+/*.register{*/
+/*  background: -webkit-linear-gradient(left, #3931af, #00c6ff);*/
+/*  margin-top: 3%;*/
+/*  padding: 3%;*/
+/*}*/
+.register .nav-tabs{
+  border: none;
+  border-radius: 1.5rem;
+  width: 100%;
+}
+
+.register-heading{
+  text-align: center;
+  color: #495057;
+}

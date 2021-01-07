@@ -2,82 +2,124 @@
   <div class="row">
     <div class="mx-3"></div>
     <div class="col-md-4 col-xs-12 background-color">
-      <h2 class="d-flex justify-content-center mt-3" style="color: white">Thuê máy</h2>
+      <h2 class="d-flex justify-content-center mt-3" style="color: white">Gói dịch vụ</h2>
       <div class="container register">
         <div class="row">
           <div class="col-md-12 register-right">
-            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link " id="home-tab" data-toggle="tab" href="#home"
-                   aria-selected="true" style="color: white; background: #1b1e21">Theo giờ</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link " id="profile-tab" data-toggle="tab" href="#profile"
-                   aria-selected="false" style="color: white; background: #1b1e21">Theo ngày</a>
-              </li>
-            </ul>
+            <div class="row">
+              <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                <li class="nav-item col-md-5">
+                  <a class="nav-link " id="home-tab" data-toggle="tab" href="#home"
+                     aria-selected="true" style="color: white; background: #1b1e21"><h3>Theo giờ&nbsp;&nbsp;</h3></a>
+                </li>
+                <div class="mx-5"></div>
+                <li class="nav-item col-md-5">
+                  <a class="nav-link "  id="profile-tab" data-toggle="tab" href="#profile"
+                     aria-selected="false" style="color: white; background: #1b1e21"><h3>Theo ngày</h3></a>
+                </li>
+              </ul>
+            </div>
+            <hr>
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="container">
+                  <div class="row mt-3">
+                    <h5 class="col-md-6">Giờ</h5>
+                    <h5 class="col-md-6 text-white text-center">
+                        Giá
+                    </h5>
+                  </div>
                   <div class="row mt-4">
-                    <h3 class="col-md-6">4h</h3>
+                    <h3 class="col-md-6">4</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white"
                             (click)="openPaymentHours(idUser+ '','20000','4 giờ')">
                       Mua-20,000 VNĐ
                     </button>
                   </div>
-                  <div class="row mt-5">
-                    <h3 class="col-md-6">8h</h3>
+                  <div class="row mt-4">
+                    <h3 class="col-md-6">8</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white"
                             (click)="openPaymentHours(idUser + '','40000','8 giờ')">
                       Mua - 40,000 VNĐ</button>
                   </div>
-                  <div class="row mt-5">
-                    <h3 class="col-md-6">10h</h3>
+                  <div class="row mt-4">
+                    <h3 class="col-md-6">10</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white"
                             (click)="openPaymentHours(idUser + '','50000','10 giờ')">
                       Mua - 50,000 VNĐ
                     </button>
                   </div>
-                  <div class="row mt-5">
-                    <h3 class="col-md-6">12h</h3>
+                  <div class="row mt-4">
+                    <h3 class="col-md-6">12</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white"
                             (click)="openPaymentHours(idUser + '','60000','12 giờ')">
                       Mua - 60,000 VNĐ
                     </button>
                   </div>
-                  <div class="row mt-5">
-                    <h3 class="col-md-6">24h</h3>
+                  <div class="row mt-4">
+                    <h3 class="col-md-6">24</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white"
                             (click)="openPaymentHours(idUser + '','120000','24 giờ')">
                       Mua - 120,000 VNĐ
                     </button>
                   </div>
                 </div>
+                <br>
+                <hr>
+                <h2 class="d-flex justify-content-start mt-2" style="color: white">Tùy chọn <p class="mt-3">( 5000 VNĐ/ giờ)</p></h2>
+                <div class="row">
+                  <div class="col-md-4 mt-1 d-flex">
+                    Số phút:<input type="number" class="form-control" [(ngModel)]="hour" (ngModelChange)="byHour()" style="color: black; width: 70px">
+                  </div>
+                  <div class="col-md-6 mt-1 d-flex">Thành tiền:<input class="form-control" [value]="priceGame+' VNĐ'" style="color: black; width: 100px"></div>
+                  <div>
+                    <button type="button" class="btn btn-outline-warning" (click)="openPaymentHours(idUser+ '',(priceGame + ''), ((hour/60) + ' giờ'))">Xác nhận</button>
+                  </div>
+                </div>
+                <br>
               </div>
               <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div class="container">
+                  <div class="row mt-3">
+                    <h5 class="col-md-6">Ngày</h5>
+                    <h5 class="col-md-6 text-white text-center">
+                      Giá
+                    </h5>
+                  </div>
                   <div class="row mt-4">
-                    <h3 class="col-md-6">1 Ngày</h3>
+                    <h3 class="col-md-6">1</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white">Mua-100.000VND</button>
                   </div>
-                  <div class="row mt-5">
-                    <h3 class="col-md-6">2 Ngày</h3>
+                  <div class="row mt-4">
+                    <h3 class="col-md-6">2</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white">Mua-180.000VND</button>
                   </div>
-                  <div class="row mt-5">
-                    <h3 class="col-md-6">3 Ngày</h3>
+                  <div class="row mt-4">
+                    <h3 class="col-md-6">3</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white">Mua-250.000VND</button>
                   </div>
-                  <div class="row mt-5">
-                    <h3 class="col-md-6">4 ngày</h3>
+                  <div class="row mt-4">
+                    <h3 class="col-md-6">4</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white">Mua-320.000VND</button>
                   </div>
-                  <div class="row mt-5">
-                    <h3 class="col-md-6">5 ngày</h3>
+                  <div class="row mt-4">
+                    <h3 class="col-md-6">5</h3>
                     <button class="col-md-6 btn btn-outline-warning text-white">Mua-380.000VND</button>
                   </div>
                 </div>
+                <br>
+                <hr>
+                <h2 class="d-flex justify-content-start mt-2" style="color: white">Tùy chọn <p class="mt-3">( 5000 VNĐ/ giờ)</p></h2>
+                <div class="row">
+                  <div class="col-md-4 mt-1">
+                    Số phút:<input type="number" [(ngModel)]="hour" style="color: black; width: 70px">
+                  </div>
+                  <div class="col-md-6 mt-1">Thành tiền:<input [value]="(priceGame/60)* 5+' VNĐ'" style="color: black; width: 100px"></div>
+                  <div>
+                    <button type="button" class="btn btn-outline-warning" (click)="openPaymentHours(idUser+ '',(priceGame + ''), (hour + ' giờ'))">Xác nhận</button>
+                  </div>
+                </div>
+                <br>
               </div>
             </div>
           </div>
@@ -109,8 +151,6 @@
         </a>
       </div>
     </div>
-
-
     <div *ngIf="isLoggedIn == false; else block" class="col-md-3  col-xs-12 container-fluid background-color">
       <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
         <div class="row d-flex offset-2 mt-2">
@@ -180,7 +220,7 @@
     <ng-template #block>
       <div class="col-md-3 col-xs-12 container-fluid background-color ">
         <h4 class="text-center mt-3">Thông tin tài khoản</h4>
-        <div class="row mt-3">
+        <div class="row mt-4">
           <div class=" col-md-8 mt-1">
             <p class="font-weight-bold">{{user.username}}</p>
           </div>
@@ -189,32 +229,34 @@
           </div>
         </div>
         <hr>
+        <br>
         <div class="container-fluid row">
           <div class="col-md-6">
             <div class="row">Ngừng sau-hh:mm.</div>
             <div class="row">
-              <h4>{{user.timeRemaining}}</h4>
+              <h4>{{transform(time)}}</h4>
             </div>
           </div>
           <div class="col-md-6">
             <div class="row">Giá cước.</div>
             <div class="row">
-              <h4>5.000VND/h</h4>
+              <h4>5.000 VNĐ/h</h4>
             </div>
           </div>
         </div>
         <hr>
+        <br>
         <div class="container-fluid row">
           <div class="col-md-6">
             <div class="row">Số dư * -></div>
             <div class="row">
-              <h4>{{user.money}}</h4>
+              <h4>{{user.money}} VNĐ</h4>
             </div>
           </div>
           <div class="col-md-6">
-            <div class="row">Phí dịch vụ(VND).</div>
+            <div class="row">Phí dịch vụ(VNĐ).</div>
             <div class="row">
-              <h4>10</h4>
+              <h4>10%</h4>
             </div>
           </div>
         </div>
@@ -222,6 +264,7 @@
           tài khoản
         </button>
         <hr>
+        <br>
         <div class="container-fluid ">
           <div class="col-12">
             <div class="row">Các mục ưa thích.</div>
@@ -233,6 +276,7 @@
           </div>
         </div>
         <hr>
+        <br>
         <div class="  row">
           <div class="col-md-6">Đơn hàng cuối.</div>
           <div class="col-md-1"></div>

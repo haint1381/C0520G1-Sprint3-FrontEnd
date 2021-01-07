@@ -21,6 +21,15 @@ export class AuthenticationService {
   findBy(idUser): Observable<any> {
     return this.http.get(API_URL + 'find-by/' + idUser);
   }
+  getMessage(): Observable<any> {
+    return this.http.get(API_URL + 'get-message');
+  }
+  saveUser(idUser, value): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('userName', idUser);
+    params = params.append('time', value);
+    return this.http.get(API_URL + 'save-user' , {params});
+  }
   public google(tokenDTO: TokenDTO): Observable<any> {
     return this.http.post<any>(API_URL + 'login-google', tokenDTO, httpOptions);
   }
