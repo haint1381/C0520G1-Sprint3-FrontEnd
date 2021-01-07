@@ -5,27 +5,43 @@
   </div>
   <div class="card-body container register  border border-dark text-center">
     <form [formGroup]="formBill">
-      <div class="form-group">
-        <div class="mt-2">
-          <label class="font-weight-bold ">Chọn số tiền
-            <select formControlName="idService">
-              <option value="" selected [disabled]="true">-- Chọn --</option>
-              <option *ngFor="let el of listDeposit" [value]="el.idService">{{el.serviceName}}</option>
-            </select>
-          </label>
+      <div class="col-md-12 m-0 p-0">
+        <label class="font-weight-bold " style="font-size: 15px"> Chọn số tiền</label>
+        <div class="col-md-12 justify-content-center m-0 p-0">
+          <select class="ml-2 form-control-sm" formControlName="idService" #idService
+                  (change)="changeIdService(idService.value)"  >
+            <option value="" selected disabled>-- Chọn --</option>
+            <option *ngFor="let el of listDeposit" [disabled]="checkPaymentSuccess === true" [value]="el.idService">{{el.serviceName}}</option>
+          </select>
         </div>
-        <div>
-          <label class="font-weight-bold mt-5 p-0">Hình thức thanh toán <input
-            class="form-control form-control-sm ml-2 m-0 p-0"
-            type="text" value="Trực tiếp"
-            readonly></label>
+        <div class="col-md-12 d-flex justify-content-center m-0 p-0 mt-4">
+          <label class="font-weight-bold " style="font-size: 15px">Hình thức thanh toán
+            <select class="ml-2 form-control-sm mt-2" (change)="event($event)" [disabled]="checkPaymentSuccess === true">
+              <option value="0">-- Chọn hình thức --</option>
+              <option value="1">Trực tiếp</option>
+              <option value="2">Thanh toán bằng PayPal</option>
+            </select></label>
+        </div>
+        <div class="p-0 m-0 mt-4 justify-content-end col-md-12 " #paypalRef
+             [hidden]="checkButtonPayPal === false ||formBill.invalid">
         </div>
       </div>
+      <div *ngIf="checkPaymentSuccess === true" class="mt-3">
+        <p class="text-success" style="font-size: 15px ;font-weight: bolder"> Thanh toán thành công. Vui lòng kiểm tra lại tài khoản</p>
+      </div>
     </form>
-    <div class="mt-5 mb-2 d-flex justify-content-center">
-      <button class="btn btn-sm btn-dark text-light " style="width: 100px" mat-dialog-close=""> Hủy
+    <div class="mt-3 mb-2 d-flex justify-content-center">
+      <button [hidden]="checkPaymentSuccess === true" class="btn btn-sm btn-dark text-light " style="width: 100px" mat-dialog-close=""> Hủy
       </button>
-      <button class="btn btn-sm btn-danger ml-5 text-light" [disabled]="this.formBill.invalid" style="width: 100px" role="button" (click)="createDeposit()"> Gửi yêu cầu
+      <button *ngIf="checkPaymentSuccess === true" class="btn btn-sm btn-dark text-light " style="width: 100px" mat-dialog-close=""> Đóng
+      </button>
+      <button class="btn btn-sm btn-danger ml-5 text-light" *ngIf="checkSubmitDirect === true"
+              [disabled]="this.formBill.invalid" style="width: 100px" role="button" (click)="createDeposit()"> Gửi yêu
+        cầu
+      </button>
+      <button class="btn btn-sm btn-warning ml-5 text-light" id="paymentPayPal" hidden style="width: 100px" role="button"
+              (click)="createDepositPayPal()"> Gửi yêu
+        cầu
       </button>
     </div>
   </div>

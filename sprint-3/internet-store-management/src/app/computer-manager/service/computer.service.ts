@@ -15,7 +15,7 @@ export class ComputerService {
   deleteComputer(idComputer): Observable<any> {
     return this.http.delete(this.API + '/delete/' + idComputer);
   }
-  editComputer(idComputer, computer): Observable<any> {;
+  editComputer(idComputer, computer): Observable<any> {
     return this.http.put(this.API + '/edit/' + idComputer, computer);
   }
   addNewComputer(computer): Observable<any> {

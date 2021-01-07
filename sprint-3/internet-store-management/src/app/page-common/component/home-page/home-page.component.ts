@@ -15,12 +15,14 @@ import {DepositAccountComponent} from '../../../service-request-manager/componen
 import {RequestServiceService} from '../../../service-request-manager/service/request-service.service';
 import {PaymentBuyHourComponent} from '../../../service-request-manager/component/payment-buy-hour/payment-buy-hour.component';
 import {MessageTimeComponent} from '../message-time/message-time.component';
-
 function formatCash(str): void {
   return str.split('').reverse().reduce((prev, next, index) => {
     return ((index % 3) ? next : (next + '.')) + prev;
   });
 }
+import {ComputerService} from '../../../computer-manager/service/computer.service';
+import {Computer} from '../../../computer-manager/model/Computer.class';
+
 
 @Component({
   selector: 'app-home-page',
@@ -34,10 +36,12 @@ export class HomePageComponent implements OnInit {
   socialUser: SocialUser;
   user: User;
   public idUser: number;
+
   public time: number;
   public priceGame = 0;
   public hour = 0;
   interval;
+  public computer: Computer;
 
   startTimer(): void {
     this.interval = setInterval(() => {
@@ -81,10 +85,11 @@ export class HomePageComponent implements OnInit {
       return '0' + hours + ' : ' + ((value - hours * 3600000)) / 60000;
     }
   }
-
+  
   constructor(
     private authenticationService: AuthenticationService,
     private tokenStorageService: TokenStorageService,
+    private computerService: ComputerService,
     private router: Router,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute,
@@ -101,8 +106,8 @@ export class HomePageComponent implements OnInit {
       this.startTimer();
       this.idUser = this.tokenStorageService.getUser().id;
       this.user = this.tokenStorageService.getUser();
-      console.log(this.user);
       this.authenticationService.findBy(this.tokenStorageService.getUser().username).subscribe(next => {
+
         this.user = next;
         // @ts-ignore
         this.user.money = formatCash(this.user.money);
@@ -121,8 +126,17 @@ export class HomePageComponent implements OnInit {
       data => {
         this.tokenStorageService.saveToken(data.token);
         this.tokenStorageService.saveUser(data);
-        console.log(data);
+        this.idUser = data.id;
         this.isLoggedIn = true;
+        if (this.isLoggedIn === true && this.idUser != 1) {
+          // @ts-ignore
+          this.computerService.getComputerById(1).subscribe(dataID => {
+            this.computer = dataID;
+            dataID.idUser = this.idUser;
+            this.computerService.editComputer(1, dataID).subscribe(dataSuccess => {
+            });
+          });
+        }
       },
       err => {
         this.errorMessage = 'Tên tài khoản và mật khẩu không hợp lệ !';
@@ -131,7 +145,7 @@ export class HomePageComponent implements OnInit {
         }, 2000);
         this.isLoggedIn = false;
       }, () => {
-        this.reloadPage();
+        // this.reloadPage();
       }
     );
   }
@@ -141,6 +155,14 @@ export class HomePageComponent implements OnInit {
   }
 
   logout(): void {
+    this.idUser = null;
+    // @ts-ignore
+    this.computerService.getComputerById(1).subscribe(dataID => {
+      this.computer = dataID;
+      dataID.idUser = this.idUser;
+      this.computerService.editComputer(1, dataID).subscribe(dataSuccess => {
+      });
+    });
     this.tokenStorageService.signOut();
     this.reloadPage();
   }
@@ -149,12 +171,23 @@ export class HomePageComponent implements OnInit {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       data => {
         this.socialUser = data;
+        // @ts-ignore
+        this.idUser = data.id;
         const token = new TokenDTO(this.socialUser.idToken);
         this.authenticationService.google(token).subscribe(next => {
           this.tokenStorageService.saveToken(next.accessToken);
           this.tokenStorageService.saveUser(next);
           this.isLoggedIn = true;
           this.reloadPage();
+          if (this.isLoggedIn === true && this.idUser != 1) {
+            // @ts-ignore
+            this.computerService.getComputerById(1).subscribe(dataID => {
+              this.computer = dataID;
+              dataID.idUser = this.idUser;
+              this.computerService.editComputer(1, dataID).subscribe(dataSuccess => {
+              });
+            });
+          }
         }, err => {
           this.isLoggedIn = false;
         });
@@ -168,11 +201,22 @@ export class HomePageComponent implements OnInit {
         this.socialUser = data;
         const token = new TokenDTO(this.socialUser.authToken);
         console.log(data);
+        // @ts-ignore
+        this.idUser = data.id;
         this.authenticationService.facebook(token).subscribe(next => {
           this.tokenStorageService.saveToken(next.accessToken);
           this.tokenStorageService.saveUser(next);
           //   console.log(next);
           this.isLoggedIn = true;
+          if (this.isLoggedIn === true && this.idUser != 1) {
+            // @ts-ignore
+            this.computerService.getComputerById(1).subscribe(dataID => {
+              this.computer = dataID;
+              dataID.idUser = this.idUser;
+              this.computerService.editComputer(1, dataID).subscribe(dataSuccess => {
+              });
+            });
+          }
           this.reloadPage();
         }, err => {
           console.log('error');

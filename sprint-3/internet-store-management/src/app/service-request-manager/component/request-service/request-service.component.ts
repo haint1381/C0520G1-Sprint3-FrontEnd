@@ -104,6 +104,7 @@ export class RequestServiceComponent implements OnInit {
             console.log('Transaction completed');
             this.checkMessagePaymentSuccess = true;
             this.isPayDirect = true;
+            this.checkButtonPayPal = false;
           });
         },
         onError: (data, actions) => {
@@ -130,10 +131,10 @@ export class RequestServiceComponent implements OnInit {
 
   newService(serviceObj: Service): FormGroup {
     return this.fb.group({
-      idService: serviceObj.idService,
-      serviceName: serviceObj.serviceName,
-      price: serviceObj.price,
-      quantityPurchased: [serviceObj.quantityPurchased, [Validators.required]],
+      idService: [serviceObj.idService],
+      serviceName: [serviceObj.serviceName],
+      price: [serviceObj.price],
+      quantityPurchased: [serviceObj.quantityPurchased, [Validators.min(0), Validators.max(serviceObj.quantity)]],
       quantity: serviceObj.quantity,
     });
   }
